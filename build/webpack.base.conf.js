@@ -7,11 +7,11 @@ var MpvuePlugin = require('webpack-mpvue-asset-plugin')
 var glob = require('glob')
 var StringReplace = require('string-replace-webpack-plugin')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
-function getEntry (rootSrc, pattern) {
+function getEntry(rootSrc, pattern) {
   var files = glob.sync(path.resolve(rootSrc, pattern))
   return files.reduce((res, file) => {
     var info = path.parse(file)
@@ -21,7 +21,7 @@ function getEntry (rootSrc, pattern) {
   }, {})
 }
 
-const appEntry = { app: resolve('./src/main.js') }
+const appEntry = {app: resolve('./src/main.js')}
 const pagesEntry = getEntry(resolve('./src'), 'pages/**/main.js')
 const entry = Object.assign({}, appEntry, pagesEntry)
 
@@ -106,12 +106,19 @@ module.exports = {
       {
         test: /\.(js|vue)$/,
         loader: StringReplace.replace({
-          replacements: [{
-            pattern: /__STATIC__/g,
-            replacement: function (nextLoaders, options, prevLoaders) {
-              return '/static/images'
+          replacements: [
+            {
+              pattern: /__STATIC__/g,
+              replacement: function (nextLoaders, options, prevLoaders) {
+                return '/static'
+              }
+            },
+            {
+              pattern: /__IMAGE__/g,
+              replacement: function (nextLoaders, options, prevLoaders) {
+                return '/static/images'
+              }
             }
-          }
           ]
         })
       }
