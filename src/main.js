@@ -2,21 +2,55 @@ import Vue from 'vue'
 import App from './App'
 
 Vue.config.productionTip = false
-App.mpType = 'app'
-
 const app = new Vue(App)
 app.$mount()
 
 export default {
-  // 这个字段走 app.json
   config: {
-    // 页面前带有 ^ 符号的，会被编译成首页，其他页面可以选填，我们会自动把 webpack entry 里面的入口页面加进去
-    pages: ['pages/logs/main', '^pages/index/main'],
     window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
-    }
+      'navigationBarTitleText': '校园易乎',
+      'navigationBarTextStyle': '#FFFFFF',
+      'navigationBarBackgroundColor': '#a9936e',
+      'backgroundColor': '#f5f5f5',
+      'backgroundTextStyle': 'dark',
+      'enablePullDownRefresh': true
+    },
+    tabBar: {
+      'list': [
+        {
+          'pagePath': 'pages/index/main',
+          'iconPath': '__STATIC__/images/toolbar/home.png',
+          'selectedIconPath': '__STATIC__/images/toolbar/home@selected.png',
+          'text': '主页'
+        },
+        {
+          'pagePath': 'pages/logs/main',
+          'iconPath': '__STATIC__/images/toolbar/shop.png',
+          'selectedIconPath': '__STATIC__/images/toolbar/shop@selected.png',
+          'text': '自营'
+        }
+        // {
+        //   'pagePath': 'pages/cart/cart',
+        //   'iconPath': '__STATIC__/images/toolbar/cart.png',
+        //   'selectedIconPath': '__STATIC__/images/toolbar/cart@selected.png',
+        //   'text': '购物车'
+        // },
+        // {
+        //   'pagePath': 'pages/personal/personal',
+        //   'iconPath': '__STATIC__/images/toolbar/personal.png',
+        //   'selectedIconPath': '__STATIC__/images/toolbar/personal@selected.png',
+        //   'text': '我的'
+        // }
+      ],
+      'backgroundColor': '#F5F5F5',
+      'selectedColor': '#AB956D',
+      'color': '#989898',
+      'borderStyle': 'white',
+      'position': 'bottom'
+    },
+    pages: [
+      'pages/index/main',
+      'pages/logs/main'
+    ]
   }
 }

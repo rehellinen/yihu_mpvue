@@ -2,15 +2,17 @@
 	"description": "项目配置文件。",
 	"setting": {
 		"urlCheck": true,
-		"es6": false,
+		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
-	"miniprogramRoot": "./dist/",
+  "miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
-	"appid": "	wx1b2ecb8981e28b61",
+	"libVersion": "1.9.91",
+	"appid": "wx1b2ecb8981e28b61",
 	"projectname": "yihu_mpvue",
+	"isGameTourist": false,
 	"condition": {
 		"search": {
 			"current": -1,
