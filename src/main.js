@@ -49,7 +49,7 @@ export default {
       'position': 'bottom'
     },
     pages: [
-      'pages/index/main',
+      '^pages/index/main',
       'pages/logs/main'
     ]
   }
