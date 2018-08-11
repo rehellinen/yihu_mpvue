@@ -1,15 +1,13 @@
-<template>
-  <div>
-    <p>123</p>
-  </div>
+<template lang="pug">
+  div.container
+    p 12345
 </template>
 
 <script>
-export default {
-  name: 'index'
-}
+  export default {
+    name: 'index'
+  }
 </script>
 
-<style scoped>
-
+<style scoped lang="sass" rel="stylesheet/sass">
 </style>

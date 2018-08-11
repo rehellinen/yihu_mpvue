@@ -6,6 +6,8 @@ var vueLoaderConfig = require('./vue-loader.conf')
 var MpvuePlugin = require('webpack-mpvue-asset-plugin')
 var glob = require('glob')
 var StringReplace = require('string-replace-webpack-plugin')
+var pathConfig = require('../src/utils/config')
+var replace = pathConfig.replace
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -43,7 +45,6 @@ module.exports = {
     alias: {
       'vue': 'mpvue',
       '@': resolve('src'),
-      '__STATIC__': resolve('static')
     },
     symlinks: false,
     aliasFields: ['mpvue', 'weapp', 'browser'],
@@ -108,15 +109,15 @@ module.exports = {
         loader: StringReplace.replace({
           replacements: [
             {
-              pattern: /__STATIC__/g,
+              pattern: new RegExp(replace.static.origin, 'g'),
               replacement: function (nextLoaders, options, prevLoaders) {
-                return '/static'
+                return replace.static.replacement
               }
             },
             {
-              pattern: /__IMAGE__/g,
+              pattern: new RegExp(replace.image.origin, 'g'),
               replacement: function (nextLoaders, options, prevLoaders) {
-                return '/static/images'
+                return replace.image.replacement
               }
             }
           ]

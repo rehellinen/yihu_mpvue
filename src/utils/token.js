@@ -1,32 +1,32 @@
 import {Config} from './config.js'
 
 class Token {
-  constructor(){
+  constructor() {
     this.verifyUrl = Config.restUrl + 'token/verify'
     this.tokenUrl = Config.restUrl + 'token/buyer'
   }
 
-  verify(){
+  verify() {
     let token = wx.getStorageSync('token')
-    if(!token){
+    if (!token) {
       this.getTokenFromServer()
-    }else{
+    } else {
       this._verifyFromServer(token)
     }
   }
 
   // 从服务器获取Token
-  getTokenFromServer(cb){
+  getTokenFromServer(cb) {
     let that = this
     wx.login({
-      success(res){
+      success(res) {
         wx.request({
           url: that.tokenUrl,
           method: "POST",
-          data:{
+          data: {
             code: res.code
           },
-          success(res){
+          success(res) {
             wx.setStorageSync('token', res.data.data.token)
             cb && cb(res)
           }
@@ -36,7 +36,7 @@ class Token {
   }
 
   // 验证Token是否有效
-  _verifyFromServer(token){
+  _verifyFromServer(token) {
     let that = this
     wx.request({
       url: that.verifyUrl,
@@ -44,9 +44,9 @@ class Token {
       data: {
         token: token
       },
-      success(res){
+      success(res) {
         let valid = res.data.data.isValid
-        if(!valid){
+        if (!valid) {
           that.getTokenFromServer()
         }
       }
