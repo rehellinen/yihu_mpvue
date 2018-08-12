@@ -16,22 +16,27 @@
       // 发现鲜货
       div.find
         img(src="__IMAGE__/theme/find.png")
+      goods-list(:goods="newGoods")
       see-more
 
       // 旧物漂流
       div.find
         img(src="__IMAGE__/theme/old.png")
+      goods-list(:goods="oldGoods")
       see-more
 </template>
 
 <script>
   import MyLoading from 'components/my-loading/my-loading'
   import SeeMore from 'components/see-more/see-more'
+  import GoodsList from 'components/goods-list/goods-list'
   import {BannerModel} from 'model/BannerModel'
   import {ThemeModel} from 'model/ThemeModel'
+  import {GoodsModel} from 'model/GoodsModel'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()
+  let Goods = new GoodsModel()
 
   export default {
     data () {
@@ -40,7 +45,9 @@
         autoPlay: true,
         showDots: false,
         banners: [],
-        themes: []
+        themes: [],
+        newGoods: [],
+        oldGoods: []
       }
     },
     created () {
@@ -50,10 +57,17 @@
       Theme.getThemes().then((res) => {
         this.themes = res
       })
+      Goods.getIndexNewGoods().then((res) => {
+        this.newGoods = res
+      })
+      Goods.getIndexOldGoods().then((res) => {
+        this.oldGoods = res
+      })
     },
     components: {
       MyLoading,
-      SeeMore
+      SeeMore,
+      GoodsList
     }
   }
 </script>
