@@ -15,42 +15,8 @@ export default {
       'backgroundTextStyle': 'dark',
       'enablePullDownRefresh': true
     },
-    tabBar: {
-      'list': [
-        {
-          'pagePath': 'pages/index/main',
-          'iconPath': '__IMAGE__/toolbar/home.png',
-          'selectedIconPath': '__IMAGE__/toolbar/home@selected.png',
-          'text': '主页'
-        },
-        {
-          'pagePath': 'pages/logs/main',
-          'iconPath': '__IMAGE__/toolbar/shop.png',
-          'selectedIconPath': '__IMAGE__/toolbar/shop@selected.png',
-          'text': '自营'
-        }
-        // {
-        //   'pagePath': 'pages/cart/cart',
-        //   'iconPath': '__IMAGE__/toolbar/cart.png',
-        //   'selectedIconPath': '__IMAGE__/toolbar/cart@selected.png',
-        //   'text': '购物车'
-        // },
-        // {
-        //   'pagePath': 'pages/personal/personal',
-        //   'iconPath': '__IMAGE__/toolbar/personal.png',
-        //   'selectedIconPath': '__IMAGE__/toolbar/personal@selected.png',
-        //   'text': '我的'
-        // }
-      ],
-      'backgroundColor': '#F5F5F5',
-      'selectedColor': '#AB956D',
-      'color': '#989898',
-      'borderStyle': 'white',
-      'position': 'bottom'
-    },
     pages: [
-      '^pages/index/main',
-      'pages/logs/main'
+      '^pages/index/main'
     ]
   }
 }
