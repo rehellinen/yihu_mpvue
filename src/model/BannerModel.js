@@ -7,13 +7,10 @@ import { BaseModel } from './BaseModel'
 
 export class BannerModel extends BaseModel {
   // 获取banner
-  getBanners (cb) {
+  getBanners () {
     let param = {
-      url: 'banner',
-      callBack (res) {
-        cb && cb(res)
-      }
+      url: 'banner'
     }
-    this.request(param)
+    return this.request(param)
   }
 }

@@ -13,45 +13,50 @@ export class BaseModel {
    *  1. url [api地址]
    *  2. type [http请求方式]
    *  3. data [请求时携带的参数]
-   *  4. callBack [回调函数]
-   *  5. eCallBack [发送错误的处理函数]
    * @param noReFetch 是否重新发送请求
    */
-  request (params = { type: 'GET' }, noReFetch = false) {
-    let that = this
-    let url = this.baseUrl + params.url
-    if (!params.type) {
-      params.type = 'GET'
-    }
-
-    wx.request({
-      url: url,
-      data: params.data,
-      method: params.type,
-      header: {
-        'content-type': 'application/json',
-        'token': wx.getStorageSync('token')
-      },
-      success: function (res) {
-        let code = res.statusCode.toString()
-        let startChar = code.charAt(0)
-        if (startChar === '2') {
-          params.callBack && params.callBack(res.data.data)
-        } else {
-          if (code === '401') {
-            if (!noReFetch) {
-              that._reFetch(params)
-            } else {
-              params.eCallBack && params.eCallBack(res.data)
-            }
-          } else {
-            params.eCallBack && params.eCallBack(res.data)
-          }
-        }
-      },
-      fail: function (err) {
-        params.eCallBack && params.eCallBack(err)
+  request (params, noReFetch = false) {
+    return new Promise((resolve, reject) => {
+      let that = this
+      let url = this.baseUrl + params.url
+      if (!params.type) {
+        params.type = 'GET'
       }
+
+      wx.request({
+        url: url,
+        data: params.data,
+        method: params.type,
+        header: {
+          'content-type': 'application/json',
+          'token': wx.getStorageSync('token')
+        },
+        success: function (res) {
+          let code = res.statusCode.toString()
+          let startChar = code.charAt(0)
+          if (startChar === '2') {
+            // 处理成功时的情况
+            resolve(res.data.data)
+          } else {
+            if (code === '401') {
+              // 处理Token无效的情况
+              if (!noReFetch) {
+                that._reFetch(params)
+              } else {
+                reject(res.data)
+              }
+            } else {
+              // 其他错误
+              reject(res.data)
+            }
+          }
+        },
+        fail: function (err) {
+          reject(err)
+        }
+      })
+    }).catch(ex => {
+      console.log(ex)
     })
   }
 
