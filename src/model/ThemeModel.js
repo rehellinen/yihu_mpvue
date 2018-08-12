@@ -2,7 +2,7 @@ import { BaseModel } from './BaseModel.js'
 
 class ThemeModel extends BaseModel {
   // 根据主题id获取分类
-  getCategory (id, cb) {
+  getCategory (id) {
     let params = {
       url: 'category/' + id
     }
@@ -14,7 +14,7 @@ class ThemeModel extends BaseModel {
     let param = {
       url: 'theme'
     }
-    this.request(param)
+    return this.request(param)
   }
 }
 

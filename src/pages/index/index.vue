@@ -9,13 +9,24 @@
 
       // 精选主题
       div.theme
-        text.theme-text 精 选 主 题
+        p 精 选 主 题
         div.theme-photo-container
           img(v-for="item in themes", :src="item.image_id.image_url" :key="item.image_id.id")
+
+      // 发现鲜货
+      div.find
+        img(src="__IMAGE__/theme/find.png")
+      see-more
+
+      // 旧物漂流
+      div.find
+        img(src="__IMAGE__/theme/old.png")
+      see-more
 </template>
 
 <script>
   import MyLoading from 'components/my-loading/my-loading'
+  import SeeMore from 'components/see-more/see-more'
   import {BannerModel} from 'model/BannerModel'
   import {ThemeModel} from 'model/ThemeModel'
 
@@ -41,7 +52,8 @@
       })
     },
     components: {
-      MyLoading
+      MyLoading,
+      SeeMore
     }
   }
 </script>
@@ -66,4 +78,33 @@
     flex-direction: column
     color: $base-font-color
     background-color: white
+    align-items: center
+    p
+      margin-bottom: 5px
+      font-size: 35rpx
+
+  .theme-photo-container
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    img
+      width: 48.5vw
+      height: 183rpx
+      margin-top: 10rpx
+      margin-left: 1vw
+  /* theme */
+
+  /* find */
+  .find
+    display: flex
+    align-items: center
+    justify-content: center
+    padding: 40rpx 0 20rpx 0
+    background-color: white
+    width: 750rpx
+    height: 63rpx
+    img
+      width: 300rpx
+      height: 63rpx
+  /* find */
 </style>

@@ -15,7 +15,6 @@ div.loading-container(v-if="showLoading")
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
-  @import "~css/base"
   .loading-container
     display: flex
     justify-content: center
