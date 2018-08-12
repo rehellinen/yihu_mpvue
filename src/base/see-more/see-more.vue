@@ -26,8 +26,9 @@ div.more-container
     height: 80rpx
     padding-right: 2%
     background-color: white
+    margin-bottom: 5rpx
     p
-      font-size: 28rpx
+      font-size: $small-font-size
     img
       transform: rotate(270deg)
       height: 40rpx

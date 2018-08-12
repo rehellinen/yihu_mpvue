@@ -27,9 +27,9 @@
 </template>
 
 <script>
-  import MyLoading from 'components/my-loading/my-loading'
-  import SeeMore from 'components/see-more/see-more'
-  import GoodsList from 'components/goods-list/goods-list'
+  import MyLoading from 'base/my-loading/my-loading'
+  import SeeMore from 'base/see-more/see-more'
+  import GoodsList from 'base/goods-list/goods-list'
   import {BannerModel} from 'model/BannerModel'
   import {ThemeModel} from 'model/ThemeModel'
   import {GoodsModel} from 'model/GoodsModel'
@@ -95,7 +95,7 @@
     align-items: center
     p
       margin-bottom: 5px
-      font-size: 35rpx
+      font-size: $big-font-size
 
   .theme-photo-container
     display: flex

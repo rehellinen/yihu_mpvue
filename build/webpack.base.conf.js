@@ -46,6 +46,7 @@ module.exports = {
       'vue': 'mpvue',
       '@': resolve('src'),
       'components': resolve('src/components'),
+      'base': resolve('src/base'),
       'css': resolve('static/css'),
       'model': resolve('src/model'),
     },
