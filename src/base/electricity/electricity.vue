@@ -13,14 +13,10 @@
 
 <script>
   export default {
-    props: {
-      threeDays: {
-        type: Number,
-        default: 0
-      },
-      surplus: {
-        type: Number,
-        default: 0
+    data () {
+      return {
+        threeDays: 0,
+        surplus: 0
       }
     }
   }

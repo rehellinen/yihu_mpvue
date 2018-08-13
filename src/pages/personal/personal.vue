@@ -9,29 +9,33 @@
       // 个人信息栏
 
       // 电费栏
-      electricity(:threeDays="threeDays", :surplus="surplus")
+      electricity
       // 电费栏
+
+      // 我的订单
+      personal-order
+      // 我的订单
 </template>
 
 <script>
   import MyLoading from 'base/my-loading/my-loading'
   import TopImage from 'base/top-image/top-image'
   import Electricity from 'base/electricity/electricity'
+  import PersonalOrder from 'components/personal-order/personal-order'
 
   export default {
     data () {
       return {
         showLoading: false,
         avatar: '__IMAGE__/theme/personal@avatar.jpg',
-        name: 'tuntematon',
-        threeDays: 0,
-        surplus: 0
+        name: 'tuntematon'
       }
     },
     components: {
       MyLoading,
       TopImage,
-      Electricity
+      Electricity,
+      PersonalOrder
     }
   }
 </script>

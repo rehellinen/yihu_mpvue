@@ -24,7 +24,6 @@ div.more-container
     align-items: center
     color: $grey-font-color
     height: 80rpx
-    padding-right: 2%
     background-color: white
     margin-bottom: 5rpx
     p
@@ -33,4 +32,5 @@ div.more-container
       transform: rotate(270deg)
       height: 40rpx
       width: 40rpx
+      margin-right: 5rpx
 </style>
