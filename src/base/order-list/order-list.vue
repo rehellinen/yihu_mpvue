@@ -5,25 +5,29 @@ div.order-list-contailer
     img.detail-image(:src="item.snap_img", mode='aspectFill')
     div.two-text
       p.name-text {{item.snap_name}}
-      p.status-text {{orderStatus(item.status)}}
+      p.status-text(v-if="item.status === orderEnum.UNPAID") 待付款
+      p.status-text(v-if="item.status === orderEnum.PAID") 待发货
+      p.status-text(v-if="item.status === orderEnum.DELIVERED") 已发货
+      p.status-text(v-if="item.status === orderEnum.COMPLETED") 已完成
+      p.status-text(v-if="item.status === orderEnum.PAID_BUT_NO_GOODS") 付款成功但库存量不足
     div.price-container
       p.price ￥{{item.total_price}}
       div.delete(v-if="item.status === 1") x
 </template>
 
 <script>
-  // import {orderEnum} from 'utils/config'
+  import {orderEnum} from 'utils/config'
 
   export default {
+    data () {
+      return {
+        orderEnum
+      }
+    },
     props: {
       orders: {
         type: Array,
         default: []
-      }
-    },
-    methods: {
-      orderStatus (status) {
-        return '123111111'
       }
     }
   }
@@ -71,6 +75,7 @@ div.order-list-contailer
 
   .price
     font-size: $small-font-size
+    margin-top: 2px
 
   .delete
     font-size: $bigger-font-size
