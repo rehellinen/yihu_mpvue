@@ -3,7 +3,7 @@
     my-loading(:showLoading="showLoading")
     div.container.index-container
       // 轮播图
-      swiper.banner(interval='5000' :indicator-dots='showDots' :autoplay='autoPlay')
+      swiper.banner(interval='5000' :indicator-dots='false' :autoplay='true')
           swiper-item(v-for="item in banners" :key="item.image_id.id")
             img(:src="item.image_id.image_url")
 
@@ -16,7 +16,7 @@
       // 发现鲜货
       div.find
         img(src="__IMAGE__/theme/find.png")
-      goods-list(:goods="newGoods")
+      goods-list(:goods="newGoods", :opt="opt")
       see-more
 
       // 旧物漂流
@@ -34,26 +34,33 @@
   import {ThemeModel} from 'model/ThemeModel'
   import {GoodsModel} from 'model/GoodsModel'
   import {Load} from 'utils/image'
+  import {LazyLoad} from 'utils/lazyload'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()
   let Goods = new GoodsModel()
 
+  const REQUEST_NUMBER = 4
+
   export default {
     data () {
       return {
         showLoading: true,
-        autoPlay: true,
-        showDots: false,
         banners: [],
         themes: [],
         newGoods: [],
-        oldGoods: []
+        oldGoods: [],
+        goodsImages: [],
+        opt: {}
       }
     },
     created () {
       this._getData()
-      this.load = new Load(this, 4)
+      this.load = new Load(this, REQUEST_NUMBER)
+    },
+    onPageScroll (opt) {
+      this.newGoodsLazyLoad.refresh()
+      this.oldGoodsLazyLoad.refresh()
     },
     methods: {
       _getData () {
@@ -68,10 +75,12 @@
         Goods.getIndexNewGoods().then((res) => {
           this.newGoods = res
           this.load.isLoadedAll()
+          this.newGoodsLazyLoad = new LazyLoad(this.newGoods)
         })
         Goods.getIndexOldGoods().then((res) => {
           this.oldGoods = res
           this.load.isLoadedAll()
+          this.oldGoodsLazyLoad = new LazyLoad(this.oldGoods)
         })
       }
     },

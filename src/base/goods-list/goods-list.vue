@@ -1,7 +1,7 @@
 <template lang="pug">
 div.goods-list-container
-  div.goods-container(v-for="item in goods", :key="item.id")
-    img(:src="item.image_id.image_url" mode='aspectFill')
+  div.goods-container(v-for="(item, index) in goods", :key="item.id")
+    img.lazy(:src="item.lazy_url" mode='aspectFill' :data-index="index")
     div.text-container
       div
         text.two-handed(v-if="item.type === 2") 二手
