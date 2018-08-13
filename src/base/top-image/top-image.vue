@@ -43,6 +43,7 @@ div.info
     flex-direction: column
     align-items: center
     background-color: white
+    position: relative
 
   .header-image
     width: 750rpx

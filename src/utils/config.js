@@ -16,5 +16,12 @@ module.exports = {
       origin: '__IMAGE__',
       replacement: '/static/images'
     }
+  },
+
+  // 配置4：关于支付状态
+  payEnum: {
+    OUT_OF_STOCK: 0,
+    PAY_FAIL: 1,
+    PAY_SUCCESS: 2
   }
 }

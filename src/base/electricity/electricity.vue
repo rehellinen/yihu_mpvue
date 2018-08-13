@@ -12,11 +12,27 @@
 </template>
 
 <script>
+  import {ElectricityModel} from 'model/ElectricityModel'
+
+  let Electricity = new ElectricityModel()
   export default {
     data () {
       return {
         threeDays: 0,
         surplus: 0
+      }
+    },
+    created () {
+      this._getData()
+    },
+    methods: {
+      _getData () {
+        Electricity.getSurplus().then((res) => {
+          this.surplus = res.elec
+        })
+        Electricity.getThreeDays().then((res) => {
+          this.threeDays = res.elec
+        })
       }
     }
   }

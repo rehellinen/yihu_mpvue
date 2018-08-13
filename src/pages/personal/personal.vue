@@ -40,7 +40,7 @@
     },
     methods: {
       _getData () {
-        // 关于电费
+        // 获取订单
       }
     },
     components: {
