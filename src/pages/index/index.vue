@@ -33,6 +33,7 @@
   import {BannerModel} from 'model/BannerModel'
   import {ThemeModel} from 'model/ThemeModel'
   import {GoodsModel} from 'model/GoodsModel'
+  import {Load} from 'utils/image'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()
@@ -41,7 +42,7 @@
   export default {
     data () {
       return {
-        showLoading: false,
+        showLoading: true,
         autoPlay: true,
         showDots: false,
         banners: [],
@@ -52,20 +53,25 @@
     },
     created () {
       this._getData()
+      this.load = new Load(this, 4)
     },
     methods: {
       _getData () {
         Banner.getBanners().then((res) => {
           this.banners = res
+          this.load.isLoadedAll()
         })
         Theme.getThemes().then((res) => {
           this.themes = res
+          this.load.isLoadedAll()
         })
         Goods.getIndexNewGoods().then((res) => {
           this.newGoods = res
+          this.load.isLoadedAll()
         })
         Goods.getIndexOldGoods().then((res) => {
           this.oldGoods = res
+          this.load.isLoadedAll()
         })
       }
     },
