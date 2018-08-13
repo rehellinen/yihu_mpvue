@@ -16,7 +16,7 @@
       // 发现鲜货
       div.find
         img(src="__IMAGE__/theme/find.png")
-      goods-list(:goods="newGoods", :opt="opt")
+      goods-list(:goods="newGoods")
       see-more
 
       // 旧物漂流
@@ -50,8 +50,7 @@
         themes: [],
         newGoods: [],
         oldGoods: [],
-        goodsImages: [],
-        opt: {}
+        goodsImages: []
       }
     },
     created () {
@@ -75,12 +74,12 @@
         Goods.getIndexNewGoods().then((res) => {
           this.newGoods = res
           this.load.isLoadedAll()
-          this.newGoodsLazyLoad = new LazyLoad(this.newGoods)
+          this.newGoodsLazyLoad = new LazyLoad(this.newGoods, this)
         })
         Goods.getIndexOldGoods().then((res) => {
           this.oldGoods = res
           this.load.isLoadedAll()
-          this.oldGoodsLazyLoad = new LazyLoad(this.oldGoods)
+          this.oldGoodsLazyLoad = new LazyLoad(this.oldGoods, this)
         })
       }
     },

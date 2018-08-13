@@ -7,14 +7,16 @@ export class LazyLoad {
   /**
    * 构造函数
    */
-  constructor (data) {
+  constructor (data, page) {
+    this.page = page
     // 图片的NodesRef对象实例
     this.images = wx.createSelectorQuery().selectAll('.lazy')
     // 进行数据绑定的数据
     this.data = data
     // 获取可使用窗口高度
     this.windowHeight = wx.getSystemInfoSync().windowHeight
-
+    // 是否加载完成
+    this.isLoadedAll = false
     this._processData()
   }
 
@@ -22,12 +24,20 @@ export class LazyLoad {
    * 每次滚动都进行刷新
    */
   refresh () {
+    if (this.isLoadedAll) {
+      return
+    }
+    console.log('test')
     this.images.boundingClientRect(res => {
       res.forEach(item => {
-        if (item.top <= this.windowHeight) {
+        if (item.top <= (this.windowHeight + 20)) {
           let index = item.dataset.index
-          this.data[index].lazy_url = this.data[index].image_id.image_url
-          this.data[index].subtitle = ''
+          if (index === this.data.length - 1) {
+            this.isLoadedAll = true
+          }
+          let newData = this.data[index]
+          newData.lazy_url = newData.image_id.image_url
+          this.page.$set(this.data, index, newData)
         }
       })
     }).exec()
