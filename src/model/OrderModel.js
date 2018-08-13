@@ -67,7 +67,7 @@ class OrderModel extends BaseModel {
    * @param status
    * @param page
    */
-  getOrder (status, page) {
+  getOrder (status, page = 1) {
     let params = {
       url: 'order/' + status,
       data: {
@@ -78,15 +78,17 @@ class OrderModel extends BaseModel {
     return this.request(params)
   }
 
-  // 根据订单ID获取详细信息
-  getOrderByID (id, type, cb) {
+  /**
+   * 根据订单ID获取详细信息
+   * @param id
+   * @param type
+   * @returns {*}
+   */
+  getOrderByID (id, type) {
     let params = {
-      url: 'order/' + id + '/' + type,
-      callBack (res) {
-        cb && cb(res)
-      }
+      url: 'order/' + id + '/' + type
     }
-    this.request(params)
+    return this.request(params)
   }
 
   // 判断是否有新订单
@@ -100,27 +102,21 @@ class OrderModel extends BaseModel {
   }
 
   // 收货
-  comfirm (id, cb) {
+  comfirm (id) {
     let params = {
       url: 'order/confirm/' + id,
-      type: 'POST',
-      callBack (res) {
-        cb && cb(res)
-      }
+      type: 'POST'
     }
-    this.request(params)
+    return this.request(params)
   }
 
   // 删除订单
-  delete (id, cb) {
+  delete (id) {
     let params = {
       url: 'order/' + id,
-      type: 'DELETE',
-      callBack (res) {
-        cb && cb(res)
-      }
+      type: 'DELETE'
     }
-    this.request(params)
+    return this.request(params)
   }
 }
 

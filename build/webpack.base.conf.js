@@ -49,6 +49,7 @@ module.exports = {
       'base': resolve('src/base'),
       'css': resolve('static/css'),
       'model': resolve('src/model'),
+      'utils': resolve('src/utils')
     },
     symlinks: false,
     aliasFields: ['mpvue', 'weapp', 'browser'],

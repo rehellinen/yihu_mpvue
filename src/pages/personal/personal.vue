@@ -14,10 +14,11 @@
 
       // 我的订单
       div.order-container
-        div.image-container(v-if="order.length !== 0")
+        div.image-container(v-if="orders.length !== 0")
           img(src="__IMAGE__/theme/personal@order.png")
-        order-list
-        see-more(v-if="order.length !== 0")
+        order-list(:orders="orders")
+        div(v-if="orders.length !==0")
+          see-more
       // 我的订单
 </template>
 
@@ -27,12 +28,16 @@
   import Electricity from 'base/electricity/electricity'
   import SeeMore from 'base/see-more/see-more'
   import OrderList from 'base/order-list/order-list'
+  import {orderEnum} from 'utils/config'
+
+  import {OrderModel} from 'model/OrderModel'
+  let Order = new OrderModel()
 
   export default {
     data () {
       return {
         showLoading: false,
-        order: []
+        orders: []
       }
     },
     created () {
@@ -41,6 +46,17 @@
     methods: {
       _getData () {
         // 获取订单
+        Order.getOrder(orderEnum.ALL).then(res => {
+          this._processOrder(res)
+        })
+      },
+      _processOrder (order) {
+        if (order.length >= 2) {
+          this.orders.push(order[0])
+          this.orders.push(order[1])
+        } else {
+          this.orders = order
+        }
       }
     },
     components: {
