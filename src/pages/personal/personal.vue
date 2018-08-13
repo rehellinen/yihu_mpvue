@@ -3,7 +3,7 @@
     my-loading(:showLoading="showLoading")
     div.container.personal-container(v-if="!showLoading")
       // 个人信息栏
-      top-image(:avatar="avatar", :name="name")
+      top-image(type="user")
       div.icon-container
         img(src="__IMAGE__/icon/edit.png")
       // 个人信息栏
@@ -13,7 +13,11 @@
       // 电费栏
 
       // 我的订单
-      personal-order
+      div.order-container
+        div.image-container(v-if="order.length !== 0")
+          img(src="__IMAGE__/theme/personal@order.png")
+        order-list
+        see-more(v-if="order.length !== 0")
       // 我的订单
 </template>
 
@@ -21,21 +25,30 @@
   import MyLoading from 'base/my-loading/my-loading'
   import TopImage from 'base/top-image/top-image'
   import Electricity from 'base/electricity/electricity'
-  import PersonalOrder from 'components/personal-order/personal-order'
+  import SeeMore from 'base/see-more/see-more'
+  import OrderList from 'base/order-list/order-list'
 
   export default {
     data () {
       return {
         showLoading: false,
-        avatar: '__IMAGE__/theme/personal@avatar.jpg',
-        name: 'tuntematon'
+        order: []
+      }
+    },
+    created () {
+      this._getData()
+    },
+    methods: {
+      _getData () {
+        // 关于电费
       }
     },
     components: {
       MyLoading,
       TopImage,
       Electricity,
-      PersonalOrder
+      SeeMore,
+      OrderList
     }
   }
 </script>
@@ -60,4 +73,22 @@
       height: 40rpx
   .personal-container
     background-color: $background-color
+
+  .order-container
+    display: flex
+    flex-direction: column
+    background-color: white
+    margin-top: 20rpx
+    width: 750rpx
+    .image-container
+      display: flex
+      justify-content: center
+      padding: 30rpx 0
+      border-bottom: 1rpx solid $light-font-color
+      width: 90%
+      margin-left: 5%
+      align-items: center
+      img
+        width: 170rpx
+        height: 50rpx
 </style>

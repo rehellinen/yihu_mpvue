@@ -1,6 +1,11 @@
 <script>
+  import {Token} from './utils/token'
+
   export default {
-    name: 'app'
+    created () {
+      let token = new Token()
+      token.verify()
+    }
   }
 </script>
 

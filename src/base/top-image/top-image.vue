@@ -1,8 +1,10 @@
 <template lang="pug">
 div.info
   img.header-image(:src="top_image")
-  img.avatar(:src="avatar")
-  p.avatar-name {{name}}
+  open-data.avatar-name(type="userNickName", v-if="type === 'user'")
+  open-data.avatar(type="userAvatarUrl", v-if="type === 'user'")
+  img.avatar(:src="avatar", v-if="type !== 'user'")
+  p.avatar-name(v-if="type !== 'user'") {{name}}
   p.avatar-quote {{quote}}
 </template>
 
@@ -24,6 +26,10 @@ div.info
       quote: {
         type: String,
         default: '生活就像海洋，只有意志坚强的人才能到达彼岸'
+      },
+      type: {
+        type: String,
+        default: 'user'
       }
     }
   }
@@ -49,6 +55,7 @@ div.info
     top: 250rpx
     border-radius: 50%
     display: block
+    overflow: hidden
 
   .avatar-name
     margin-top: 80rpx

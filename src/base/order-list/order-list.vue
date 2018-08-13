@@ -1,13 +1,18 @@
-<template>
-
+<template lang="pug">
+div
 </template>
 
 <script>
   export default {
-    name: "order-list"
+    props: {
+      goods: {
+        type: Array,
+        default: []
+      }
+    }
   }
 </script>
 
-<style scoped>
+<style scoped lang="sass" rel="stylesheet/sass">
 
 </style>

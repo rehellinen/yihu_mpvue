@@ -51,18 +51,23 @@
       }
     },
     created () {
-      Banner.getBanners().then((res) => {
-        this.banners = res
-      })
-      Theme.getThemes().then((res) => {
-        this.themes = res
-      })
-      Goods.getIndexNewGoods().then((res) => {
-        this.newGoods = res
-      })
-      Goods.getIndexOldGoods().then((res) => {
-        this.oldGoods = res
-      })
+      this._getData()
+    },
+    methods: {
+      _getData () {
+        Banner.getBanners().then((res) => {
+          this.banners = res
+        })
+        Theme.getThemes().then((res) => {
+          this.themes = res
+        })
+        Goods.getIndexNewGoods().then((res) => {
+          this.newGoods = res
+        })
+        Goods.getIndexOldGoods().then((res) => {
+          this.oldGoods = res
+        })
+      }
     },
     components: {
       MyLoading,
