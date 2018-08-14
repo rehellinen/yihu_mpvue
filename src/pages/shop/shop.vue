@@ -13,19 +13,35 @@ div
 <script>
   import MyLoading from 'base/my-loading/my-loading'
   import ShopList from 'components/shop-list/shop-list'
+  import {ShopModel} from 'model/ShopModel'
   import {Load} from 'utils/load'
 
+  let Shop = new ShopModel()
   const REQUEST_NUMBER = 1
 
   export default {
     data () {
       return {
         showLoading: false,
+        page: 1,
         shops: []
       }
     },
+    created () {
+      this._getShops()
+    },
     mounted () {
       this.load = new Load(this, REQUEST_NUMBER)
+    },
+    methods: {
+      _getShops () {
+        Shop.getShops(this.page).then(res => {
+          this._processData(res)
+        })
+      },
+      _processData (shops) {
+        this.shops = shops
+      }
     },
     components: {
       MyLoading,

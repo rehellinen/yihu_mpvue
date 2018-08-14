@@ -1,41 +1,23 @@
 import {BaseModel} from './BaseModel.js'
 
-export class ShopModel extends BaseModel{
-  constructor(){
-    super()
-  }
-
+export class ShopModel extends BaseModel {
   // 获取自营商家信息
-  getShop(page, cb, ecb){
+  getShops (page) {
     let params = {
       url: 'shop',
       data: {
         page: page
-      },
-      callBack(data){
-        cb && cb(data)
-      },
-      eCallBack(data){
-        ecb && ecb(data)
       }
     }
-    this.request(params)
+    return this.request(params)
   }
 
   // 根据ID获取自营商家信息
-  getShopByID(id, cb) {
+  getShopByID (id) {
     let params = {
-      url: 'shop/' + id,
-      callBack: function (data) {
-        cb && cb(data)
-      }
+      url: 'shop/' + id
     }
 
-    this.request(params)
-  }
-
-  // 根据ID获取二手卖家信息
-  getSellerByID(id, cb) {
-
+    return this.request(params)
   }
 }
