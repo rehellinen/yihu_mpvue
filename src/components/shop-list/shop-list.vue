@@ -27,12 +27,12 @@ export default {
   .shop-container
     display: flex
     flex-direction: column
-    width: 710rpx
-    margin-top: 20rpx
-    margin-left: 20rpx
+    width: $card-width
+    margin-top: $card-margin-top
+    margin-left: $card-margin-left
     background-color: white
     padding-bottom: 15rpx
-    border-radius: 10px
+    border-radius: $card-border-radius
 
     .up
       height: 100rpx

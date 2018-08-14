@@ -34,6 +34,12 @@ export default {
           'text': '自营'
         },
         {
+          'pagePath': 'pages/cart/main',
+          'iconPath': '__IMAGE__/toolbar/cart.png',
+          'selectedIconPath': '__IMAGE__/toolbar/cart@selected.png',
+          'text': '购物车'
+        },
+        {
           'pagePath': 'pages/personal/main',
           'iconPath': '__IMAGE__/toolbar/personal.png',
           'selectedIconPath': '__IMAGE__/toolbar/personal@selected.png',
