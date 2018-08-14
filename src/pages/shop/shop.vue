@@ -2,11 +2,12 @@
 div
   my-loading(:showLoading="showLoading")
   div.container.shop-container(v-if="!showLoading")
-    div.header-image
+    div.header-image(:style="topStyle")
       img(src="__IMAGE__/theme/shop@header.png")
-    div.recommend-image
+    div.recommend-image(:style="topStyle")
       img(src="__IMAGE__/theme/recommend.png")
-
+    div.top-title(:style="titleStyle")
+      p 自营商店
     shop-list(:shops="shops")
 </template>
 
@@ -24,14 +25,29 @@ div
       return {
         showLoading: false,
         page: 1,
-        shops: []
+        shops: [],
+        topStyle: '',
+        titleStyle: ''
       }
     },
     created () {
       this._getShops()
     },
     mounted () {
+      this.selector = wx.createSelectorQuery().select('.recommend-image')
       this.load = new Load(this, REQUEST_NUMBER)
+    },
+    onPageScroll (opt) {
+      const topImageHeight = 217
+      const recommendHeight = 85
+      const totalHeight = topImageHeight + recommendHeight
+
+      this.selector.boundingClientRect(res => {
+        let scale = (res.top + recommendHeight) / totalHeight
+        let blur = 30 * (1 - scale)
+        this.topStyle = `filter:blur(${blur}rpx);-webkit-filter:blur(${blur}rpx);`
+        this.titleStyle = `opacity:${1 - scale}`
+      }).exec()
     },
     methods: {
       _getShops () {
@@ -51,6 +67,20 @@ div
 </script>
 
 <style scoped lang="sass" rel="stylesheet/sass">
+  @import "~css/base"
+  .top-title
+    background-color: $nav-color
+    position: fixed
+    top: 0
+    height: 60rpx
+    width: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    opacity: 0
+    p
+      font-size: $normal-font-size
+      color: whitesmoke
   .shop-container
     background-color: #F9F9F9
 
