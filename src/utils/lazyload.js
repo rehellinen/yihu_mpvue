@@ -7,7 +7,7 @@ export class LazyLoad {
   /**
    * 构造函数
    */
-  constructor (data, page) {
+  constructor (data, page, start = 0) {
     this.page = page
     // 图片的NodesRef对象实例
     this.images = wx.createSelectorQuery().selectAll('.lazy')
@@ -17,6 +17,15 @@ export class LazyLoad {
     this.windowHeight = wx.getSystemInfoSync().windowHeight
     // 是否加载完成
     this.isLoadedAll = false
+    // 遍历的序号
+    this.index = 0
+    // 从第几个开始
+    this.start = start
+    // 滚动标志位
+    this.isFresh = true
+    setTimeout(() => {
+      this.refresh()
+    }, 200)
     this._processData()
   }
 
@@ -24,22 +33,37 @@ export class LazyLoad {
    * 每次滚动都进行刷新
    */
   refresh () {
-    if (this.isLoadedAll) {
+    if (this.isLoadedAll || !this.isFresh) {
+      clearTimeout(this.timer)
+      this.timer = setTimeout(() => {
+        this.isFresh = true
+      }, 10)
       return
     }
-    console.log('test')
+    this.isFresh = false
     this.images.boundingClientRect(res => {
-      res.forEach(item => {
-        if (item.top <= (this.windowHeight + 20)) {
-          let index = item.dataset.index
-          if (index === this.data.length - 1) {
+      let i = this.index + this.start
+      while (i < res.length) {
+        if (res[i].top <= (this.windowHeight - 40)) {
+          let realIndex = i - this.start
+          if (realIndex > this.index) {
+            this.index = realIndex
+            if (realIndex === this.data.length - 1) {
+              this.index++
+            }
+          }
+
+          if (realIndex === this.data.length - 1) {
             this.isLoadedAll = true
           }
-          let newData = this.data[index]
+
+          let newData = this.data[realIndex]
+
           newData.lazy_url = newData.image_id.image_url
-          this.page.$set(this.data, index, newData)
+          this.page.$set(this.data, realIndex, newData)
         }
-      })
+        i++
+      }
     }).exec()
   }
 

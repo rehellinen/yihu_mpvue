@@ -79,7 +79,7 @@
         Goods.getIndexOldGoods().then((res) => {
           this.oldGoods = res
           this.load.isLoadedAll()
-          this.oldGoodsLazyLoad = new LazyLoad(this.oldGoods, this)
+          this.oldGoodsLazyLoad = new LazyLoad(this.oldGoods, this, 6)
         })
       }
     },
