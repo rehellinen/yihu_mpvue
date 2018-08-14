@@ -23,6 +23,8 @@ export class LazyLoad {
     this.start = start
     // 滚动标志位
     this.isFresh = true
+    // 懒加载的默认图片
+    this.lazyImage = '__IMAGE__/theme/loading.jpg'
     setTimeout(() => {
       this.refresh()
     }, 200)
@@ -60,6 +62,7 @@ export class LazyLoad {
           let newData = this.data[realIndex]
 
           newData.lazy_url = newData.image_id.image_url
+          newData.transition = 'afterShow'
           this.page.$set(this.data, realIndex, newData)
         }
         i++
@@ -69,7 +72,7 @@ export class LazyLoad {
 
   _processData () {
     this.data.forEach((item) => {
-      item.lazy_url = '__IMAGE__/theme/loading.jpg'
+      item.lazy_url = this.lazyImage
     })
   }
 }

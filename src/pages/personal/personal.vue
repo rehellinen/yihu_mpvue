@@ -29,25 +29,29 @@
   import SeeMore from 'base/see-more/see-more'
   import OrderList from 'base/order-list/order-list'
   import {orderEnum} from 'utils/config'
+  import {Load} from 'utils/load'
 
   import {OrderModel} from 'model/OrderModel'
   let Order = new OrderModel()
+  const REQUEST_NUMBER = 1
 
   export default {
     data () {
       return {
-        showLoading: false,
+        showLoading: true,
         orders: []
       }
     },
     created () {
       this._getData()
+      this.load = new Load(this, REQUEST_NUMBER)
     },
     methods: {
       _getData () {
         // 获取订单
         Order.getOrder(orderEnum.ALL).then(res => {
           this._processOrder(res)
+          this.load.isLoadedAll()
         })
       },
       _processOrder (order) {

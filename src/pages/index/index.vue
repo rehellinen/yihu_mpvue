@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     my-loading(:showLoading="showLoading")
-    div.container.index-container
+    div.container.index-container(v-if="!showLoading")
       // 轮播图
       swiper.banner(interval='5000' :indicator-dots='false' :autoplay='true')
           swiper-item(v-for="item in banners" :key="item.image_id.id")
@@ -33,8 +33,8 @@
   import {BannerModel} from 'model/BannerModel'
   import {ThemeModel} from 'model/ThemeModel'
   import {GoodsModel} from 'model/GoodsModel'
-  import {Load} from 'utils/image'
   import {LazyLoad} from 'utils/lazyload'
+  import {Load} from 'utils/load'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()

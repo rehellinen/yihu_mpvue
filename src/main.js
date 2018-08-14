@@ -28,6 +28,12 @@ export default {
           'text': '主页'
         },
         {
+          'pagePath': 'pages/shop/main',
+          'iconPath': '__IMAGE__/toolbar/shop.png',
+          'selectedIconPath': '__IMAGE__/toolbar/shop@selected.png',
+          'text': '自营'
+        },
+        {
           'pagePath': 'pages/personal/main',
           'iconPath': '__IMAGE__/toolbar/personal.png',
           'selectedIconPath': '__IMAGE__/toolbar/personal@selected.png',
