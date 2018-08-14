@@ -8,10 +8,10 @@
         img.come-image(src="__IMAGE__/theme/shop@come.png")
       div.down
         div.left
-          img(:src="item.main_image_id[0].image_id.image_url", v-if="item.main_image_id[0]")
+          img(:src="item.main_image_id[0].image_id.image_url", v-if="item.main_image_id[0]" mode="aspectFill")
         div.right
-          img.right1-image(:src="item.main_image_id[1].image_id.image_url", v-if="item.main_image_id[1]")
-          img.right2-image(:src="item.main_image_id[2].image_id.image_url", v-if="item.main_image_id[2]")
+          img.right1-image(:src="item.main_image_id[1].image_id.image_url", v-if="item.main_image_id[1]" mode="aspectFill")
+          img.right2-image(:src="item.main_image_id[2].image_id.image_url", v-if="item.main_image_id[2]" mode="aspectFill")
 </template>
 
 <script>

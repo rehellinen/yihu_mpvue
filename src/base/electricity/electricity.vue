@@ -1,6 +1,6 @@
 <template lang="pug">
     div.elec-container
-      img(src="__IMAGE__/theme/personal@backElec.png")
+      img(src="__IMAGE__/theme/personal@backElec.jpg" mode="aspectFill")
       div.elec-detail
         div.surplus
           text.surplus-text 剩余电量 (度)
@@ -43,13 +43,15 @@
 
   .elec-container
     background-color: white
-    width: 750rpx
+    width: $card-width
+    margin-left: $card-margin-left
+    margin-top: $card-margin-top
+    border-radius: $card-border-radius
     height: 185rpx
-    border-radius: 8px
-
     img
-      width: 750rpx
+      width: 710rpx
       height: 185rpx
+      border-radius: $card-border-radius
       position: absolute
 
   .elec-detail
@@ -69,13 +71,13 @@
     .surplus-text
       font-size: $smaller-font-size
       z-index: 40
-      color: #000
       margin-top: 30rpx
+      color: $base-font-color
 
     .surplus-num
       font-size: $vast-font-size
       z-index: 40
-      color: #000
+      color: $base-font-color
       margin-top: 20rpx
 
   .line

@@ -93,13 +93,16 @@
       height: 40rpx
   .personal-container
     background-color: $background-color
+    padding-bottom: $card-margin-top
 
   .order-container
     display: flex
     flex-direction: column
     background-color: white
     margin-top: 20rpx
-    width: 750rpx
+    width: $card-width
+    margin-left: $card-margin-left
+    border-radius: $card-border-radius
     .image-container
       display: flex
       justify-content: center

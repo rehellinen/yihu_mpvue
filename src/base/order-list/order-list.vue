@@ -12,7 +12,7 @@ div.order-list-contailer
       p.status-text(v-if="item.status === orderEnum.PAID_BUT_NO_GOODS") 付款成功但库存量不足
     div.price-container
       p.price ￥{{item.total_price}}
-      div.delete(v-if="item.status === 1") x
+      img.delete(src="__IMAGE__/icon/delete.png")
 </template>
 
 <script>
@@ -45,14 +45,15 @@ div.order-list-contailer
     display: flex
     flex-direction: row
     justify-content: space-between
-    padding: 30rpx 0
+    padding: 20rpx 0
     border-bottom: 1rpx solid $light-font-color
-    width: 90%
-    margin: 0 5%
+    width: 92%
+    margin: 0 4%
 
   .detail-image
     width: 200rpx
     height: 150rpx
+    border-radius: 10rpx
 
   .two-text
     display: flex
@@ -60,7 +61,7 @@ div.order-list-contailer
     width: 40%
 
   .name-text
-    font-size: $normal-font-size
+    font-size: $small-font-size
 
   .status-text
     font-size: $small-font-size
@@ -78,9 +79,8 @@ div.order-list-contailer
     margin-top: 2px
 
   .delete
-    font-size: $bigger-font-size
-    margin-top: 20rpx
-    margin-right: 5rpx
+    width: 30rpx
+    height: 30rpx
 
   .no-order-text
     display: flex
