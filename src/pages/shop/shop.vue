@@ -3,9 +3,9 @@ div
   my-loading(:showLoading="showLoading")
   div.container.shop-container(v-if="!showLoading")
     div.header-image(:style="topStyle")
-      img(src="__IMAGE__/theme/shop@header.png")
+      img(src="__IMAGE__/theme/shop@header.jpg")
     div.recommend-image(:style="topStyle")
-      img(src="__IMAGE__/theme/recommend.png")
+      img(src="__IMAGE__/theme/recommend.jpg")
     div.top-title(:style="titleStyle")
       p 自营商店
     shop-list(:shops="shops")
