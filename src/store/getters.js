@@ -10,16 +10,9 @@ const getters = {
     return state.cartData
   },
 
-  totalPrice (state) {
-    return CartModel._calTotalCountAndPrice(state.cartData).totalPrice
-  },
-
-  selectedCount (state) {
-    return CartModel._calTotalCountAndPrice(state.cartData).selectedCount
-  },
-
-  selectedType (state) {
-    return CartModel._calTotalCountAndPrice(state.cartData).selectedType
+  // 购物车详细的数据
+  cartDetail (state) {
+    return CartModel.calTotalCountAndPrice(state.cartData)
   }
 }
 

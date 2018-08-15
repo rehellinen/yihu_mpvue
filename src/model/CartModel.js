@@ -157,7 +157,7 @@ export class CartModel extends BaseModel {
     return {
       selectedCount,
       selectedType,
-      totalPrice
+      totalPrice: totalPrice / multiple
     }
   }
 }

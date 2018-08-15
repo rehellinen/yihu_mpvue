@@ -1,69 +1,50 @@
 <template lang="pug">
   div.container.cart-container
-    cart-list(:cartData="cartData")
+    cart-list
 
     div.footer-account-box
-      div.all-select
-        img.title-icon(src="__IMAGE__/icon/all@selected.png", v-if="1")
-        img.title-icon(src="__IMAGE__/icon/all.png" v-else)
-        p 全选()
+      div.all-select(@click="selectAllTap")
+        img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedCount === cartData.length")
+        img(src="__IMAGE__/icon/all.png" v-else)
+        p 全选({{cartDetail.selectedCount}})
       div.all-price-submit
         div.accounts-btn
-        div.price-text ￥
+        div.price-text ￥{{cartDetail.totalPrice}}
         div.arrow-icon
           img(src="__IMAGE__/icon/arrow@rightGrey.png" v-if="1")
           img(src="__IMAGE__/icon/arrow@rightWhite.png" v-else)
 </template>
 
 <script>
-import {CartModel} from 'model/CartModel'
-// import {GoodsModel} from 'model/GoodsModel'
+import {GoodsModel} from 'model/GoodsModel'
 import CartList from 'components/cart-list/cart-list'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
-let Cart = new CartModel()
-// let Goods = new GoodsModel()
+let Goods = new GoodsModel()
 
 export default {
-  data () {
-    return {
-      totalPrice: 0,
-      selectedCount: 0,
-      selectedType: 0
-    }
-  },
   computed: {
     ...mapGetters([
-      'cartData'
+      'cartData',
+      'cartDetail'
     ])
   },
   onShow () {
-    // Goods.updateGoods().then()
-    console.log(this.cartData)
-    // console.log(this.$store)
+    // 更新购物车数据
+    Goods.updateGoods()
   },
   onHide () {
-    Cart.setCartStorage(this.$store)
+    // 保存缓存
+    this.saveToStorage(this.cartData)
   },
   methods: {
-    // 单选按钮
-    selectTap (event) {
-      let id = event.currentTarget.dataset.id
-      let selected = event.currentTarget.dataset.selected
-      let index = this._getIndexByID(id)
-
-      this.data.cartData[index].selected = !selected
-      this._updateCartData()
-    },
-
     // 全选按钮
     selectAllTap (event) {
-      let selected = event.currentTarget.dataset.selected
-      let data = this.data.cartData
-      for (let i = 0; i < data.length; i++) {
-        data[i].selected = !selected
+      let flag = true
+      if (this.cartData.length === this.cartDetail.selectedType) {
+        flag = false
       }
-      this._updateCartData()
+      this.selectAll(flag)
     },
 
     // 改变商品数量
@@ -112,7 +93,12 @@ export default {
       wx.navigateTo({
         url: '../order/order?totalPrice=' + this.data.totalPrice
       })
-    }
+    },
+    ...mapActions([
+      'add',
+      'selectAll',
+      'saveToStorage'
+    ])
   },
   components: {
     CartList
@@ -137,14 +123,13 @@ export default {
   .footer-account-box
     position: fixed
     bottom: 0
-    height: 92rpx
+    height: 90rpx
     width: 100%
     display: flex
     border-top: 1rpx solid $light-font-color
     border-bottom: 1rpx solid $light-font-color
     background-color: $nav-color
     color: #fff
-
     div
       display: flex
       align-items: center
@@ -152,7 +137,6 @@ export default {
   .all-select
     font-size: $small-font-size
     width: 40%
-
     img
       height: 48rpx
       width: 48rpx
@@ -160,7 +144,6 @@ export default {
 
   .all-price-submit
     width: 60%
-
     .disabled
       color: $light-font-color
 
@@ -182,8 +165,7 @@ export default {
 
   .arrow-icon
     width: 20%
-
-  .arrow-icon image
-    height: 32rpx
-    width: 32rpx
+    image
+      height: 32rpx
+      width: 32rpx
 </style>

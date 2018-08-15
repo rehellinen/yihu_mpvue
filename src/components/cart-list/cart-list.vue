@@ -1,7 +1,7 @@
 <template lang="pug">
   div.cart-box(v-if="cartData.length > 0")
     div.cart-item(v-for="(item, index) in cartData" :key="item.id")
-      div.cart-item-checkbox
+      div.cart-item-checkbox(@click="selectOneTap(index)")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
         img(src="__IMAGE__/icon/circle@noselected.png", v-else)
       div.cart-item-img
@@ -19,14 +19,13 @@
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex'
+
   export default {
-    props: {
-      cartData: {
-        type: Array,
-        default () {
-          return []
-        }
-      }
+    computed: {
+      ...mapGetters([
+        'cartData'
+      ])
     },
     methods: {
       deleteOne (index) {
@@ -34,7 +33,18 @@
       },
       minusOne (id) {
         console.log(id)
-      }
+      },
+      // 单选按钮
+      selectOneTap (index) {
+        let selected = !this.cartData[index].selected
+        this.selectOne({
+          index,
+          selected
+        })
+      },
+      ...mapActions([
+        'selectOne'
+      ])
     }
   }
 </script>
