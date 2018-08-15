@@ -139,4 +139,25 @@ export class CartModel extends BaseModel {
     }
     this.setCartStorage(data)
   }
+
+  static calTotalCountAndPrice (cartData) {
+    let totalPrice = 0
+    let selectedCount = 0
+    let selectedType = 0
+    let multiple = 100
+    if (cartData.length !== 0) {
+      for (let i = 0; i < cartData.length; i++) {
+        if (cartData[i].selected) {
+          totalPrice += (cartData[i].count) * (cartData[i].price * multiple)
+          selectedCount += cartData[i].count
+          selectedType++
+        }
+      }
+    }
+    return {
+      selectedCount,
+      selectedType,
+      totalPrice
+    }
+  }
 }

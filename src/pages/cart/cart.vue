@@ -17,29 +17,33 @@
 
 <script>
 import {CartModel} from 'model/CartModel'
-import {GoodsModel} from 'model/GoodsModel'
+// import {GoodsModel} from 'model/GoodsModel'
 import CartList from 'components/cart-list/cart-list'
+import {mapGetters} from 'vuex'
 
 let Cart = new CartModel()
-let Goods = new GoodsModel()
+// let Goods = new GoodsModel()
 
 export default {
   data () {
     return {
-      cartData: [],
       totalPrice: 0,
       selectedCount: 0,
       selectedType: 0
     }
   },
+  computed: {
+    ...mapGetters([
+      'cartData'
+    ])
+  },
   onShow () {
-    Goods.updateGoods().then((res) => {
-      this.cartData = Cart.getCartDataFromLocal()
-      this._calTotalCountAndPrice()
-    })
+    // Goods.updateGoods().then()
+    console.log(this.cartData)
+    // console.log(this.$store)
   },
   onHide () {
-    Cart.setCartStorage(this.cartData)
+    Cart.setCartStorage(this.$store)
   },
   methods: {
     // 单选按钮
@@ -83,27 +87,6 @@ export default {
       let index = this._getIndexByID(id)
       this.data.cartData.splice(index, 1)
       this._updateCartData()
-    },
-
-    // 计算选择的商品总数以及总金额
-    _calTotalCountAndPrice () {
-      let cartData = this.cartData
-      let totalPrice = 0
-      let selectedCount = 0
-      let selectedType = 0
-      let multiple = 100
-      if (cartData.length !== 0) {
-        for (let i = 0; i < cartData.length; i++) {
-          if (cartData[i].selected) {
-            totalPrice += (cartData[i].count) * (cartData[i].price * multiple)
-            selectedCount += cartData[i].count
-            selectedType++
-          }
-        }
-      }
-      this.selectedCount = selectedCount
-      this.selectedType = selectedType
-      this.totalPrice = totalPrice / (multiple)
     },
 
     // 根据商品id获取商品下标
