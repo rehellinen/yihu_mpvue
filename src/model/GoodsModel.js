@@ -25,7 +25,7 @@ export class GoodsModel extends BaseModel {
       }
     }
     return this.request(params).then((res) => {
-      cart._updateStorageGoods(res, goods)
+      cart.updateStorageGoods(res, goods)
     })
   }
 

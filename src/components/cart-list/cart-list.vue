@@ -12,9 +12,9 @@
           p.price ￥{{item.price}}
         div.bottom-box
           div.cart-item-count
-            img(src="__IMAGE__/icon/minus.png", @click="minusOne(item.id)")
+            img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)")
             div {{item.count}}
-            img(src="__IMAGE__/icon/plus.png")
+            img(src="__IMAGE__/icon/plus.png", @click="plusOne(index)")
           img.delete(src="__IMAGE__/icon/delete.png", @click="deleteOne(index)")
 </template>
 
@@ -28,22 +28,21 @@
       ])
     },
     methods: {
-      deleteOne (index) {
-        console.log(index)
+      minusOne (index) {
+        this.changeCount({index, count: -1})
       },
-      minusOne (id) {
-        console.log(id)
+      plusOne (index) {
+        this.changeCount({index, count: 1})
       },
       // 单选按钮
       selectOneTap (index) {
         let selected = !this.cartData[index].selected
-        this.selectOne({
-          index,
-          selected
-        })
+        this.selectOne({index, selected})
       },
       ...mapActions([
-        'selectOne'
+        'selectOne',
+        'changeCount',
+        'deleteOne'
       ])
     }
   }

@@ -125,7 +125,7 @@ export class CartModel extends BaseModel {
   }
 
   // 更新缓存中商品信息
-  _updateStorageGoods (res, goods) {
+  updateStorageGoods (res, goods) {
     let data = []
     for (let item of res) {
       let id = item.id
@@ -140,6 +140,11 @@ export class CartModel extends BaseModel {
     this.setCartStorage(data)
   }
 
+  /**
+   * 获取购物车页面所需的详细信息
+   * @param cartData 购物车商品
+   * @returns {{selectedCount: number, selectedType: number, totalPrice: number}}
+   */
   static calTotalCountAndPrice (cartData) {
     let totalPrice = 0
     let selectedCount = 0

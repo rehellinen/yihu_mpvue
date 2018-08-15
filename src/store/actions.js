@@ -35,6 +35,18 @@ const actions = {
     let data = copyObjArr(state.cartData)
     data[index].selected = selected
     commit(types.SAVE_CART_DATA, data)
+  },
+  // 添加
+  changeCount ({commit, state}, {index, count}) {
+    let data = copyObjArr(state.cartData)
+    data[index].count += count
+    commit(types.SAVE_CART_DATA, data)
+  },
+  // 删除
+  deleteOne ({commit, state}, index) {
+    let data = copyObjArr(state.cartData)
+    data.splice(index, 1)
+    commit(types.SAVE_CART_DATA, data)
   }
 }
 

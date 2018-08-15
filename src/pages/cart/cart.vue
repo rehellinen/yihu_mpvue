@@ -4,7 +4,7 @@
 
     div.footer-account-box
       div.all-select(@click="selectAllTap")
-        img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedCount === cartData.length")
+        img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
         img(src="__IMAGE__/icon/all.png" v-else)
         p 全选({{cartDetail.selectedCount}})
       div.all-price-submit
