@@ -3,13 +3,21 @@
  *  Create By rehellinen
  *  Create On 2018/8/14 13:12
  */
-
-import {Load} from 'utils/load'
-var loadMixin = {
+let searchMixin = {
   mounted () {
-    const REQUEST_NUMBER = 0
-    this.load = new Load(this, REQUEST_NUMBER)
+    this.selector = wx.createSelectorQuery().select('.header-image')
+  },
+  data () {
+    return {
+      pullDown: false
+    }
+  },
+  onPageScroll (opt) {
+    this.selector.boundingClientRect(res => {
+      // 关于搜索框样式
+      this.pullDown = res.top
+    }).exec()
   }
 }
 
-export {loadMixin}
+export {searchMixin}

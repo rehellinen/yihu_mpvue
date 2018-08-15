@@ -2,52 +2,39 @@
 div
   my-loading(:showLoading="showLoading")
   div.container.shop-container(v-if="!showLoading")
-    div.header-image(:style="topStyle")
+    search(:pullDown="pullDown")
+    div.header-image
       img(src="__IMAGE__/theme/shop@header.jpg")
-    div.recommend-image(:style="topStyle")
-      img(src="__IMAGE__/theme/recommend.jpg")
-    div.top-title(:style="titleStyle")
-      p 自营商店
+    <!--div.recommend-image(:style="topStyle")-->
+      <!--img(src="__IMAGE__/theme/recommend.jpg")-->
     shop-list(:shops="shops")
 </template>
 
 <script>
   import MyLoading from 'base/my-loading/my-loading'
   import ShopList from 'components/shop-list/shop-list'
+  import Search from 'base/search/search'
   import {ShopModel} from 'model/ShopModel'
   import {Load} from 'utils/load'
+  import {searchMixin} from 'utils/mixins'
 
   let Shop = new ShopModel()
   const REQUEST_NUMBER = 1
 
   export default {
+    mixins: [searchMixin],
     data () {
       return {
         showLoading: false,
         page: 1,
-        shops: [],
-        topStyle: '',
-        titleStyle: ''
+        shops: []
       }
     },
     created () {
       this._getShops()
     },
     mounted () {
-      this.selector = wx.createSelectorQuery().select('.recommend-image')
       this.load = new Load(this, REQUEST_NUMBER)
-    },
-    onPageScroll (opt) {
-      const topImageHeight = 217
-      const recommendHeight = 85
-      const totalHeight = topImageHeight + recommendHeight
-
-      this.selector.boundingClientRect(res => {
-        let scale = (res.top + recommendHeight) / totalHeight
-        let blur = 30 * (1 - scale)
-        this.topStyle = `filter:blur(${blur}rpx);-webkit-filter:blur(${blur}rpx);`
-        this.titleStyle = `opacity:${1 - scale}`
-      }).exec()
     },
     methods: {
       _getShops () {
@@ -61,7 +48,8 @@ div
     },
     components: {
       MyLoading,
-      ShopList
+      ShopList,
+      Search
     }
   }
 </script>
@@ -83,6 +71,7 @@ div
       color: whitesmoke
   .shop-container
     background-color: #F9F9F9
+    padding-bottom: $card-margin-left
 
   .header-image
     width: 100%

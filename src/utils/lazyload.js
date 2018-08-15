@@ -39,7 +39,7 @@ export class LazyLoad {
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         this.isFresh = true
-      }, 10)
+      }, 20)
       return
     }
     this.isFresh = false

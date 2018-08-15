@@ -2,8 +2,9 @@
   div
     my-loading(:showLoading="showLoading")
     div.container.index-container(v-if="!showLoading")
+      search(:pullDown="pullDown")
       // 轮播图
-      swiper.banner(interval='5000' :indicator-dots='false' :autoplay='true')
+      swiper.banner.header-image(interval='5000' :indicator-dots='false' :autoplay='true')
           swiper-item(v-for="item in banners" :key="item.image_id.id")
             img(:src="item.image_id.image_url")
 
@@ -35,6 +36,8 @@
   import {GoodsModel} from 'model/GoodsModel'
   import {LazyLoad} from 'utils/lazyload'
   import {Load} from 'utils/load'
+  import Search from 'base/search/search'
+  import {searchMixin} from 'utils/mixins'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()
@@ -43,6 +46,7 @@
   const REQUEST_NUMBER = 4
 
   export default {
+    mixins: [searchMixin],
     data () {
       return {
         showLoading: true,
@@ -86,7 +90,8 @@
     components: {
       MyLoading,
       SeeMore,
-      GoodsList
+      GoodsList,
+      Search
     }
   }
 </script>

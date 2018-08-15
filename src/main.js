@@ -13,7 +13,7 @@ export default {
       'navigationBarBackgroundColor': '#a9936e',
       'backgroundColor': '#f5f5f5',
       'backgroundTextStyle': 'dark',
-      'enablePullDownRefresh': true
+      'enablePullDownRefresh': false
     },
     pages: [
       '^pages/index/main',
