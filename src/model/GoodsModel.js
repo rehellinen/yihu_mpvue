@@ -22,14 +22,11 @@ export class GoodsModel extends BaseModel {
       url: 'goods/check',
       data: {
         ids: idsStr
-      },
-      callBack: (res) => {
-        cart._updateStorageGoods(res, goods)
-      },
-      eCallBack: (res) => {
       }
     }
-    this.request(params)
+    return this.request(params).then((res) => {
+      cart._updateStorageGoods(res, goods)
+    })
   }
 
   // 获取首页旧物漂流

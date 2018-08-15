@@ -1,6 +1,6 @@
 <template lang="pug">
   div.cart-box(v-if="cartData.length > 0")
-    div.cart-item(v-for="(item, index) in cartData" :key="index")
+    div.cart-item(v-for="(item, index) in cartData" :key="item.id")
       div.cart-item-checkbox
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
         img(src="__IMAGE__/icon/circle@noselected.png", v-else)
@@ -12,10 +12,10 @@
           p.price ￥{{item.price}}
         div.bottom-box
           div.cart-item-count
-            img(src="__IMAGE__/icon/minus.png")
+            img(src="__IMAGE__/icon/minus.png", @click="minusOne(item.id)")
             div {{item.count}}
             img(src="__IMAGE__/icon/plus.png")
-          img.delete(src="__IMAGE__/icon/delete.png")
+          img.delete(src="__IMAGE__/icon/delete.png", @click="deleteOne(index)")
 </template>
 
 <script>
@@ -26,6 +26,14 @@
         default () {
           return []
         }
+      }
+    },
+    methods: {
+      deleteOne (index) {
+        console.log(index)
+      },
+      minusOne (id) {
+        console.log(id)
       }
     }
   }

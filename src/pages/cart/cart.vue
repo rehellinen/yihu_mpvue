@@ -17,18 +17,26 @@
 
 <script>
 import {CartModel} from 'model/CartModel'
+import {GoodsModel} from 'model/GoodsModel'
 import CartList from 'components/cart-list/cart-list'
 
 let Cart = new CartModel()
+let Goods = new GoodsModel()
 
 export default {
   data () {
     return {
-      cartData: []
+      cartData: [],
+      totalPrice: 0,
+      selectedCount: 0,
+      selectedType: 0
     }
   },
-  created () {
-    this.cartData = Cart.getCartDataFromLocal()
+  onShow () {
+    Goods.updateGoods().then((res) => {
+      this.cartData = Cart.getCartDataFromLocal()
+      this._calTotalCountAndPrice()
+    })
   },
   onHide () {
     Cart.setCartStorage(this.cartData)
@@ -77,20 +85,9 @@ export default {
       this._updateCartData()
     },
 
-    // 更新购物车页面的数据
-    _updateCartData () {
-      let newData = this._calTotalCountAndPrice()
-      this.setData({
-        selectedCount: newData.selectedCount,
-        cartData: this.data.cartData,
-        selectedType: newData.selectedType,
-        totalPrice: newData.totalPrice
-      })
-    },
-
     // 计算选择的商品总数以及总金额
     _calTotalCountAndPrice () {
-      let cartData = this.data.cartData
+      let cartData = this.cartData
       let totalPrice = 0
       let selectedCount = 0
       let selectedType = 0
@@ -104,12 +101,9 @@ export default {
           }
         }
       }
-
-      return {
-        selectedCount: selectedCount,
-        selectedType: selectedType,
-        totalPrice: totalPrice / (multiple)
-      }
+      this.selectedCount = selectedCount
+      this.selectedType = selectedType
+      this.totalPrice = totalPrice / (multiple)
     },
 
     // 根据商品id获取商品下标
