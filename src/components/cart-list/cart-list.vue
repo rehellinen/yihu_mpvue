@@ -4,10 +4,10 @@
       div.cart-item-checkbox(@click="selectOneTap(index)")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
         img(src="__IMAGE__/icon/circle@noselected.png", v-else)
-      div.cart-item-img
+      div.cart-item-img(@click="toDetail(index)")
         img.goods-image(:src="item.image_id.image_url" mode="aspectFill")
       div.cart-item-word
-        div.title-box
+        div.title-box(@click="toDetail(index)")
           p.name {{item.name}}
           p.price ￥{{item.price}}
         div.bottom-box
@@ -38,6 +38,14 @@
       selectOneTap (index) {
         let selected = !this.cartData[index].selected
         this.selectOne({index, selected})
+      },
+      // 跳转商品详情
+      toDetail (index) {
+        let id = this.cartData[index].id
+        let type = this.cartData[index].type
+        wx.navigateTo({
+          url: '/pages/detail/detail?id=' + id + '&type=' + type
+        })
       },
       ...mapActions([
         'selectOne',

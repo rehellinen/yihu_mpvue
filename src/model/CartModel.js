@@ -50,12 +50,18 @@ export class CartModel extends BaseModel {
     return res
   }
 
-  // 更新缓存数据
+  /**
+   * 更新缓存数据
+   * @param data
+   */
   setCartStorage (data) {
     wx.setStorageSync(this._storageKeyName, data)
   }
 
-  // 获取缓存
+  /**
+   * 获取缓存
+   * @returns {*}
+   */
   getCartStorage () {
     return wx.getStorageSync(this._storageKeyName)
   }
@@ -92,20 +98,6 @@ export class CartModel extends BaseModel {
       }
     }
     return count
-  }
-
-  // 修改商品数量
-  // 1. id [商品id]
-  // 2. count [数量]
-  _updateCount (id, count) {
-    let cartData = this.getCartDataFromLocal()
-    let isExisted = this._isExistedThatOne(id, cartData)
-    if (isExisted.index !== -1) {
-      if (isExisted.data.count > 1) {
-        cartData[isExisted.index].count += count
-      }
-    }
-    this.setCartStorage(cartData)
   }
 
   // 根据商品id判断此商品是否存在于缓存中
