@@ -26,5 +26,6 @@ export default {
     align-items: center
     justify-content: center
     margin-top: $card-margin-top
+    color: $grey-font-color
 
 </style>

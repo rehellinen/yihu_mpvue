@@ -10,18 +10,12 @@ export class UserModel extends BaseModel {
   }
 
   // 更新当前用户的信息
-  updateBuyerInfo (data, cb) {
+  updateBuyerInfo (data) {
     let params = {
       url: 'buyer',
       type: 'PUT',
-      data: data,
-      callBack (res) {
-        cb && cb(res)
-      },
-      eCallBack (res) {
-        cb && cb(res)
-      }
+      data: data
     }
-    this.request(params)
+    return this.request(params)
   }
 }

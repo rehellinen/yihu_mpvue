@@ -27,11 +27,31 @@
 
 <script>
 import TitlePanel from 'base/title-panel/title-panel'
+import {UserModel} from 'model/UserModel'
+
+let User = new UserModel()
 
 export default {
+  mounted () {
+    User.getBuyerInfo().then((res) => {
+      this.info = res
+    })
+  },
   data () {
     return {
-      title: '修改信息'
+      title: '修 改 信 息',
+      info: {}
+    }
+  },
+  methods: {
+    formSubmit (event) {
+      let data = event.mp.detail.value
+      User.updateBuyerInfo(data).then(res => {
+        wx.showToast({
+          title: '修改信息成功',
+          image: '__IMAGE__/icon/success@white.png'
+        })
+      })
     }
   },
   components: {
@@ -67,15 +87,16 @@ export default {
   .section p
     font-size: $small-font-size
     color: $grey-font-color
+    padding: 20rpx 0 15rpx 0
 
   .section input
     font-size: $small-font-size
     color: $grey-font-color
-    padding: 20rpx 0
+    padding: 20rpx 0 15rpx 0
 
   .submit-btn
     width: 89%
-    margin: 20rpx 5.4%
+    margin: 25rpx 5.4%
     height: 75rpx
 
   .submit-btn p
