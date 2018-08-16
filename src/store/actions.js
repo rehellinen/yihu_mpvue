@@ -10,12 +10,12 @@ import {CartModel} from '../model/CartModel'
 let Cart = new CartModel()
 
 const actions = {
-  addCartGoods () {
-    // let selected = event.currentTarget.dataset.selected
-    // let data = this.data.cartData
-    // for (let i = 0; i < data.length; i++) {
-    //   data[i].selected = !selected
-    // }
+  // 添加商品至购物车
+  addGoods ({commit, state}, {goods, count}) {
+    let data = copyObjArr(state.cartData)
+    data = CartModel.add(goods, count, data)
+    Cart.setCartStorage(data)
+    commit(types.SAVE_CART_DATA, data)
   },
   // 全选
   selectAll ({commit, state}, flag) {
@@ -36,7 +36,7 @@ const actions = {
     data[index].selected = selected
     commit(types.SAVE_CART_DATA, data)
   },
-  // 添加
+  // 更改购物车数量
   changeCount ({commit, state}, {index, count}) {
     let data = copyObjArr(state.cartData)
     data[index].count += count

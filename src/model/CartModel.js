@@ -6,27 +6,29 @@ export class CartModel extends BaseModel {
     this._storageKeyName = 'cart'
   }
 
-  // 添加商品到购物车
-  // 1. goods [商品]
-  // 2. count [数量]
-  // 3. eCallBack [发生错误时的回调]
-  add (goods, count, eCallBack) {
-    let cartData = this.getCartDataFromLocal()
-    let isExisted = this._isExistedThatOne(goods.id, cartData)
-
+  /**
+   * 添加商品到购物车
+   * @param goods 商品信息
+   * @param count 商品数量
+   * @param cartData 缓存中的商品数量
+   * @return Array
+   */
+  static add (goods, count, cartData) {
+    let isExisted = CartModel._isExistedThatOne(goods.id, cartData)
     if (isExisted.index === -1) {
       // index为-1代表商品不存在购物车中
       goods.count = count
       goods.selected = true
       cartData.push(goods)
     } else {
-      if ((cartData[isExisted.index].count + count) <= cartData[isExisted.index].quantity) {
-        cartData[isExisted.index].count += count
+      let selectedData = cartData[isExisted.index]
+      if ((selectedData.count + count) <= selectedData.quantity) {
+        selectedData.count += count
       } else {
-        eCallBack && eCallBack()
+        selectedData.count = selectedData.quantity
       }
     }
-    wx.setStorageSync(this._storageKeyName, cartData)
+    return cartData
   }
 
   // 从缓存中获取所有购物车商品
@@ -103,7 +105,7 @@ export class CartModel extends BaseModel {
   // 根据商品id判断此商品是否存在于缓存中
   // 1. id [商品]
   // 2. cartData [缓存中购物车商品]
-  _isExistedThatOne (id, cartData) {
+  static _isExistedThatOne (id, cartData) {
     let result = {index: -1}
     cartData.forEach((item, index) => {
       if (item.id === id) {

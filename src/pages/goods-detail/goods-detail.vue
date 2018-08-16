@@ -6,7 +6,9 @@
         div.cart-count {{cartDetail.selectedCount}}
 
     div.goods-container
+      // 商品头图
       img.head-image(:src="goods.image_id.image_url", v-if="goods.image_id")
+      // 详细信息
       div.info
         div.info-up
           div.name-container
@@ -14,20 +16,27 @@
               p.two-handed(v-if="goods.type === 2") 二手
               p.name {{goods.name}}
             p.subtitle {{goods.subtitle}}
-
           picker(:range="countArray"
             @change="pickerChange"
             :value="selectedCount")
             div.picker.normal
               p 数量 {{selectedCount}}
               img(src="__IMAGE__/icon/arrow@downOrange.png")
+
         div.hr
+
         div.info-down
+          div.price-quantity-container
+            p.price ￥{{goods.price}}
+            p.quantity 库存：{{goods.quantity}}
+          div.cart-text-container(@click="addGoodsToCart" :class="{disabled : goods.quantity}")
+            p 加入购物车
+            img(src="__IMAGE__/icon/cart.png")
 </template>
 
 <script>
 import {GoodsModel} from 'model/GoodsModel'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 let Goods = new GoodsModel()
 
@@ -36,7 +45,7 @@ export default {
     return {
       goods: {},
       countArray: [],
-      selectedCount: 0
+      selectedCount: 1
     }
   },
   computed: {
@@ -53,6 +62,12 @@ export default {
     pickerChange (event) {
       this.selectedCount = event.mp.detail.value
     },
+    addGoodsToCart () {
+      this.addGoods({
+        goods: this.goods,
+        count: this.selectedCount
+      })
+    },
     _getData (id, type) {
       Goods.getGoodsDetail(id, type).then((res) => {
         wx.setNavigationBarTitle({title: res.name})
@@ -63,11 +78,14 @@ export default {
     _processData () {
       let maxCount = this.goods.quantity
       let countArr = []
-      for (let i = 0; i <= maxCount; i++) {
+      for (let i = 1; i <= maxCount; i++) {
         countArr.push(i)
       }
       this.countArray = countArr
-    }
+    },
+    ...mapActions([
+      'addGoods'
+    ])
   }
 }
 </script>
@@ -137,15 +155,24 @@ export default {
     display: flex
     justify-content: space-between
     align-items: center
+    margin-top: 15rpx
 
   .name-container
     display: flex
     flex-direction: column
     flex-basis: 73%
+    div
+      display: flex
+      align-items: flex-end
 
   .name
     color: $deep-font-color
     font-size: $normal-font-size
+
+  .two-handed
+    font-size: $smaller-font-size
+    color: $base-font-color
+    margin-right: 13rpx
 
   .subtitle
     color: #d99009
@@ -162,9 +189,6 @@ export default {
       height: 15px
       margin-left: 10px
 
-  .picker.disabled
-    color: $light-font-color
-
   .picker.normal
     color: #d99009
 
@@ -177,4 +201,35 @@ export default {
     background-color: $lighter-font-color
     margin-top: 12px
     margin-bottom: 8px
+
+  .info-down
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+  .price-quantity-container
+    display: flex
+    align-items: center
+
+  .price
+    font-size: $biggest-font-size
+    color: #d99009
+
+  .quantity
+    margin-top: 6px
+    margin-left: 16rpx
+    font-size: $small-font-size
+    color: $grey-font-color
+
+  .cart-text-container
+    width: 50%
+    display: flex
+    justify-content: flex-end
+    align-items: center
+    font-size: $normal-font-size
+    color: #d99009
+    img
+      width: 30px
+      height: 30px
+      margin-left: 20rpx
 </style>
