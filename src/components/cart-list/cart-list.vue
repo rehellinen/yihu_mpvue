@@ -12,9 +12,14 @@
           p.price ￥{{item.price}}
         div.bottom-box
           div.cart-item-count
-            img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)")
+            img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
+            img.disabled(src="__IMAGE__/icon/minus@disabled.png" v-else)
+
             div {{item.count}}
-            img(src="__IMAGE__/icon/plus.png", @click="plusOne(index)")
+
+            img(src="__IMAGE__/icon/plus.png", @click="plusOne(index)" v-if="item.count < item.quantity")
+            img.disabled(src="__IMAGE__/icon/plus@disabled.png" v-else)
+
           img.delete(src="__IMAGE__/icon/delete.png", @click="deleteOne(index)")
 </template>
 
@@ -23,6 +28,9 @@
 
   export default {
     computed: {
+      minusImg () {
+
+      },
       ...mapGetters([
         'cartData'
       ])

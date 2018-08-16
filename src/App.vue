@@ -9,5 +9,5 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="sass" rel="stylesheet/sass">
 </style>

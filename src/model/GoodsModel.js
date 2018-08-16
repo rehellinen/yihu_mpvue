@@ -1,5 +1,6 @@
 import {BaseModel} from './BaseModel.js'
 import {CartModel} from './CartModel'
+import {GoodsType} from 'utils/config'
 let cart = new CartModel()
 
 export class GoodsModel extends BaseModel {
@@ -63,15 +64,22 @@ export class GoodsModel extends BaseModel {
     this.request(params)
   }
 
-  // 获取自营 / 二手商品详情
-  getGoodsDetail (url, cb) {
-    let params = {
-      url: url,
-      callBack: function (data) {
-        cb && cb(data)
-      }
+  /**
+   * 获取商品详情
+   * @param id 商品id
+   * @param type 商品类型
+   */
+  getGoodsDetail (id, type) {
+    console.log(id, type, type === GoodsType.NEW_GOODS)
+    let url = `oldGoods/${id}`
+    if (parseInt(type) === GoodsType.NEW_GOODS) {
+      url = `newGoods/${id}`
     }
-    this.request(params)
+
+    let params = {
+      url: url
+    }
+    return this.request(params)
   }
 
   // 根据商家id获取所有商品

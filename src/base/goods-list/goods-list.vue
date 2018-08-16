@@ -1,6 +1,6 @@
 <template lang="pug">
 div.goods-list-container
-  div.goods-container(v-for="(item, index) in goods", :key="item.id")
+  div.goods-container(v-for="(item, index) in goods", :key="item.id" @click="toGoodsDetail(index)")
     img.lazy(:src="item.lazy_url" mode='aspectFill' :data-index="index", :class="item.transition")
     div.text-container
       div
@@ -17,6 +17,15 @@ div.goods-list-container
         default () {
           return []
         }
+      }
+    },
+    methods: {
+      toGoodsDetail (index) {
+        let id = this.goods[index].id
+        let type = this.goods[index].type
+        wx.navigateTo({
+          url: `../goods-detail/main?id=${id}&type=${type}`
+        })
       }
     }
   }

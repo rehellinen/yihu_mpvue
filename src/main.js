@@ -20,7 +20,10 @@ export default {
     },
     pages: [
       '^pages/index/main',
-      'pages/personal/main'
+      'pages/personal/main',
+      'pages/cart/main',
+      'pages/shop/main',
+      'pages/goods-detail/main'
     ],
     tabBar: {
       list: [

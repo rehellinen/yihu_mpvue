@@ -7,11 +7,11 @@
         img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
         img(src="__IMAGE__/icon/all.png" v-else)
         p 全选({{cartDetail.selectedCount}})
-      div.all-price-submit(@click="submitOrder()")
-        div.price-text ￥{{cartDetail.totalPrice}}
+      div.all-price-submit(@click="submitOrder()", :class="{disabled : cartDetail.totalPrice === 0}")
+        div.price-text(:class="{disabled : cartDetail.totalPrice === 0}") ￥{{cartDetail.totalPrice}}
         div.arrow-icon
-          img(src="__IMAGE__/icon/arrow@rightGrey.png" v-if="1")
-          img(src="__IMAGE__/icon/arrow@rightWhite.png" v-else)
+          img(src="__IMAGE__/icon/arrow@rightWhite.png" v-if="cartDetail.totalPrice !== 0")
+          img.disabled(src="__IMAGE__/icon/arrow@rightGrey.png" v-else)
 </template>
 
 <script>
@@ -108,8 +108,9 @@ export default {
     display: flex
     justify-content: flex-end
     width: 40%
-    .disabled
+    .price-text.disabled
       color: $light-font-color
+      border-left: 3rpx dotted $light-font-color
 
   .price-text, .arrow-icon
     display: flex

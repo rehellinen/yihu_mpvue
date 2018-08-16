@@ -41,5 +41,11 @@ module.exports = {
     COMPLETED: 4,
     // 买家已付款但是没有足够的库存
     PAID_BUT_NO_GOODS: 5
+  },
+
+  // 配置6：关于商品类型
+  GoodsType: {
+    NEW_GOODS: 1,
+    OLD_GOODS: 2
   }
 }
