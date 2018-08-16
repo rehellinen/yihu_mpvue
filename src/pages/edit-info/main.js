@@ -6,6 +6,6 @@ app.$mount()
 
 export default {
   config: {
-    'navigationBarTitleText': '修改信息'
+    'navigationBarTitleText': '校园易乎'
   }
 }

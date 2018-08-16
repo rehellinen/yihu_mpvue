@@ -1,5 +1,6 @@
 <template lang="pug">
   div.container.edit-container
+    title-panel(:title="title")
     div.form-container
       form(@submit="formSubmit")
         div.section
@@ -25,7 +26,17 @@
 </template>
 
 <script>
+import TitlePanel from 'base/title-panel/title-panel'
+
 export default {
+  data () {
+    return {
+      title: '修改信息'
+    }
+  },
+  components: {
+    TitlePanel
+  }
 }
 </script>
 
