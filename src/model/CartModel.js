@@ -5,36 +5,13 @@ export class CartModel extends BaseModel {
     super()
     this._storageKeyName = 'cart'
   }
-
   /**
-   * 添加商品到购物车
-   * @param goods 商品信息
-   * @param count 商品数量
-   * @param cartData 缓存中的商品数量
-   * @return Array
+   * 获取购物车商品
+   * @param flag
+   * @return {*} true，只获取选中的商品;false，获取所有商品
    */
-  static add (goods, count, cartData) {
-    let isExisted = CartModel._isExistedThatOne(goods.id, cartData)
-    if (isExisted.index === -1) {
-      // index为-1代表商品不存在购物车中
-      goods.count = count
-      goods.selected = true
-      cartData.push(goods)
-    } else {
-      let selectedData = cartData[isExisted.index]
-      if ((selectedData.count + count) <= selectedData.quantity) {
-        selectedData.count += count
-      } else {
-        selectedData.count = selectedData.quantity
-      }
-    }
-    return cartData
-  }
-
-  // 从缓存中获取所有购物车商品
-  // 1. flag [true，只获取选中的商品;false，获取所有商品]
-  getCartDataFromLocal (flag) {
-    let res = this.getCartStorage()
+  getCartStorage (flag) {
+    let res = wx.getStorageSync(this._storageKeyName)
     if (!res) {
       res = []
     }
@@ -58,14 +35,6 @@ export class CartModel extends BaseModel {
    */
   setCartStorage (data) {
     wx.setStorageSync(this._storageKeyName, data)
-  }
-
-  /**
-   * 获取缓存
-   * @returns {*}
-   */
-  getCartStorage () {
-    return wx.getStorageSync(this._storageKeyName)
   }
 
   // 删除购物车中的商品
@@ -100,22 +69,6 @@ export class CartModel extends BaseModel {
       }
     }
     return count
-  }
-
-  // 根据商品id判断此商品是否存在于缓存中
-  // 1. id [商品]
-  // 2. cartData [缓存中购物车商品]
-  static _isExistedThatOne (id, cartData) {
-    let result = {index: -1}
-    cartData.forEach((item, index) => {
-      if (item.id === id) {
-        result = {
-          data: item,
-          index: index
-        }
-      }
-    })
-    return result
   }
 
   // 更新缓存中商品信息
@@ -158,5 +111,50 @@ export class CartModel extends BaseModel {
       selectedType,
       totalPrice: totalPrice / multiple
     }
+  }
+
+  /**
+   * 添加商品到购物车
+   * @param goods 商品信息
+   * @param count 商品数量
+   * @param cartData 缓存中的商品数量
+   * @return Array
+   */
+  static add (goods, count, cartData) {
+    let isExisted = CartModel._isExistedThatOne(goods.id, cartData)
+    if (isExisted.index === -1) {
+      // index为-1代表商品不存在购物车中
+      goods.count = count
+      goods.selected = true
+      cartData.push(goods)
+    } else {
+      let selectedData = cartData[isExisted.index]
+      if ((selectedData.count + count) <= selectedData.quantity) {
+        selectedData.count += count
+      } else {
+        selectedData.count = selectedData.quantity
+      }
+    }
+    return cartData
+  }
+
+  /**
+   * 根据商品id判断此商品是否存在于购物车
+   * @param id 商品id
+   * @param cartData 购物车商品
+   * @return {{index: number}}
+   * @private
+   */
+  static _isExistedThatOne (id, cartData) {
+    let result = {index: -1}
+    cartData.forEach((item, index) => {
+      if (item.id === id) {
+        result = {
+          data: item,
+          index: index
+        }
+      }
+    })
+    return result
   }
 }

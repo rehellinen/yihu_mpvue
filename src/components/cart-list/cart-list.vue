@@ -52,7 +52,7 @@
         let id = this.cartData[index].id
         let type = this.cartData[index].type
         wx.navigateTo({
-          url: '/pages/detail/detail?id=' + id + '&type=' + type
+          url: `../goods-detail/main?id=${id}&type=${type}`
         })
       },
       ...mapActions([
@@ -69,7 +69,7 @@
   .cart-box
     display: flex
     flex-direction: column
-    margin-bottom: 92rpx
+    margin-bottom: 110rpx
     font-size: $small-font-size
     width: 100%
 

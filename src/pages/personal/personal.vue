@@ -107,7 +107,7 @@
       display: flex
       justify-content: center
       padding: 30rpx 0
-      border-bottom: 1rpx solid $light-font-color
+      border-bottom: 1rpx solid $lighter-font-color
       width: 90%
       margin-left: 5%
       align-items: center

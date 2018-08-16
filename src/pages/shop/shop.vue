@@ -30,10 +30,8 @@ div
         shops: []
       }
     },
-    created () {
-      this._getShops()
-    },
     mounted () {
+      this._getShops()
       this.load = new Load(this, REQUEST_NUMBER)
     },
     methods: {

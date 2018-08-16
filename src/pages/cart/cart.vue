@@ -1,17 +1,20 @@
 <template lang="pug">
-  div.container.cart-container
-    cart-list
+  div
+    div.no-data(v-if="cartData.length === 0")
+      p 购 物 车 中 没 有 商 品
+    div.container.cart-container(v-else)
+      cart-list
 
-    div.footer-account-box
-      div.all-select(@click="selectAllTap")
-        img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
-        img(src="__IMAGE__/icon/all.png" v-else)
-        p 全选({{cartDetail.selectedCount}})
-      div.all-price-submit(@click="submitOrder()", :class="{disabled : cartDetail.totalPrice === 0}")
-        div.price-text(:class="{disabled : cartDetail.totalPrice === 0}") ￥{{cartDetail.totalPrice}}
-        div.arrow-icon
-          img(src="__IMAGE__/icon/arrow@rightWhite.png" v-if="cartDetail.totalPrice !== 0")
-          img.disabled(src="__IMAGE__/icon/arrow@rightGrey.png" v-else)
+      div.footer-account-box
+        div.all-select(@click="selectAllTap")
+          img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
+          img(src="__IMAGE__/icon/all.png" v-else)
+          p 全选({{cartDetail.selectedCount}})
+        div.all-price-submit(@click="submitOrder()", :class="{disabled : cartDetail.totalPrice === 0}")
+          div.price-text(:class="{disabled : cartDetail.totalPrice === 0}") ￥{{cartDetail.totalPrice}}
+          div.arrow-icon
+            img(src="__IMAGE__/icon/arrow@rightWhite.png" v-if="cartDetail.totalPrice !== 0")
+            img.disabled(src="__IMAGE__/icon/arrow@rightGrey.png" v-else)
 </template>
 
 <script>
@@ -76,7 +79,7 @@ export default {
   .no-data
     display: flex
     height: 140rpx
-    font-size: 26rpx
+    font-size: $small-font-size
     color: $light-font-color
     align-items: center
     justify-content: center

@@ -46,7 +46,7 @@ div.order-list-contailer
     flex-direction: row
     justify-content: space-between
     padding: 20rpx 0
-    border-bottom: 1rpx solid $light-font-color
+    border-bottom: 1rpx solid $lighter-font-color
     width: 92%
     margin: 0 4%
 

@@ -1,6 +1,6 @@
 <template lang="pug">
   div.container.detail-container
-    div.cart-container
+    div.cart-container(@click="toCart")
       div.cart
         img(src="__IMAGE__/icon/cart.png")
         div.cart-count {{cartDetail.selectedCount}}
@@ -18,10 +18,12 @@
             p.subtitle {{goods.subtitle}}
           picker(:range="countArray"
             @change="pickerChange"
-            :value="selectedCount")
-            div.picker.normal
-              p 数量 {{selectedCount}}
-              img(src="__IMAGE__/icon/arrow@downOrange.png")
+            :disabled="cartCount >= goods.quantity"
+            )
+            div.picker.normal(:class="{disabled : cartCount >= goods.quantity}")
+              p 数量 {{cartCount < goods.quantity ? selectedCount : 0}}
+              img(src="__IMAGE__/icon/arrow@downOrange.png" v-if="cartCount < goods.quantity")
+              img(src="__IMAGE__/icon/arrow@downGrey.png" v-else)
 
         div.hr
 
@@ -29,13 +31,17 @@
           div.price-quantity-container
             p.price ￥{{goods.price}}
             p.quantity 库存：{{goods.quantity}}
-          div.cart-text-container(@click="addGoodsToCart" :class="{disabled : goods.quantity}")
-            p 加入购物车
-            img(src="__IMAGE__/icon/cart.png")
+          div.cart-text-container(@click="addGoodsToCart" :class="{disabled : cartCount >= goods.quantity}")
+            p {{cartCount < goods.quantity ? '加入购物车' : '库存不足'}}
+            img(src="__IMAGE__/icon/cart.png" v-if="cartCount < goods.quantity")
+            img(src="__IMAGE__/icon/cart@grey.png" v-else)
+
+    div.photo-text-detail
 </template>
 
 <script>
 import {GoodsModel} from 'model/GoodsModel'
+import {CartModel} from 'model/CartModel'
 import {mapGetters, mapActions} from 'vuex'
 
 let Goods = new GoodsModel()
@@ -44,13 +50,31 @@ export default {
   data () {
     return {
       goods: {},
-      countArray: [],
       selectedCount: 1
     }
   },
   computed: {
+    cartCount () {
+      let res = CartModel._isExistedThatOne(this.goods.id, this.cartData)
+      if (res.index !== -1) {
+        return res.data.count
+      }
+      return 0
+    },
+    countArray () {
+      let maxCount = this.goods.quantity - this.cartCount
+      if (this.selectedCount > maxCount) {
+        this.selectedCount = maxCount
+      }
+      let countArr = []
+      for (let i = 1; i <= maxCount; i++) {
+        countArr.push(i)
+      }
+      return countArr
+    },
     ...mapGetters([
-      'cartDetail'
+      'cartDetail',
+      'cartData'
     ])
   },
   mounted () {
@@ -58,9 +82,13 @@ export default {
     this._getData(id, type)
   },
   methods: {
-    // picker改变时触发的函数
+    toCart () {
+      wx.switchTab({
+        url: '../cart/main'
+      })
+    },
     pickerChange (event) {
-      this.selectedCount = event.mp.detail.value
+      this.selectedCount = this.countArray[event.mp.detail.value]
     },
     addGoodsToCart () {
       this.addGoods({
@@ -72,16 +100,7 @@ export default {
       Goods.getGoodsDetail(id, type).then((res) => {
         wx.setNavigationBarTitle({title: res.name})
         this.goods = res
-        this._processData()
       })
-    },
-    _processData () {
-      let maxCount = this.goods.quantity
-      let countArr = []
-      for (let i = 1; i <= maxCount; i++) {
-        countArr.push(i)
-      }
-      this.countArray = countArr
     },
     ...mapActions([
       'addGoods'
@@ -175,7 +194,7 @@ export default {
     margin-right: 13rpx
 
   .subtitle
-    color: #d99009
+    color: $cart-color
     font-size: $small-font-size
     margin-top: 8rpx
 
@@ -184,13 +203,13 @@ export default {
     justify-content: flex-end
     align-items: center
     font-size: $small-font-size
+    color: $cart-color
     img
       width: 15px
       height: 15px
       margin-left: 10px
-
-  .picker.normal
-    color: #d99009
+  .picker.disabled
+    color: $light-font-color
 
   .selected-count
     margin-left: 20rpx
@@ -213,7 +232,7 @@ export default {
 
   .price
     font-size: $biggest-font-size
-    color: #d99009
+    color: $cart-color
 
   .quantity
     margin-top: 6px
@@ -227,9 +246,11 @@ export default {
     justify-content: flex-end
     align-items: center
     font-size: $normal-font-size
-    color: #d99009
+    color: $cart-color
     img
       width: 30px
       height: 30px
       margin-left: 20rpx
+  .cart-text-container.disabled
+    color: $light-font-color
 </style>

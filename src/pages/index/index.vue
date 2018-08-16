@@ -57,7 +57,7 @@
         goodsImages: []
       }
     },
-    created () {
+    mounted () {
       this._getData()
       this.load = new Load(this, REQUEST_NUMBER)
     },

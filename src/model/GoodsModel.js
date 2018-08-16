@@ -1,17 +1,18 @@
 import {BaseModel} from './BaseModel.js'
 import {CartModel} from './CartModel'
 import {GoodsType} from 'utils/config'
-let cart = new CartModel()
+
+let Cart = new CartModel()
 
 export class GoodsModel extends BaseModel {
   // 更新购物车中商品信息
   updateGoods () {
-    let goods = cart.getCartDataFromLocal()
+    let goods = Cart.getCartStorage()
     let ids = []
     let idsStr = ''
 
     if (goods.length === 0) {
-      return new Promise()
+      return
     }
 
     for (let item of goods) {
@@ -26,7 +27,7 @@ export class GoodsModel extends BaseModel {
       }
     }
     return this.request(params).then((res) => {
-      cart.updateStorageGoods(res, goods)
+      Cart.updateStorageGoods(res, goods)
     })
   }
 
