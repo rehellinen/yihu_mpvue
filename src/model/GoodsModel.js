@@ -70,7 +70,6 @@ export class GoodsModel extends BaseModel {
    * @param type 商品类型
    */
   getGoodsDetail (id, type) {
-    console.log(id, type, type === GoodsType.NEW_GOODS)
     let url = `oldGoods/${id}`
     if (parseInt(type) === GoodsType.NEW_GOODS) {
       url = `newGoods/${id}`
