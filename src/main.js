@@ -23,7 +23,8 @@ export default {
       'pages/personal/main',
       'pages/cart/main',
       'pages/shop/main',
-      'pages/goods-detail/main'
+      'pages/goods-detail/main',
+      'pages/edit-info/main'
     ],
     tabBar: {
       list: [

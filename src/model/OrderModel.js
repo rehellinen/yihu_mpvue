@@ -67,12 +67,12 @@ class OrderModel extends BaseModel {
    * @param status
    * @param page
    */
-  getOrder (status, page = 1) {
+  getOrder (status, page = 1, size = 12) {
     let params = {
       url: 'order/' + status,
       data: {
         page: page,
-        size: 12
+        size
       }
     }
     return this.request(params)

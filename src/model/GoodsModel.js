@@ -5,7 +5,10 @@ import {GoodsType} from 'utils/config'
 let Cart = new CartModel()
 
 export class GoodsModel extends BaseModel {
-  // 更新购物车中商品信息
+  /**
+   * 更新购物车中商品信息
+   * @return Promise
+   */
   updateGoods () {
     let goods = Cart.getCartStorage()
     let ids = []
@@ -31,7 +34,10 @@ export class GoodsModel extends BaseModel {
     })
   }
 
-  // 获取首页旧物漂流
+  /**
+   * 获取首页旧物漂流
+   * @return {*}
+   */
   getIndexOldGoods () {
     let params = {
       url: 'oldGoods/index'
@@ -39,7 +45,10 @@ export class GoodsModel extends BaseModel {
     return this.request(params)
   }
 
-  // 获取首页发现鲜货
+  /**
+   * 获取首页发现鲜货
+   * @return {*}
+   */
   getIndexNewGoods () {
     let params = {
       url: 'newGoods/index'
@@ -126,17 +135,6 @@ export class GoodsModel extends BaseModel {
       },
       eCallBack (res) {
         ecb && ecb(res)
-      }
-    }
-    this.request(params)
-  }
-
-  // 获取商店页面三个商品图片
-  getRecommend (id, cb) {
-    let params = {
-      url: 'newGoods/recommend/shop/' + id,
-      callBack (res) {
-        cb && cb(res)
       }
     }
     this.request(params)

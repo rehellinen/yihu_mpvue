@@ -4,7 +4,7 @@
     div.container.personal-container(v-if="!showLoading")
       // 个人信息栏
       top-image(type="user")
-      div.icon-container
+      div.icon-container(@click="toEdit")
         img(src="__IMAGE__/icon/edit.png")
       // 个人信息栏
 
@@ -34,6 +34,8 @@
   import {OrderModel} from 'model/OrderModel'
   let Order = new OrderModel()
   const REQUEST_NUMBER = 1
+  const ORDER_PAGE = 1
+  const ORDER_COUNT = 2
 
   export default {
     data () {
@@ -47,9 +49,14 @@
       this.load = new Load(this, REQUEST_NUMBER)
     },
     methods: {
+      toEdit () {
+        wx.navigateTo({
+          url: '../edit-info/main'
+        })
+      },
       _getData () {
         // 获取订单
-        Order.getOrder(orderEnum.ALL).then(res => {
+        Order.getOrder(orderEnum.ALL, ORDER_PAGE, ORDER_COUNT).then(res => {
           this._processOrder(res)
           this.load.isLoadedAll()
         })

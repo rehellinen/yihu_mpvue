@@ -7,8 +7,8 @@ export class CartModel extends BaseModel {
   }
   /**
    * 获取购物车商品
-   * @param flag
-   * @return {*} true，只获取选中的商品;false，获取所有商品
+   * @param flag true，只获取选中的商品;false，获取所有商品
+   * @return {*}
    */
   getCartStorage (flag) {
     let res = wx.getStorageSync(this._storageKeyName)
@@ -71,12 +71,16 @@ export class CartModel extends BaseModel {
     return count
   }
 
-  // 更新缓存中商品信息
+  /**
+   * 更新缓存中商品信息
+   * @param res 服务器获取的商品信息
+   * @param goods 缓存中的商品信息
+   */
   updateStorageGoods (res, goods) {
     let data = []
     for (let item of res) {
       let id = item.id
-      let goodsIndexObj = this._isExistedThatOne(id, goods)
+      let goodsIndexObj = CartModel._isExistedThatOne(id, goods)
       let index = goodsIndexObj.index
       let storageGoods = goodsIndexObj.data
 

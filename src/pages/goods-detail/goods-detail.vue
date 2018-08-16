@@ -1,6 +1,6 @@
 <template lang="pug">
   div.container.detail-container
-    div.cart-container(@click="toCart")
+    div.cart-container(@click="toCart", :class="{animate: isShake}")
       div.cart
         img(src="__IMAGE__/icon/cart.png")
         div.cart-count {{cartDetail.selectedCount}}
@@ -35,13 +35,24 @@
             p {{cartCount < goods.quantity ? '加入购物车' : '库存不足'}}
             img(src="__IMAGE__/icon/cart.png" v-if="cartCount < goods.quantity")
             img(src="__IMAGE__/icon/cart@grey.png" v-else)
+            img.small-top-img(:class="{animate: fastTap}"
+              :src="goods.image_id.image_url"
+              :style="translateStyle"
+              v-if="goods.image_id"
+              mode="aspectFill")
 
     div.photo-text-detail
+      switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs")
+        div(slot="test")
+          p 123
+        div(slot="1")
+          p 123334
 </template>
 
 <script>
 import {GoodsModel} from 'model/GoodsModel'
 import {CartModel} from 'model/CartModel'
+import SwitchTab from 'base/switch-tab/switch-tab'
 import {mapGetters, mapActions} from 'vuex'
 
 let Goods = new GoodsModel()
@@ -50,7 +61,10 @@ export default {
   data () {
     return {
       goods: {},
-      selectedCount: 1
+      selectedCount: 1,
+      fastTap: false,
+      isShake: false,
+      translateStyle: ''
     }
   },
   computed: {
@@ -82,6 +96,9 @@ export default {
     this._getData(id, type)
   },
   methods: {
+    switchTabs (event) {
+      console.log(event)
+    },
     toCart () {
       wx.switchTab({
         url: '../cart/main'
@@ -90,9 +107,46 @@ export default {
     pickerChange (event) {
       this.selectedCount = this.countArray[event.mp.detail.value]
     },
-    addGoodsToCart () {
+    addGoodsToCart (event) {
+      // 防止快速点击
+      if (this.fastTap) {
+        return
+      }
+      this._addCartAnimation(event.mp)
+      this._addToCart()
+    },
+    // 处理加入购物车的动画
+    _addCartAnimation (event) {
+      let touches = event.touches[0]
+      let relative = {
+        x: '5px',
+        y: 15 - touches.clientY + 'px'
+      }
+      let style = `display: block;transform:translate(${relative.x},${relative.y}) rotate(350deg) scale(0)`
+      this.fastTap = true
+      this.translateStyle = style
+
+      setTimeout(() => {
+        this.translateStyle = 'transform: none'
+        this.fastTap = false
+        this.isShake = true
+
+        setTimeout(() => {
+          this.isShake = false
+        }, 200)
+      }, 1300)
+    },
+    // 处理加入购物车的逻辑
+    _addToCart () {
+      let data = {}
+      let keys = ['id', 'name', 'image_id', 'price', 'type', 'quantity']
+      for (let key in this.goods) {
+        if (keys.indexOf(key) >= 0) {
+          data[key] = this.goods[key]
+        }
+      }
       this.addGoods({
-        goods: this.goods,
+        goods: data,
         count: this.selectedCount
       })
     },
@@ -105,6 +159,9 @@ export default {
     ...mapActions([
       'addGoods'
     ])
+  },
+  components: {
+    SwitchTab
   }
 }
 </script>
@@ -131,6 +188,9 @@ export default {
       width: 50rpx
       height: 50rpx
       margin-top: 8rpx
+  .cart-container.animate
+    animation: aCartScale 200ms cubic-bezier(0.17, 0.67, 0.83, 0.67)
+    animation-fill-mode: backwards
 
   .cart-count
     width: 20px
@@ -253,4 +313,18 @@ export default {
       margin-left: 20rpx
   .cart-text-container.disabled
     color: $light-font-color
+
+  .photo-text-detail
+    margin-top: 20rpx
+
+  .small-top-img
+    height: 300rpx
+    width: 300rpx
+    right: 20rpx
+    position: absolute
+    opacity: 0
+    border-radius: 50px
+  .small-top-img.animate
+    opacity: 1
+    transition: all 1300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)
 </style>
