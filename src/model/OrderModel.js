@@ -98,7 +98,7 @@ class OrderModel extends BaseModel {
   }
 
   // 设置newOrder的缓存
-  setNewOrderStorage (value) {
+  setNewOrder (value) {
     wx.setStorageSync(this.key, value)
   }
 

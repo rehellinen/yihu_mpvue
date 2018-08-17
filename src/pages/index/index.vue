@@ -2,7 +2,7 @@
   div
     my-loading(:showLoading="showLoading")
     div.container.index-container(v-if="!showLoading")
-      search(:pullDown="pullDown")
+      <!--search(:pullDown="pullDown")-->
       // 轮播图
       swiper.banner.header-image.header(interval='5000' :indicator-dots='false' :autoplay='true')
           swiper-item(v-for="item in banners" :key="item.image_id.id")
@@ -37,19 +37,16 @@
   import {ThemeModel} from 'model/ThemeModel'
   import {GoodsModel} from 'model/GoodsModel'
   import {LazyLoad} from 'utils/lazyload'
-  import {Load} from 'utils/load'
   import Search from 'base/search/search'
-  import {searchMixin} from 'utils/mixins'
+  import {searchMixin, loadMixin} from 'utils/mixins'
   import {GoodsType} from 'utils/config'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()
   let Goods = new GoodsModel()
 
-  const REQUEST_NUMBER = 4
-
   export default {
-    mixins: [searchMixin],
+    mixins: [searchMixin, loadMixin],
     data () {
       return {
         showLoading: true,
@@ -61,9 +58,8 @@
         GoodsType
       }
     },
-    mounted () {
+    onLoad () {
       this._getData()
-      this.load = new Load(this, REQUEST_NUMBER)
     },
     onPageScroll (opt) {
       this.newGoodsLazyLoad.refresh()
@@ -78,20 +74,16 @@
       _getData () {
         Banner.getBanners().then((res) => {
           this.banners = res
-          this.load.isLoadedAll()
         })
         Theme.getThemes().then((res) => {
           this.themes = res
-          this.load.isLoadedAll()
         })
         Goods.getIndexNewGoods().then((res) => {
           this.newGoods = res
-          this.load.isLoadedAll()
           this.newGoodsLazyLoad = new LazyLoad(this.newGoods, this)
         })
         Goods.getIndexOldGoods().then((res) => {
           this.oldGoods = res
-          this.load.isLoadedAll()
           this.oldGoodsLazyLoad = new LazyLoad(this.oldGoods, this, 6)
         })
       }

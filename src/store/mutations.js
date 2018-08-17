@@ -12,5 +12,8 @@ export const mutations = {
   },
   [types.SAVE_CART_DATA] (state, data) {
     state.cartData = data
+  },
+  [types.SET_ORDERS_CHANGE] (state, flag) {
+    state.ordersChange = flag
   }
 }

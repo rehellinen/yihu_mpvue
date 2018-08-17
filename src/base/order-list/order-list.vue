@@ -22,6 +22,8 @@ div.order-list-contailer(:class="{'card-container': card}")
   import {orderEnum, iconType} from 'utils/config'
   import {modal, toast} from 'utils/utils'
   import {OrderModel} from 'model/OrderModel'
+  import {mapMutations} from 'vuex'
+  import {types} from '../../store/mutation-types'
 
   let Order = new OrderModel()
 
@@ -46,12 +48,18 @@ div.order-list-contailer(:class="{'card-container': card}")
       deleteOne (id) {
         modal('', '是否确定删除?', () => {
           Order.delete(id).then(() => {
+            Order.ordersChange(true)
+            this.setOrderChange(true)
+            this.$emit('reload')
             toast('删除成功')
           }).catch((ex) => {
             toast('删除失败', iconType.F)
           })
         })
-      }
+      },
+      ...mapMutations({
+        setOrderChange: types.SET_ORDERS_CHANGE
+      })
     }
   }
 </script>

@@ -13,6 +13,11 @@ const getters = {
   // 购物车详细的数据
   cartDetail (state) {
     return CartModel.calTotalCountAndPrice(state.cartData)
+  },
+
+  // 是否有新订单
+  ordersChange (state) {
+    return state.ordersChange
   }
 }
 

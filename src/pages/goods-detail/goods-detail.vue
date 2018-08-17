@@ -1,5 +1,6 @@
 <template lang="pug">
   div.container.detail-container
+    my-loading(:showLoading="showLoading")
     div.cart-container(@click="toCart", :class="{animate: isShake}")
       div.cart
         img(src="__IMAGE__/icon/cart.png")
@@ -43,10 +44,11 @@
 
     div.photo-text-detail
       switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs")
-        div(slot="test")
-          p 123
-        div(slot="1")
-          p 123334
+      div.switch-container(:style="switchStyle")
+        div.detail-info-container
+          p {{goods.description}}
+        div.shop-info-container
+          p 345
 </template>
 
 <script>
@@ -54,18 +56,27 @@ import {GoodsModel} from 'model/GoodsModel'
 import {CartModel} from 'model/CartModel'
 import SwitchTab from 'base/switch-tab/switch-tab'
 import {mapGetters, mapActions} from 'vuex'
+import {loadMixin} from 'utils/mixins'
+import MyLoading from 'base/my-loading/my-loading'
 
 let Goods = new GoodsModel()
 
 export default {
+  mixins: [loadMixin],
   data () {
     return {
       goods: {},
       selectedCount: 1,
       fastTap: false,
       isShake: false,
-      translateStyle: ''
+      translateStyle: '',
+      switchStyle: ''
     }
+  },
+  onShow () {
+    let {id, type} = this.$root.$mp.query
+    this.selectedCount = 1
+    this._getData(id, type)
   },
   computed: {
     cartCount () {
@@ -91,13 +102,9 @@ export default {
       'cartData'
     ])
   },
-  mounted () {
-    let {id, type} = this.$root.$mp.query
-    this._getData(id, type)
-  },
   methods: {
-    switchTabs (event) {
-      console.log(event)
+    switchTabs (index) {
+      this.switchStyle = `transform:translate(-${index}00vw,0)`
     },
     toCart () {
       wx.switchTab({
@@ -161,7 +168,8 @@ export default {
     ])
   },
   components: {
-    SwitchTab
+    SwitchTab,
+    MyLoading
   }
 }
 </script>
@@ -326,5 +334,16 @@ export default {
     border-radius: 50px
   .small-top-img.animate
     opacity: 1
-    transition: all 1300ms cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    transition: all 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.275)
+
+  .switch-container
+    display: flex
+    flex-wrap: nowrap
+    background-color: white
+    width: 200vw
+    transition: all 0.4s ease-in-out
+  .detail-info-container
+    width: 100vw
+  .shop-info-container
+    width: 100vw
 </style>

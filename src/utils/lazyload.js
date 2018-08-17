@@ -35,18 +35,11 @@ export class LazyLoad {
    * 每次滚动都进行刷新
    */
   refresh () {
-    if (this.isLoadedAll || !this.isFresh) {
-      clearTimeout(this.timer)
-      this.timer = setTimeout(() => {
-        this.isFresh = true
-      }, 20)
-      return
-    }
-    this.isFresh = false
     this.images.boundingClientRect(res => {
       let i = this.index + this.start
       while (i < res.length) {
-        if (res[i].top <= (this.windowHeight - 40)) {
+        if (res[i].top <= (this.windowHeight + 40)) {
+          console.log(res[i].top)
           let realIndex = i - this.start
           if (realIndex > this.index) {
             this.index = realIndex

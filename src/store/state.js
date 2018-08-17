@@ -8,7 +8,8 @@ import {CartModel} from 'model/CartModel'
 let Cart = new CartModel()
 
 const state = {
-  cartData: Cart.getCartStorage()
+  cartData: Cart.getCartStorage(),
+  ordersChange: false
 }
 
 export {state}

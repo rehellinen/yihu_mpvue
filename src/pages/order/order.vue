@@ -3,7 +3,7 @@
     switch-tab(:tabs="tabs", @switch="switchTabs")
     div.order-container(:style="switchStyle")
       div.single-type(v-for="(item, index) in orders" :key="index")
-        order-list(:orders="item", card="true")
+        order-list(:orders="item", card="true", @reload="reload")
 </template>
 
 <script>
@@ -44,6 +44,12 @@ export default {
         })
         this.page[index]++
       }
+    },
+    reload () {
+      this.orders = [[], [], [], [], []]
+      this.page = [1, 1, 1, 1, 1]
+      this.hasMore = [true, true, true, true, true]
+      this._loadData()
     }
   },
   onReachBottom () {
