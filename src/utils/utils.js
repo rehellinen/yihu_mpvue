@@ -15,4 +15,16 @@ function toast (title, icon = iconType.SUCCESS) {
   })
 }
 
-export {copyObjArr, toast}
+function modal (title = '', content = '', cb, showCancel = true) {
+  wx.showModal({
+    title,
+    content,
+    showCancel,
+    confirmColor: '#a9936e',
+    success () {
+      cb && cb()
+    }
+  })
+}
+
+export {copyObjArr, toast, modal}

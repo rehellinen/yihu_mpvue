@@ -52,6 +52,6 @@ module.exports = {
   // 配置7：关于toast图标
   iconType: {
     SUCCESS: '__IMAGE__/icon/success@white.png',
-    FAIL: 2
+    FAIL: '__IMAGE__/icon/fail@white.png'
   }
 }

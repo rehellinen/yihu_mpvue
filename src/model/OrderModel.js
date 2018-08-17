@@ -103,7 +103,7 @@ class OrderModel extends BaseModel {
   }
 
   // 收货
-  comfirm (id) {
+  confirm (id) {
     let params = {
       url: 'order/confirm/' + id,
       type: 'POST'
@@ -111,7 +111,11 @@ class OrderModel extends BaseModel {
     return this.request(params)
   }
 
-  // 删除订单
+  /**
+   * 删除订单
+   * @param id
+   * @return {*}
+   */
   delete (id) {
     let params = {
       url: 'order/' + id,

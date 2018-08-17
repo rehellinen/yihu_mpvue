@@ -13,11 +13,17 @@ div.order-list-contailer(:class="{'card-container': card}")
       p.status-text(v-if="item.status === orderEnum.PAID_BUT_NO_GOODS") 付款成功但库存量不足
     div.price-container
       p.price ￥{{item.total_price}}
-      img.delete(src="__IMAGE__/icon/delete.png")
+      img.delete(src="__IMAGE__/icon/delete.png"
+        v-if="item.status === orderEnum.UNPAID"
+        @click="deleteOne(item.id)")
 </template>
 
 <script>
-  import {orderEnum} from 'utils/config'
+  import {orderEnum, iconType} from 'utils/config'
+  import {modal, toast} from 'utils/utils'
+  import {OrderModel} from 'model/OrderModel'
+
+  let Order = new OrderModel()
 
   export default {
     data () {
@@ -34,6 +40,17 @@ div.order-list-contailer(:class="{'card-container': card}")
       card: {
         type: Boolean,
         default: false
+      }
+    },
+    methods: {
+      deleteOne (id) {
+        modal('', '是否确定删除?', () => {
+          Order.delete(id).then(() => {
+            toast('删除成功')
+          }).catch((ex) => {
+            toast('删除失败', iconType.F)
+          })
+        })
       }
     }
   }
