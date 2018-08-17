@@ -1,6 +1,6 @@
 <template lang="pug">
   div.cart-box(v-if="cartData.length > 0")
-    div.cart-item(v-for="(item, index) in cartData" :key="item.id")
+    div.cart-item(v-for="(item, index) in cartData" :key="item.id" :class="{deleteThat: deleteIndex === index, deleteAfter: deleteIndex && index > deleteIndex}")
       div.cart-item-checkbox(@click="selectOneTap(index)")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
         img(src="__IMAGE__/icon/circle@noselected.png", v-else)
@@ -20,17 +20,19 @@
             img(src="__IMAGE__/icon/plus.png", @click="plusOne(index)" v-if="item.count < item.quantity")
             img.disabled(src="__IMAGE__/icon/plus@disabled.png" v-else)
 
-          img.delete(src="__IMAGE__/icon/delete.png", @click="deleteOne(index)")
+          img.delete(src="__IMAGE__/icon/delete.png", @click="deleteGoods(index)")
 </template>
 
 <script>
   import {mapGetters, mapActions} from 'vuex'
 
   export default {
+    data () {
+      return {
+        deleteIndex: null
+      }
+    },
     computed: {
-      minusImg () {
-
-      },
       ...mapGetters([
         'cartData'
       ])
@@ -54,6 +56,9 @@
         wx.navigateTo({
           url: `../goods-detail/main?id=${id}&type=${type}`
         })
+      },
+      deleteGoods (index) {
+        this.deleteOne(index)
       },
       ...mapActions([
         'selectOne',
@@ -83,8 +88,16 @@
     border-radius: $card-border-radius
     padding: 15rpx 0
     height: 186rpx
+    opacity: 1
     > view
       height: 100%
+  .deleteThat
+    transform: translate(0,-150rpx)
+    transition: all 0.5s ease-in-out
+    opacity: 0
+  .deleteAfter
+    transition: all 1s ease-in-out
+    transform: translate(0,-234rpx)
 
   .cart-item-checkbox
     display: flex

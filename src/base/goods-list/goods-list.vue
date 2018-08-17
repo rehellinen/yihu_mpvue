@@ -1,6 +1,7 @@
 <template lang="pug">
-div.goods-list-container
-  div.goods-container(v-for="(item, index) in goods", :key="item.id" @click="toGoodsDetail(index)")
+div.goods-list-container(:style="style")
+  div.goods-container(v-for="(item, index) in goods", :key="item.id"
+    @click="toGoodsDetail(index)")
     img.lazy(:src="item.lazy_url" mode='aspectFill' :data-index="index", :class="item.transition")
     div.text-container
       div
@@ -17,6 +18,15 @@ div.goods-list-container
         default () {
           return []
         }
+      },
+      backgroundColor: {
+        type: String,
+        default: 'white'
+      }
+    },
+    computed: {
+      style () {
+        return `background-color:${this.backgroundColor}`
       }
     },
     methods: {
@@ -38,7 +48,7 @@ div.goods-list-container
     flex-direction: row
     flex-wrap: wrap
     width: 750rpx
-    background-color: white
+    background-color: $background-color
     padding-bottom: 5rpx
 
   .goods-container
@@ -50,6 +60,7 @@ div.goods-list-container
     margin-top: 25rpx
     box-shadow: 0 0 6px #ebebeb
     border-radius: 8px
+    background-color: white
     img
       width: 350rpx
       height: 250rpx

@@ -44,6 +44,7 @@ const actions = {
   },
   // 删除
   deleteOne ({commit, state}, index) {
+    console.log(index)
     let data = copyObjArr(state.cartData)
     data.splice(index, 1)
     commit(types.SAVE_CART_DATA, data)

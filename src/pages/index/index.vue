@@ -18,13 +18,15 @@
       div.find
         img(src="__IMAGE__/theme/find.png")
       goods-list(:goods="newGoods")
-      see-more
+      div(@click="toGoodsMore(GoodsType.NEW_GOODS)")
+        see-more
 
       // 旧物漂流
       div.find
         img(src="__IMAGE__/theme/old.png")
       goods-list(:goods="oldGoods")
-      see-more
+      div(@click="toGoodsMore(GoodsType.OLD_GOODS)")
+        see-more
 </template>
 
 <script>
@@ -38,6 +40,7 @@
   import {Load} from 'utils/load'
   import Search from 'base/search/search'
   import {searchMixin} from 'utils/mixins'
+  import {GoodsType} from 'utils/config'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()
@@ -54,7 +57,8 @@
         themes: [],
         newGoods: [],
         oldGoods: [],
-        goodsImages: []
+        goodsImages: [],
+        GoodsType
       }
     },
     mounted () {
@@ -66,6 +70,11 @@
       this.oldGoodsLazyLoad.refresh()
     },
     methods: {
+      toGoodsMore (type) {
+        wx.navigateTo({
+          url: `../goods-more/main?type=${type}`
+        })
+      },
       _getData () {
         Banner.getBanners().then((res) => {
           this.banners = res

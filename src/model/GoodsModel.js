@@ -57,21 +57,19 @@ export class GoodsModel extends BaseModel {
   }
 
   // 获取所有二手 / 自营商品
-  getGoods (url, page, cb, ecb) {
+  getGoods (type, page) {
+    let url = `oldGoods`
+    if (parseInt(type) === GoodsType.NEW_GOODS) {
+      url = `newGoods`
+    }
     let params = {
       url: url,
       data: {
         page: page,
         size: 14
-      },
-      callBack (res) {
-        cb && cb(res)
-      },
-      eCallBack (res) {
-        ecb && ecb(res)
       }
     }
-    this.request(params)
+    return this.request(params)
   }
 
   /**

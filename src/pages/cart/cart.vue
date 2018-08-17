@@ -4,7 +4,6 @@
       p 购 物 车 中 没 有 商 品
     div.container.cart-container(v-else)
       cart-list
-
       div.footer-account-box
         div.all-select(@click="selectAllTap")
           img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
@@ -112,8 +111,8 @@ export default {
     justify-content: flex-end
     width: 40%
     .price-text.disabled
-      color: $light-font-color
-      border-left: 3rpx dotted $light-font-color
+      color: $lighter-font-color
+      border-left: 3rpx dotted $lighter-font-color
 
   .price-text, .arrow-icon
     display: flex
