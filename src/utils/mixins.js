@@ -5,7 +5,7 @@
  */
 let searchMixin = {
   mounted () {
-    this.selector = wx.createSelectorQuery().select('.header-image')
+    this.selector = wx.createSelectorQuery().select('.header')
   },
   data () {
     return {
@@ -20,4 +20,19 @@ let searchMixin = {
   }
 }
 
-export {searchMixin}
+let pageMixin = {
+  data () {
+    return {
+      page: 1,
+      hasMore: true
+    }
+  },
+  onReachBottom () {
+    this.page++
+    if (this.hasMore) {
+      this._loadData()
+    }
+  }
+}
+
+export {searchMixin, pageMixin}

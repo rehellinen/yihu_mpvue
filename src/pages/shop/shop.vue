@@ -3,7 +3,7 @@ div
   my-loading(:showLoading="showLoading")
   div.container.shop-container(v-if="!showLoading")
     search(:pullDown="pullDown")
-    div.header-image
+    div.header-image.header
       img(src="__IMAGE__/theme/shop@header.jpg")
     <!--div.recommend-image(:style="topStyle")-->
       <!--img(src="__IMAGE__/theme/recommend.jpg")-->

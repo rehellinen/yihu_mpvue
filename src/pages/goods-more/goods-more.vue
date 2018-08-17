@@ -1,16 +1,18 @@
 <template lang="pug">
-  div.goods-more-container
+  div.goods-more-container.header
+    // search(:pullDown="pullDown")
     title-panel(:title="title")
     goods-list(:goods="goods", backgroundColor="#f9f9f9")
 </template>
 
 <script>
 import GoodsList from 'base/goods-list/goods-list'
-import {searchMixin} from 'utils/mixins'
+import {searchMixin, pageMixin} from 'utils/mixins'
 import {GoodsModel} from 'model/GoodsModel'
 import {LazyLoad} from 'utils/lazyload'
 import TitlePanel from 'base/title-panel/title-panel'
 import {GoodsType} from 'utils/config'
+import Search from 'base/search/search'
 
 let Goods = new GoodsModel()
 
@@ -22,25 +24,34 @@ export default {
       title: ''
     }
   },
-  mixins: [searchMixin],
+  mixins: [searchMixin, pageMixin],
   onPageScroll () {
     this.lazyLoad.refresh()
   },
   mounted () {
-    let type = this.$root.$mp.query.type
-    if (parseInt(type) === GoodsType.NEW_GOODS) {
+    this.type = this.$root.$mp.query.type
+    if (parseInt(this.type) === GoodsType.NEW_GOODS) {
       this.title = '发现鲜货'
     } else {
       this.title = '旧物漂流'
     }
-    Goods.getGoods(type, this.page).then(res => {
-      this.goods = res
-      this.lazyLoad = new LazyLoad(this.goods, this)
-    })
+    this._loadData()
+  },
+  methods: {
+    _loadData () {
+      Goods.getGoods(this.type, this.page).then(res => {
+        if (res.length === 0) {
+          this.hasMore = false
+        }
+        this.goods = this.goods.concat(res)
+        this.lazyLoad = new LazyLoad(this.goods, this)
+      })
+    }
   },
   components: {
     GoodsList,
-    TitlePanel
+    TitlePanel,
+    Search
   }
 }
 </script>
@@ -51,4 +62,5 @@ export default {
     background-color: $background-color
     min-height: 100vh
     overflow: hidden
+    padding-bottom: 20rpx
 </style>

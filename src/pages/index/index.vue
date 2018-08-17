@@ -4,7 +4,7 @@
     div.container.index-container(v-if="!showLoading")
       search(:pullDown="pullDown")
       // 轮播图
-      swiper.banner.header-image(interval='5000' :indicator-dots='false' :autoplay='true')
+      swiper.banner.header-image.header(interval='5000' :indicator-dots='false' :autoplay='true')
           swiper-item(v-for="item in banners" :key="item.image_id.id")
             img(:src="item.image_id.image_url")
 
