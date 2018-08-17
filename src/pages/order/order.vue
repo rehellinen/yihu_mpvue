@@ -1,7 +1,7 @@
 <template lang="pug">
-  div
+  div.top-container
     switch-tab(:tabs="tabs", @switch="switchTabs")
-    div.order-container
+    div.order-container(:style="switchStyle")
       div.single-type(v-for="(item, index) in orders" :key="index")
         order-list(:orders="item", card="true")
 </template>
@@ -22,19 +22,28 @@ export default {
     return {
       orders: [[], [], [], [], []],
       page: [1, 1, 1, 1, 1],
+      hasMore: [true, true, true, true, true],
       currentIndex: 0,
-      tabs: ['全部', '待付款', '待发货', '待收货', '已完成']
+      tabs: ['全部', '待付款', '待发货', '待收货', '已完成'],
+      switchStyle: ''
     }
   },
   methods: {
     switchTabs (index) {
       this.currentIndex = index
+      this.switchStyle = `transform:translate(-${index}00vw,0)`
+      this._loadData()
     },
     _loadData () {
-      let type = this.currentIndex
-      Order.getOrder(type).then(res => {
-        this.$set(this.orders, type, this.orders[type].concat(res))
-      })
+      let index = this.currentIndex
+      if (this.hasMore[index]) {
+        Order.getOrder(index, this.page[index]).then(res => {
+          this.$set(this.orders, index, this.orders[index].concat(res))
+        }).catch((ex) => {
+          this.hasMore[index] = false
+        })
+        this.page[index]++
+      }
     }
   },
   onReachBottom () {
@@ -52,18 +61,15 @@ export default {
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~css/base"
+  .top-container
+    background-color: $background-color
+    min-height: 100vh
+
   .order-container
     display: flex
     flex-wrap: nowrap
-    min-height: 100vh
-    background-color: $background-color
     width: 500vw
-    //align-items: flex-start
+    transition: all 0.5s ease-in-out
   .single-type
     width: 100vw
-    //margin-left: $card-margin-left
-    //margin-top: $card-margin-top
-    //margin-bottom: $card-margin-top
-    //border-radius: $card-border-radius
-    //overflow: hidden
 </style>
