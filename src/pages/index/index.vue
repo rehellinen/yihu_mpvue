@@ -62,7 +62,7 @@
       this._getData()
     },
     onPageScroll (opt) {
-      this.newGoodsLazyLoad.refresh()
+      // this.newGoodsLazyLoad.refresh()
       this.oldGoodsLazyLoad.refresh()
     },
     methods: {
@@ -80,11 +80,11 @@
         })
         Goods.getIndexNewGoods().then((res) => {
           this.newGoods = res
-          this.newGoodsLazyLoad = new LazyLoad(this.newGoods, this)
+          this.newGoodsLazyLoad = new LazyLoad(this.newGoods, this, 0, 6)
         })
         Goods.getIndexOldGoods().then((res) => {
           this.oldGoods = res
-          this.oldGoodsLazyLoad = new LazyLoad(this.oldGoods, this, 6)
+          this.oldGoodsLazyLoad = new LazyLoad(this.oldGoods, this, 6, 6)
         })
       }
     },

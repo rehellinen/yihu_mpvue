@@ -7,12 +7,14 @@ export class LazyLoad {
   /**
    * 构造函数
    */
-  constructor (data, page, start = 0) {
+  constructor (data, page, start = 0, length) {
     this.page = page
     // 图片的NodesRef对象实例
     this.images = wx.createSelectorQuery().selectAll('.lazy')
     // 进行数据绑定的数据
     this.data = data
+    // 数据绑定的数据的长度
+    this.length = length || data.length
     // 获取可使用窗口高度
     this.windowHeight = wx.getSystemInfoSync().windowHeight
     // 是否加载完成
@@ -21,13 +23,8 @@ export class LazyLoad {
     this.index = 0
     // 从第几个开始
     this.start = start
-    // 滚动标志位
-    this.isFresh = true
     // 懒加载的默认图片
     this.lazyImage = '__IMAGE__/theme/loading.jpg'
-    setTimeout(() => {
-      this.refresh()
-    }, 200)
     this._processData()
   }
 
@@ -35,30 +32,25 @@ export class LazyLoad {
    * 每次滚动都进行刷新
    */
   refresh () {
+    // 判断是否加载完成
+    if (this.isLoadedAll) {
+      return
+    }
+
     this.images.boundingClientRect(res => {
       let i = this.index + this.start
-      while (i < res.length) {
-        if (res[i].top <= (this.windowHeight + 40)) {
-          console.log(res[i].top)
-          let realIndex = i - this.start
-          if (realIndex > this.index) {
-            this.index = realIndex
-            if (realIndex === this.data.length - 1) {
-              this.index++
-            }
-          }
+      console.log(this.isLoadedAll)
+      if (res[i].top < (this.windowHeight + 40)) {
+        // 更改图片URL
+        let newData = this.data[this.index]
+        newData.lazy_url = newData.image_id.image_url
+        newData.transition = 'afterShow'
+        this.page.$set(this.data, this.index, newData)
 
-          if (realIndex === this.data.length - 1) {
-            this.isLoadedAll = true
-          }
-
-          let newData = this.data[realIndex]
-
-          newData.lazy_url = newData.image_id.image_url
-          newData.transition = 'afterShow'
-          this.page.$set(this.data, realIndex, newData)
+        this.index++
+        if (this.index >= this.length - 1) {
+          this.isLoadedAll = true
         }
-        i++
       }
     }).exec()
   }
