@@ -66,6 +66,7 @@ class OrderModel extends BaseModel {
    * 获取订单
    * @param status
    * @param page
+   * @param size
    */
   getOrder (status, page = 1, size = 12) {
     let params = {

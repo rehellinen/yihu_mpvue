@@ -17,7 +17,7 @@
         div.image-container(v-if="orders.length !== 0")
           img(src="__IMAGE__/theme/personal@order.png")
         order-list(:orders="orders")
-        div(v-if="orders.length !==0")
+        div(v-if="orders.length !==0", @click="toOrderMore")
           see-more
       // 我的订单
 </template>
@@ -49,6 +49,11 @@
       this.load = new Load(this, REQUEST_NUMBER)
     },
     methods: {
+      toOrderMore () {
+        wx.navigateTo({
+          url: '../order/main'
+        })
+      },
       toEdit () {
         wx.navigateTo({
           url: '../edit-info/main'

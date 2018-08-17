@@ -36,12 +36,12 @@ export default {
 .tab-container
   width: 100%
   background-color: white
-  height: 90rpx
+  height: 80rpx
   display: flex
   flex-direction: row
   justify-content: space-around
   align-items: center
-  font-size: $normal-font-size
+  font-size: $small-font-size
   color: $light-font-color
   border-bottom: 1px solid $light-font-color
 

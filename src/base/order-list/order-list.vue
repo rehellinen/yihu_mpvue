@@ -1,7 +1,8 @@
 <template lang="pug">
-div.order-list-contailer
+div.order-list-contailer(:class="{'card-container': card}")
   p.no-order-text(v-if="orders.length === 0") 没 有 相 关 订 单
-  div.detail-container(v-for="item in orders" :key="item.id")
+  div.detail-container(v-for="item in orders" :key="item.id"
+    :class="{'card': card}")
     img.detail-image(:src="item.snap_img", mode='aspectFill')
     div.two-text
       p.name-text {{item.snap_name}}
@@ -28,6 +29,11 @@ div.order-list-contailer
       orders: {
         type: Array,
         default: []
+      },
+      // 是否为卡片样式
+      card: {
+        type: Boolean,
+        default: false
       }
     }
   }
@@ -49,6 +55,16 @@ div.order-list-contailer
     border-bottom: 1rpx solid $lighter-font-color
     width: 92%
     margin: 0 4%
+  .card-container
+    background-color: $background-color
+  .card
+    width: $card-width
+    margin-left: $card-margin-left
+    border-radius: $card-border-radius
+    background-color: white
+    border-bottom: 0
+    margin-top: 20rpx
+    justify-content: space-around
 
   .detail-image
     width: 200rpx

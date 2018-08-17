@@ -56,7 +56,7 @@ export class BaseModel {
         }
       })
     }).catch(ex => {
-      console.log(ex)
+      throw ex
     })
   }
 

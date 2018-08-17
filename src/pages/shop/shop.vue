@@ -5,8 +5,6 @@ div
     search(:pullDown="pullDown")
     div.header-image.header
       img(src="__IMAGE__/theme/shop@header.jpg")
-    <!--div.recommend-image(:style="topStyle")-->
-      <!--img(src="__IMAGE__/theme/recommend.jpg")-->
     shop-list(:shops="shops")
 </template>
 
@@ -16,32 +14,30 @@ div
   import Search from 'base/search/search'
   import {ShopModel} from 'model/ShopModel'
   import {Load} from 'utils/load'
-  import {searchMixin} from 'utils/mixins'
+  import {searchMixin, pageMixin} from 'utils/mixins'
 
   let Shop = new ShopModel()
   const REQUEST_NUMBER = 1
 
   export default {
-    mixins: [searchMixin],
+    mixins: [searchMixin, pageMixin],
     data () {
       return {
         showLoading: false,
-        page: 1,
         shops: []
       }
     },
     mounted () {
-      this._getShops()
+      this._loadData()
       this.load = new Load(this, REQUEST_NUMBER)
     },
     methods: {
-      _getShops () {
+      _loadData () {
         Shop.getShops(this.page).then(res => {
-          this._processData(res)
+          this.shops = this.shops.concat(res)
+        }).catch(ex => {
+          this.hasMore = false
         })
-      },
-      _processData (shops) {
-        this.shops = shops
       }
     },
     components: {

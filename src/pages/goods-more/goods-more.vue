@@ -40,11 +40,10 @@ export default {
   methods: {
     _loadData () {
       Goods.getGoods(this.type, this.page).then(res => {
-        if (res.length === 0) {
-          this.hasMore = false
-        }
         this.goods = this.goods.concat(res)
         this.lazyLoad = new LazyLoad(this.goods, this)
+      }).catch(ex => {
+        this.hasMore = false
       })
     }
   },
