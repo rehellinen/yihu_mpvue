@@ -89,23 +89,23 @@ export class GoodsModel extends BaseModel {
     return this.request(params)
   }
 
-  // 根据商家id获取所有商品
-  getGoodsByShopId (page, id, cb, ecb) {
+  /**
+   * 根据商店id获取商品
+   * @param id
+   * @param page
+   * @param size
+   * @return {*}
+   */
+  getGoodsByShopId (id, page, size = 10) {
     let params = {
       url: 'newGoods/shop/' + id,
       data: {
-        page: page,
-        size: 10
-      },
-      callBack: function (data) {
-        cb && cb(data)
-      },
-      eCallBack (data) {
-        ecb && ecb(data)
+        page,
+        size
       }
     }
 
-    this.request(params)
+    return this.request(params)
   }
 
   // 获取自营商店最近新品
