@@ -2,7 +2,9 @@
 div.goods-list-container(:style="style")
   div.goods-container(v-for="(item, index) in goods", :key="item.id"
     @click="toGoodsDetail(index)")
-    img.lazy(:src="item.lazy_url" mode='aspectFill' :data-index="index", :class="item.transition")
+    img.lazy(:src="item.lazy_url" mode='aspectFill'
+      :data-index="index", :class="item.transition"
+      @load="imageLoaded" :data-type="from")
     div.text-container
       div
         text.two-handed(v-if="item.type === 2") 二手
@@ -22,6 +24,10 @@ div.goods-list-container(:style="style")
       backgroundColor: {
         type: String,
         default: 'white'
+      },
+      from: {
+        type: String,
+        default: ''
       }
     },
     computed: {

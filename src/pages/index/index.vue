@@ -1,30 +1,33 @@
 <template lang="pug">
   div
     my-loading(:showLoading="showLoading")
-    div.container.index-container(v-if="!showLoading")
+    div.container.index-container(v-show="!showLoading")
       <!--search(:pullDown="pullDown")-->
       // 轮播图
       swiper.banner.header-image.header(interval='5000' :indicator-dots='false' :autoplay='true')
           swiper-item(v-for="item in banners" :key="item.image_id.id")
-            img(:src="item.image_id.image_url")
+            img(:src="item.image_id.image_url"
+              @load="imageLoaded" data-type="index")
 
       // 精选主题
       div.theme
         p 精 选 主 题
         div.theme-photo-container
-          img(v-for="item in themes", :src="item.image_id.image_url" :key="item.image_id.id")
+          img(v-for="item in themes", :src="item.image_id.image_url"
+            :key="item.image_id.id"
+            @load="imageLoaded" data-type="index")
 
       // 发现鲜货
       div.find
-        img(src="__IMAGE__/theme/find.png" @load="this.imageLoaded" data-type="index")
-      goods-list(:goods="newGoods")
+        img(src="__IMAGE__/theme/find.png")
+      goods-list(:goods="newGoods" :from="pageEnum.INDEX")
       div(@click="toGoodsMore(GoodsType.NEW_GOODS)")
         see-more
 
       // 旧物漂流
       div.find
         img(src="__IMAGE__/theme/old.png")
-      goods-list(:goods="oldGoods")
+      goods-list(:goods="oldGoods" :from="pageEnum.INDEX")
       div(@click="toGoodsMore(GoodsType.OLD_GOODS)")
         see-more
 </template>
@@ -38,27 +41,33 @@
   import {GoodsModel} from 'model/GoodsModel'
   import {LazyLoad} from 'utils/lazyload'
   import Search from 'base/search/search'
-  import {searchMixin, loadMixin} from 'utils/mixins'
+  import {searchMixin} from 'utils/mixins'
   import {GoodsType} from 'utils/config'
+  import {pageEnum, images} from '../../utils/load'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()
   let Goods = new GoodsModel()
 
   export default {
-    mixins: [searchMixin, loadMixin],
+    mixins: [searchMixin],
     data () {
       return {
-        showLoading: true,
         banners: [],
         themes: [],
         newGoods: [],
         oldGoods: [],
         goodsImages: [],
-        GoodsType
+        GoodsType,
+        pageEnum
       }
     },
-    onLoad () {
+    computed: {
+      showLoading () {
+        return images[pageEnum.INDEX].showLoading
+      }
+    },
+    created () {
       this._getData()
     },
     onPageScroll (opt) {

@@ -51,7 +51,6 @@ let loadMixin = {
   },
   methods: {
     loaded () {
-      console.log('loaded')
       this.loadedPhotoCount++
       if (this.loadedPhotoCount > this.photoCount) {
         this.showLoading = false
