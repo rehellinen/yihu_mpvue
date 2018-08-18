@@ -54,7 +54,7 @@ export default {
     // 跳转确认订单的页面
     submitOrder () {
       wx.navigateTo({
-        url: '../order/order'
+        url: '../order-confirm/main'
       })
     },
     ...mapActions([

@@ -1,16 +1,19 @@
 <template lang="pug">
   div.cart-box(v-if="cartData.length > 0")
-    div.cart-item(v-for="(item, index) in cartData" :key="item.id" :class="{deleteThat: deleteIndex === index, deleteAfter: deleteIndex && index > deleteIndex}")
-      div.cart-item-checkbox(@click="selectOneTap(index)")
+    div.cart-item(v-for="(item, index) in goods" :key="item.id" :class="{deleteThat: deleteIndex === index, deleteAfter: deleteIndex && index > deleteIndex}")
+      div.cart-item-checkbox(@click="selectOneTap(index)", v-if="!isConfirm")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
         img(src="__IMAGE__/icon/circle@noselected.png", v-else)
+      div.left(v-else)
+
       div.cart-item-img(@click="toDetail(index)")
         img.goods-image(:src="item.image_id.image_url" mode="aspectFill")
+
       div.cart-item-word
         div.title-box(@click="toDetail(index)")
           p.name {{item.name}}
           p.price ￥{{item.price}}
-        div.bottom-box
+        div.bottom-box(v-if="!isConfirm")
           div.cart-item-count
             img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
             img.disabled(src="__IMAGE__/icon/minus@disabled.png" v-else)
@@ -21,20 +24,37 @@
             img.disabled(src="__IMAGE__/icon/plus@disabled.png" v-else)
 
           img.delete(src="__IMAGE__/icon/delete.png", @click="deleteGoods(index)")
+        div.note-container(v-else)
+          div.note
+            input
+          p.count x {{item.count}}
 </template>
 
 <script>
   import {mapGetters, mapActions} from 'vuex'
 
   export default {
+    props: {
+      isConfirm: {
+        type: Boolean,
+        default: false
+      }
+    },
     data () {
       return {
         deleteIndex: null
       }
     },
     computed: {
+      goods () {
+        if (this.isConfirm) {
+          return this.selectedCartData
+        }
+        return this.cartData
+      },
       ...mapGetters([
-        'cartData'
+        'cartData',
+        'selectedCartData'
       ])
     },
     methods: {
@@ -71,6 +91,8 @@
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~css/base"
+  .left
+    width: 30rpx
   .cart-box
     display: flex
     flex-direction: column
@@ -125,13 +147,15 @@
     justify-content: space-between
     padding: 8rpx 0 8rpx 30rpx
     color: $base-font-color
-    width: 380rpx
+    /*width: 380rpx*/
 
   .title-box
     display: flex
     justify-content: space-between
     .name
       flex-basis: 70%
+    .price
+      margin-right: 20rpx
 
   .bottom-box
     display: flex
@@ -154,4 +178,15 @@
   .delete
     width: 30rpx
     height: 30rpx
+    margin-right: 20rpx
+
+  .note-container
+    display: flex
+    justify-content: space-between
+  .note
+    width: 80%
+    border-bottom:
+    input
+  .count
+    margin-right: 20rpx
 </style>

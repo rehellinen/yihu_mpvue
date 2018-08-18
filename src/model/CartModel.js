@@ -7,25 +7,13 @@ export class CartModel extends BaseModel {
   }
   /**
    * 获取购物车商品
-   * @param flag true，只获取选中的商品;false，获取所有商品
    * @return {*}
    */
-  getCartStorage (flag) {
+  getCartStorage () {
     let res = wx.getStorageSync(this._storageKeyName)
     if (!res) {
-      res = []
+      return []
     }
-
-    if (flag) {
-      let newRes = []
-      for (let item of res) {
-        if (item.selected) {
-          newRes.push(item)
-        }
-      }
-      res = newRes
-    }
-
     return res
   }
 

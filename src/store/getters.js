@@ -18,6 +18,17 @@ const getters = {
   // 是否有新订单
   ordersChange (state) {
     return state.ordersChange
+  },
+
+  // 选中的商品
+  selectedCartData (state) {
+    let newRes = []
+    for (let item of state.cartData) {
+      if (item.selected) {
+        newRes.push(item)
+      }
+    }
+    return newRes
   }
 }
 

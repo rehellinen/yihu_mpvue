@@ -62,7 +62,7 @@
       this._getData()
     },
     onPageScroll (opt) {
-      // this.newGoodsLazyLoad.refresh()
+      this.newGoodsLazyLoad.refresh()
       this.oldGoodsLazyLoad.refresh()
     },
     methods: {

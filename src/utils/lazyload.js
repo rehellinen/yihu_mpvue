@@ -39,7 +39,6 @@ export class LazyLoad {
 
     this.images.boundingClientRect(res => {
       let i = this.index + this.start
-      console.log(this.isLoadedAll)
       if (res[i].top < (this.windowHeight + 40)) {
         // 更改图片URL
         let newData = this.data[this.index]

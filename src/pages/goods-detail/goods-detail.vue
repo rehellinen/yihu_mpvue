@@ -145,15 +145,8 @@ export default {
     },
     // 处理加入购物车的逻辑
     _addToCart () {
-      let data = {}
-      let keys = ['id', 'name', 'image_id', 'price', 'type', 'quantity']
-      for (let key in this.goods) {
-        if (keys.indexOf(key) >= 0) {
-          data[key] = this.goods[key]
-        }
-      }
       this.addGoods({
-        goods: data,
+        goods: this.goods,
         count: this.selectedCount
       })
     },

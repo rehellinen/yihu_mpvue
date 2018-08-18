@@ -12,8 +12,17 @@ let Cart = new CartModel()
 const actions = {
   // 添加商品至购物车
   addGoods ({commit, state}, {goods, count}) {
+    // 处理商品的数据结构
+    let cartData = {}
+    let keys = ['id', 'name', 'image_id', 'price', 'type', 'quantity']
+    for (let key in goods) {
+      if (keys.indexOf(key) >= 0) {
+        cartData[key] = goods[key]
+      }
+    }
+    // 更改缓存以及store中的数据
     let data = copyObjArr(state.cartData)
-    data = CartModel.add(goods, count, data)
+    data = CartModel.add(cartData, count, data)
     Cart.setCartStorage(data)
     commit(types.SAVE_CART_DATA, data)
   },
