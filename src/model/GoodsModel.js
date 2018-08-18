@@ -109,15 +109,12 @@ export class GoodsModel extends BaseModel {
   }
 
   // 获取自营商店最近新品
-  getRecentGoodsByShopId (id, cb) {
+  getRecentGoodsByShopId (id) {
     let params = {
-      url: 'newGoods/recent/shop/' + id,
-      callBack: function (data) {
-        cb && cb(data)
-      }
+      url: 'newGoods/recent/shop/' + id
     }
 
-    this.request(params)
+    return this.request(params)
   }
 
   // 根据分类获取商品
