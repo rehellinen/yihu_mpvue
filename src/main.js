@@ -24,6 +24,11 @@ export default {
       'pages/cart/main',
       'pages/shop/main',
       'pages/goods-detail/main',
+      'pages/goods-more/main',
+      'pages/order/main',
+      'pages/order-confirm/main',
+      'pages/pay-result/main',
+      'pages/shop-detail/main',
       'pages/edit-info/main'
     ],
     tabBar: {
