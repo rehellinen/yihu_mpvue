@@ -26,7 +26,7 @@
           img.delete(src="__IMAGE__/icon/delete.png", @click="deleteGoods(index)")
         div.note-container(v-else)
           div.note
-            input
+            input(placeholder="请输入备注", placeholder-style="color:#999")
           p.count x {{item.count}}
 </template>
 
@@ -183,10 +183,13 @@
   .note-container
     display: flex
     justify-content: space-between
+    align-items: center
+    margin-bottom: 10rpx
   .note
     width: 80%
-    border-bottom:
+    border-bottom: 1rpx solid $lighter-font-color
     input
+      color: $grey-font-color
   .count
     margin-right: 20rpx
 </style>
