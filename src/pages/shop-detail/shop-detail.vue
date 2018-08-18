@@ -52,7 +52,8 @@ export default {
     _loadData () {
       Goods.getGoodsByShopId(this.shopID, this.page).then(res => {
         this.allGoods = this.allGoods.concat(res)
-        this.lazyLoad = new LazyLoad(this.allGoods, this)
+        let start = (this.page - 1) * 10
+        this.lazyLoad = new LazyLoad(this.allGoods, this, start, res.length)
       }).catch((ex) => {
         this.hasMore = false
       })

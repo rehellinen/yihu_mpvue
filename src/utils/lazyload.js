@@ -25,6 +25,7 @@ export class LazyLoad {
     this.start = start
     // 懒加载的默认图片
     this.lazyImage = '__IMAGE__/theme/loading.jpg'
+    this.stop = false
     this._processData()
   }
 
@@ -36,27 +37,40 @@ export class LazyLoad {
     if (this.isLoadedAll) {
       return
     }
-
+    if (this.stop) {
+      return
+    }
+    this.stop = true
     this.images.boundingClientRect(res => {
       let i = this.index + this.start
       if (res[i].top < (this.windowHeight + 40)) {
         // 更改图片URL
-        let newData = this.data[this.index]
+        let newData = this.data[i]
+        if (!newData) {
+          this.stop = false
+          return
+        }
         newData.lazy_url = newData.image_id.image_url
         newData.transition = 'afterShow'
         this.page.$set(this.data, this.index, newData)
 
-        this.index++
         if (this.index >= this.length - 1) {
           this.isLoadedAll = true
+          return
         }
+        this.index++
       }
     }).exec()
+    setTimeout(() => {
+      this.stop = false
+    }, 100)
   }
 
   _processData () {
-    this.data.forEach((item) => {
-      item.lazy_url = this.lazyImage
-    })
+    for (let i = this.start; i < (this.start + this.length); i++) {
+      let newData = this.data[i]
+      newData.lazy_url = this.lazyImage
+      this.page.$set(this.data, i, newData)
+    }
   }
 }
