@@ -52,6 +52,7 @@ export default {
         }
       }
       this.isCompleted = flag
+      this.$emit('isCompleted', flag)
     }
   }
 }

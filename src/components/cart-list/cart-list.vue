@@ -28,6 +28,7 @@
           div.note
             input(placeholder="请输入备注", placeholder-style="color:#999")
           p.count x {{item.count}}
+
 </template>
 
 <script>

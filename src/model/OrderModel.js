@@ -28,7 +28,7 @@ class OrderModel extends BaseModel {
    * @param orderIdentify
    * @returns Promise
    */
-  execPay (orderIdentify) {
+  execPay (orderIdentify, cb) {
     let params = {
       url: 'preOrder',
       type: 'POST',
@@ -44,20 +44,14 @@ class OrderModel extends BaseModel {
           signType: res.signType,
           paySign: res.paySign,
           success () {
-            return new Promise((resolve) => {
-              resolve({status: payEnum.PAY_SUCCESS, res})
-            })
+            cb && cb(payEnum.PAY_SUCCESS, res)
           },
           fail () {
-            return new Promise((resolve) => {
-              resolve({status: payEnum.PAY_FAIL, res})
-            })
+            cb && cb(payEnum.PAY_FAIL, res)
           }
         })
       } else {
-        return new Promise((resolve) => {
-          resolve({status: payEnum.OUT_OF_STOCK, res})
-        })
+        cb && cb(payEnum.OUT_OF_STOCK, res)
       }
     })
   }
