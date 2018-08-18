@@ -115,6 +115,7 @@
     width: $card-width
     margin-left: $card-margin-left
     border-radius: $card-border-radius
+    overflow: hidden
     .image-container
       display: flex
       justify-content: center

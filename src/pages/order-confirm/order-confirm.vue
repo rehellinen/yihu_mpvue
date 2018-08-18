@@ -66,13 +66,13 @@ export default {
         if (statusCode === payEnum.PAY_SUCCESS) {
           this.deleteGoods()
           wx.redirectTo({
-            url: `../pay-result/pay-result?status=${statusCode}`
+            url: `../pay-result/main?status=${statusCode}`
           })
         } else if (statusCode === payEnum.OUT_OF_STOCK) {
           this._orderFail(res)
         } else {
           wx.redirectTo({
-            url: `../pay-result/pay-result?status=${payEnum.PAY_FAIL}`
+            url: `../pay-result/main?status=${payEnum.PAY_FAIL}`
           })
         }
       })

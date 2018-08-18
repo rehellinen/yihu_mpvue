@@ -31,7 +31,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -78,7 +78,14 @@
 				{
 					"id": -1,
 					"name": "确认订单",
-					"pathName": "pages/order-confirm/main"
+					"pathName": "pages/order-confirm/main",
+					"query": ""
+				},
+				{
+					"id": 8,
+					"name": "支付结果",
+					"pathName": "pages/pay-result/main",
+					"query": "status=1"
 				}
 			]
 		}

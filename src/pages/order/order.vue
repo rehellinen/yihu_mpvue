@@ -53,10 +53,7 @@ export default {
     }
   },
   onReachBottom () {
-    this.page++
-    if (this.hasMore) {
-      this._loadData()
-    }
+    this._loadData()
   },
   components: {
     SwitchTab,

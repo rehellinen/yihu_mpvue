@@ -21,8 +21,8 @@ function modal (title = '', content = '', cb, showCancel = true) {
     content,
     showCancel,
     confirmColor: '#a9936e',
-    success () {
-      cb && cb()
+    success (res) {
+      cb && cb(res)
     }
   })
 }

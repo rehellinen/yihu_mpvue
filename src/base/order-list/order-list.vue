@@ -46,15 +46,17 @@ div.order-list-contailer(:class="{'card-container': card}")
     },
     methods: {
       deleteOne (id) {
-        modal('', '是否确定删除?', () => {
-          Order.delete(id).then(() => {
-            Order.ordersChange(true)
-            this.setOrderChange(true)
-            this.$emit('reload')
-            toast('删除成功')
-          }).catch((ex) => {
-            toast('删除失败', iconType.F)
-          })
+        modal('', '是否确定删除?', (res) => {
+          if (res.confirm) {
+            Order.delete(id).then(() => {
+              this.setOrderChange(true)
+              this.$emit('reload')
+              toast('删除成功')
+            }).catch((ex) => {
+              console.log(ex)
+              toast('删除失败', iconType.FAIL)
+            })
+          }
         })
       },
       ...mapMutations({
