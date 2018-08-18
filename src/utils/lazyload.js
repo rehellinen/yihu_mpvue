@@ -7,22 +7,24 @@ export class LazyLoad {
   /**
    * 构造函数
    */
-  constructor (data, page, start = 0, length) {
+  constructor ({data, page, imagesStart = 0, dataStart = 0, dataLength}) {
     this.page = page
     // 图片的NodesRef对象实例
     this.images = wx.createSelectorQuery().selectAll('.lazy')
     // 进行数据绑定的数据
     this.data = data
     // 数据绑定的数据的长度
-    this.length = length || data.length
+    this.length = dataLength || data.length
     // 获取可使用窗口高度
     this.windowHeight = wx.getSystemInfoSync().windowHeight
     // 是否加载完成
     this.isLoadedAll = false
     // 遍历的序号
     this.index = 0
-    // 从第几个开始
-    this.start = start
+    // 图片从第几个开始
+    this.ImagesStart = imagesStart
+    // 传入的数据从第几个开始
+    this.dataStart = dataStart
     // 懒加载的默认图片
     this.lazyImage = '__IMAGE__/theme/loading.jpg'
     this.stop = false
@@ -42,10 +44,10 @@ export class LazyLoad {
     }
     this.stop = true
     this.images.boundingClientRect(res => {
-      let i = this.index + this.start
+      let i = this.index + this.ImagesStart
       if (res[i].top < (this.windowHeight + 40)) {
         // 更改图片URL
-        let newData = this.data[i]
+        let newData = this.data[this.dataStart + this.index]
         if (!newData) {
           this.stop = false
           return
@@ -67,7 +69,7 @@ export class LazyLoad {
   }
 
   _processData () {
-    for (let i = this.start; i < (this.start + this.length); i++) {
+    for (let i = this.dataStart; i < (this.dataStart + this.length); i++) {
       let newData = this.data[i]
       newData.lazy_url = this.lazyImage
       this.page.$set(this.data, i, newData)

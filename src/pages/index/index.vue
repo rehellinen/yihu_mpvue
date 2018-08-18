@@ -16,7 +16,7 @@
 
       // 发现鲜货
       div.find
-        img(src="__IMAGE__/theme/find.png")
+        img(src="__IMAGE__/theme/find.png" @load="this.imageLoaded" data-type="index")
       goods-list(:goods="newGoods")
       div(@click="toGoodsMore(GoodsType.NEW_GOODS)")
         see-more
@@ -80,11 +80,23 @@
         })
         Goods.getIndexNewGoods().then((res) => {
           this.newGoods = res
-          this.newGoodsLazyLoad = new LazyLoad(this.newGoods, this, 0, 6)
+          this.newGoodsLazyLoad = new LazyLoad({
+            data: this.newGoods,
+            page: this,
+            imagesStart: 0,
+            dataStart: 0,
+            dataLength: 6
+          })
         })
         Goods.getIndexOldGoods().then((res) => {
           this.oldGoods = res
-          this.oldGoodsLazyLoad = new LazyLoad(this.oldGoods, this, 6, 6)
+          this.oldGoodsLazyLoad = new LazyLoad({
+            data: this.oldGoods,
+            page: this,
+            imagesStart: 6,
+            dataStart: 0,
+            dataLength: 6
+          })
         })
       }
     },

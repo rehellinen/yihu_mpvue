@@ -29,11 +29,9 @@
   import SeeMore from 'base/see-more/see-more'
   import OrderList from 'base/order-list/order-list'
   import {orderEnum} from 'utils/config'
-  import {Load} from 'utils/load'
 
   import {OrderModel} from 'model/OrderModel'
   let Order = new OrderModel()
-  const REQUEST_NUMBER = 1
   const ORDER_PAGE = 1
   const ORDER_COUNT = 2
 
@@ -46,7 +44,6 @@
     },
     created () {
       this._getData()
-      this.load = new Load(this, REQUEST_NUMBER)
     },
     methods: {
       toOrderMore () {
@@ -63,7 +60,6 @@
         // 获取订单
         Order.getOrder(orderEnum.ALL, ORDER_PAGE, ORDER_COUNT).then(res => {
           this._processOrder(res)
-          this.load.isLoadedAll()
         })
       },
       _processOrder (order) {
@@ -106,6 +102,7 @@
   .personal-container
     background-color: $background-color
     padding-bottom: $card-margin-top
+    min-height: 100vh
 
   .order-container
     display: flex

@@ -13,11 +13,9 @@ div
   import ShopList from 'components/shop-list/shop-list'
   import Search from 'base/search/search'
   import {ShopModel} from 'model/ShopModel'
-  import {Load} from 'utils/load'
   import {searchMixin, pageMixin} from 'utils/mixins'
 
   let Shop = new ShopModel()
-  const REQUEST_NUMBER = 1
 
   export default {
     mixins: [searchMixin, pageMixin],
@@ -29,7 +27,6 @@ div
     },
     mounted () {
       this._loadData()
-      this.load = new Load(this, REQUEST_NUMBER)
     },
     methods: {
       _loadData () {

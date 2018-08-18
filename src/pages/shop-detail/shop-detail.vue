@@ -44,7 +44,10 @@ export default {
     })
     Goods.getRecentGoodsByShopId(this.shopID).then(res => {
       this.recentGoods = res
-      this.recentLazyLoad = new LazyLoad(this.recentGoods, this)
+      this.recentLazyLoad = new LazyLoad({
+        data: this.recentGoods,
+        page: this
+      })
     })
     this._loadData()
   },
@@ -53,7 +56,13 @@ export default {
       Goods.getGoodsByShopId(this.shopID, this.page).then(res => {
         this.allGoods = this.allGoods.concat(res)
         let start = (this.page - 1) * 10
-        this.lazyLoad = new LazyLoad(this.allGoods, this, start, res.length)
+        this.lazyLoad = new LazyLoad({
+          data: this.allGoods,
+          page: this,
+          imagesStart: start,
+          dataStart: start,
+          dataLength: res.length
+        })
       }).catch((ex) => {
         this.hasMore = false
       })
