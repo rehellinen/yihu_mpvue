@@ -103,6 +103,7 @@
   .cart-item
     display: flex
     flex-direction: row
+    justify-content: space-around
     background-color: white
     width: $card-width
     margin-top: $card-margin-top
@@ -152,6 +153,7 @@
   .title-box
     display: flex
     justify-content: space-between
+    width: 400rpx
     .name
       flex-basis: 70%
     .price
