@@ -50,11 +50,10 @@ div.order-list-contailer(:class="{'card-container': card}")
           if (res.confirm) {
             Order.delete(id).then(() => {
               this.setOrderChange(true)
+              toast('删除成功', iconType.SUCCESS, false)
               this.$emit('reload')
-              toast('删除成功')
             }).catch((ex) => {
-              console.log(ex)
-              toast('删除失败', iconType.FAIL)
+              toast('删除失败', iconType.FAIL, false)
             })
           }
         })

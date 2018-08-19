@@ -5,12 +5,14 @@ function copyObjArr (arr) {
   return [].concat(JSON.parse(JSON.stringify(arr)))
 }
 
-function toast (title, icon = iconType.SUCCESS) {
+function toast (title, icon = iconType.SUCCESS, isBack = true) {
   wx.showToast({
     title,
     image: icon,
     success: () => {
-      wx.navigateBack()
+      if (isBack) {
+        wx.navigateBack()
+      }
     }
   })
 }

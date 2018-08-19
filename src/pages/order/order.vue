@@ -9,14 +9,20 @@
 <script>
 import SwitchTab from 'base/switch-tab/switch-tab'
 import OrderList from 'base/order-list/order-list'
-// import {orderEnum} from 'utils/config'
 import {OrderModel} from 'model/OrderModel'
+import {mapGetters, mapMutations} from 'vuex'
 
 let Order = new OrderModel()
 
 export default {
-  mounted () {
-    this._loadData()
+  onShow () {
+    if (this.ordersChange) {
+      this.reload()
+      this.SET_ORDERS_CHANGE(false)
+    }
+  },
+  onHide () {
+    this.SET_ORDERS_CHANGE(false)
   },
   data () {
     return {
@@ -27,6 +33,11 @@ export default {
       tabs: ['全部', '待付款', '待发货', '待收货', '已完成'],
       switchStyle: ''
     }
+  },
+  computed: {
+    ...mapGetters([
+      'ordersChange'
+    ])
   },
   methods: {
     switchTabs (index) {
@@ -50,7 +61,10 @@ export default {
       this.page = [1, 1, 1, 1, 1]
       this.hasMore = [true, true, true, true, true]
       this._loadData()
-    }
+    },
+    ...mapMutations([
+      'SET_ORDERS_CHANGE'
+    ])
   },
   onReachBottom () {
     this._loadData()

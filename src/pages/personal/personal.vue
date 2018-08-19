@@ -16,7 +16,7 @@
       div.order-container
         div.image-container(v-if="orders.length !== 0")
           img(src="__IMAGE__/theme/personal@order.png")
-        order-list(:orders="orders")
+        order-list(:orders="orders" @reload="reload")
         div(v-if="orders.length !==0", @click="toOrderMore")
           see-more
       // 我的订单
@@ -30,6 +30,7 @@
   import OrderList from 'base/order-list/order-list'
   import {orderEnum} from 'utils/config'
   import {OrderModel} from 'model/OrderModel'
+  import {mapGetters, mapMutations} from 'vuex'
 
   let Order = new OrderModel()
   const ORDER_PAGE = 1
@@ -43,12 +44,27 @@
       }
     },
     onLoad () {
-      this._getData()
+      this._loadData()
       setTimeout(() => {
         this.showLoading = false
-      }, 400)
+      })
+    },
+    onShow () {
+      if (this.ordersChange) {
+        this.reload()
+        this.SET_ORDERS_CHANGE(false)
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'ordersChange'
+      ])
     },
     methods: {
+      reload () {
+        this.orders = []
+        this._loadData()
+      },
       toOrderMore () {
         wx.navigateTo({
           url: '../order/main'
@@ -59,7 +75,7 @@
           url: '../edit-info/main'
         })
       },
-      _getData () {
+      _loadData () {
         // 获取订单
         Order.getOrder(orderEnum.ALL, ORDER_PAGE, ORDER_COUNT).then(res => {
           this._processOrder(res)
@@ -72,7 +88,10 @@
         } else {
           this.orders = order
         }
-      }
+      },
+      ...mapMutations([
+        'SET_ORDERS_CHANGE'
+      ])
     },
     components: {
       MyLoading,
