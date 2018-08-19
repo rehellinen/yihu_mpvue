@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     my-loading(:showLoading="showLoading")
-    div.container.personal-container(v-if="!showLoading")
+    div.container.personal-container
       // 个人信息栏
       top-image(type="user")
       div.icon-container(@click="toEdit")
@@ -29,8 +29,8 @@
   import SeeMore from 'base/see-more/see-more'
   import OrderList from 'base/order-list/order-list'
   import {orderEnum} from 'utils/config'
-
   import {OrderModel} from 'model/OrderModel'
+
   let Order = new OrderModel()
   const ORDER_PAGE = 1
   const ORDER_COUNT = 2
@@ -42,8 +42,11 @@
         orders: []
       }
     },
-    created () {
+    onLoad () {
       this._getData()
+      setTimeout(() => {
+        this.showLoading = false
+      }, 400)
     },
     methods: {
       toOrderMore () {

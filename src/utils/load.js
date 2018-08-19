@@ -38,6 +38,11 @@ let images = {
     total: 1,
     loaded: 0,
     showLoading: true
+  },
+  [pageEnum.PERSONAL]: {
+    total: 1,
+    loaded: 0,
+    showLoading: true
   }
 }
 
