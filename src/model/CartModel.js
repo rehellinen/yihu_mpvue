@@ -9,10 +9,19 @@ export class CartModel extends BaseModel {
    * 获取购物车商品
    * @return {*}
    */
-  getCartStorage () {
+  getCartStorage (flag = false) {
     let res = wx.getStorageSync(this._storageKeyName)
     if (!res) {
       return []
+    }
+    if (flag) {
+      let newRes = []
+      for (let item of res) {
+        if (item.selected) {
+          newRes.push(item)
+        }
+      }
+      return newRes
     }
     return res
   }

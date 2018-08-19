@@ -1,7 +1,8 @@
 <template lang="pug">
   div.container.order-container
+    my-loading(:showLoading="showLoading")
     buyer-info(@isCompleted="complete")
-    cart-list(:isConfirm="true")
+    cart-list(:isConfirm="true" :from="pageEnum.ORDER_CONFIRM")
     div.accounts
       div.total-account
         p 付款合计：￥{{cartDetail.totalPrice}}
@@ -11,29 +12,37 @@
 
 <script>
 import BuyerInfo from '../../components/buyer-info/buyer-info'
+import MyLoading from 'base/my-loading/my-loading'
 import CartList from '../../components/cart-list/cart-list'
 import {OrderModel} from '../../model/OrderModel'
 import {payEnum} from '../../utils/config'
 import {mapGetters} from 'vuex'
 import {modal} from '../../utils/utils'
+import {pageEnum} from 'utils/config'
 
 let Order = new OrderModel()
 
 export default {
   data () {
     return {
-      isCompleted: false
+      isCompleted: false,
+      pageEnum
     }
   },
   computed: {
+    showLoading () {
+      return this.loadState[pageEnum.ORDER_CONFIRM]
+    },
     ...mapGetters([
       'cartDetail',
-      'cartData'
+      'cartData',
+      'loadState'
     ])
   },
   components: {
     BuyerInfo,
-    CartList
+    CartList,
+    MyLoading
   },
   methods: {
     complete (flag) {

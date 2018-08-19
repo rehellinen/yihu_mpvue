@@ -33,11 +33,15 @@ let images = {
     total: Cart.getCartStorage().length,
     loaded: 0,
     showLoading: true
+  },
+  [pageEnum.ORDER_CONFIRM]: {
+    total: 1,
+    loaded: 0,
+    showLoading: true
   }
 }
 
 function load (event) {
-  console.log('load')
   let type = event.currentTarget.dataset.type
   let loadState = store.state.loadState
   store.commit(types.ADD_LOADED_PHOTOS, type)

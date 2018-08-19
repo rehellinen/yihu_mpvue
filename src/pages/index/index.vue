@@ -70,7 +70,7 @@
         'loadState'
       ])
     },
-    created () {
+    onLoad () {
       this._getData()
     },
     onPageScroll (opt) {

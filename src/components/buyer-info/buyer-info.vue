@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.container.card(@click="toEdit")
+  div.container(@click="toEdit")
     div(v-if="!isCompleted")
       p + 补充信息
     div.info-container(v-else)
@@ -60,12 +60,9 @@ export default {
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~css/base"
-  .card
-    display: flex
-    justify-content: center
-    align-items: center
-    height: 120rpx
-    font-size: $small-font-size
+  .container
+    background-color: white
+    font-size: 15px
   .info-container
     display: flex
     flex-direction: column
@@ -79,14 +76,14 @@ export default {
     div
       display: flex
       align-items: center
-      padding: 0 55rpx 0 25rpx
+      padding: 10rpx 50rpx 0 50rpx
     img
-      width: 28rpx
-      height: 28rpx
+      width: 30rpx
+      height: 30rpx
     p
       margin-left: 10rpx
   .address
-    margin-top: 22rpx
-    margin-left: 25rpx
+    margin: 22rpx 0 15rpx 50rpx
     color: $grey-font-color
+    font-size: $small-font-size
 </style>

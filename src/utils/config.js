@@ -61,6 +61,7 @@ module.exports = {
     GOODS_MORE: 'GOODS_MORE',
     GOODS_DETAIL: 'GOODS_DETAIL',
     SHOP: 'SHOP',
-    CART: 'CART'
+    CART: 'CART',
+    ORDER_CONFIRM: 'ORDER_CONFIRM'
   }
 }
