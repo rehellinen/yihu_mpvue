@@ -60,6 +60,7 @@ module.exports = {
     INDEX: 'INDEX',
     GOODS_MORE: 'GOODS_MORE',
     GOODS_DETAIL: 'GOODS_DETAIL',
-    SHOP: 'SHOP'
+    SHOP: 'SHOP',
+    CART: 'CART'
   }
 }

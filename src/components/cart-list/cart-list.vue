@@ -7,7 +7,8 @@
       div.left(v-else)
 
       div.cart-item-img(@click="toDetail(index)")
-        img.goods-image(:src="item.image_id.image_url" mode="aspectFill")
+        img.goods-image(:src="item.image_id.image_url" mode="aspectFill"
+          @load="imageLoaded", :data-type="from")
 
       div.cart-item-word
         div.title-box(@click="toDetail(index)")
@@ -39,6 +40,10 @@
       isConfirm: {
         type: Boolean,
         default: false
+      },
+      from: {
+        type: String,
+        default: ''
       }
     },
     data () {

@@ -4,6 +4,9 @@
 import store from '../store/index'
 import {types} from '../store/mutation-types'
 import {pageEnum} from 'utils/config'
+import {CartModel} from '../model/CartModel'
+
+let Cart = new CartModel()
 
 let images = {
   [pageEnum.INDEX]: {
@@ -25,10 +28,16 @@ let images = {
     total: 1,
     loaded: 0,
     showLoading: true
+  },
+  [pageEnum.CART]: {
+    total: Cart.getCartStorage().length,
+    loaded: 0,
+    showLoading: true
   }
 }
 
 function load (event) {
+  console.log('load')
   let type = event.currentTarget.dataset.type
   let loadState = store.state.loadState
   store.commit(types.ADD_LOADED_PHOTOS, type)
