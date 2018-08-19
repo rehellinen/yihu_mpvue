@@ -1,68 +1,70 @@
 <template lang="pug">
   div.container.detail-container
     my-loading(:showLoading="showLoading")
-    div.cart-container(@click="toCart", :class="{animate: isShake}")
-      div.cart
-        img(src="__IMAGE__/icon/cart.png")
-        div.cart-count {{cartDetail.selectedCount}}
+    div(v-show="!showLoading")
+      div.cart-container(@click="toCart", :class="{animate: isShake}")
+        div.cart
+          img(src="__IMAGE__/icon/cart.png")
+          div.cart-count {{cartDetail.selectedCount}}
 
-    div.goods-container
-      // 商品头图
-      img.head-image(:src="goods.image_id.image_url", v-if="goods.image_id")
-      // 详细信息
-      div.info
-        div.info-up
-          div.name-container
-            div
-              p.two-handed(v-if="goods.type === 2") 二手
-              p.name {{goods.name}}
-            p.subtitle {{goods.subtitle}}
-          picker(:range="countArray"
-            @change="pickerChange"
-            :disabled="cartCount >= goods.quantity"
-            )
-            div.picker.normal(:class="{disabled : cartCount >= goods.quantity}")
-              p 数量 {{cartCount < goods.quantity ? selectedCount : 0}}
-              img(src="__IMAGE__/icon/arrow@downOrange.png" v-if="cartCount < goods.quantity")
-              img(src="__IMAGE__/icon/arrow@downGrey.png" v-else)
+      div.goods-container
+        // 商品头图
+        img.head-image(:src="goods.image_id.image_url",
+          v-if="goods.image_id"
+          @load="imageLoaded", :data-type="pageEnum.GOODS_DETAIL")
+        // 详细信息
+        div.info
+          div.info-up
+            div.name-container
+              div
+                p.two-handed(v-if="goods.type === 2") 二手
+                p.name {{goods.name}}
+              p.subtitle {{goods.subtitle}}
+            picker(:range="countArray"
+              @change="pickerChange"
+              :disabled="cartCount >= goods.quantity"
+              )
+              div.picker.normal(:class="{disabled : cartCount >= goods.quantity}")
+                p 数量 {{cartCount < goods.quantity ? selectedCount : 0}}
+                img(src="__IMAGE__/icon/arrow@downOrange.png" v-if="cartCount < goods.quantity")
+                img(src="__IMAGE__/icon/arrow@downGrey.png" v-else)
 
-        div.hr
+          div.hr
 
-        div.info-down
-          div.price-quantity-container
-            p.price ￥{{goods.price}}
-            p.quantity 库存：{{goods.quantity}}
-          div.cart-text-container(@click="addGoodsToCart" :class="{disabled : cartCount >= goods.quantity}")
-            p {{cartCount < goods.quantity ? '加入购物车' : '库存不足'}}
-            img(src="__IMAGE__/icon/cart.png" v-if="cartCount < goods.quantity")
-            img(src="__IMAGE__/icon/cart@grey.png" v-else)
-            img.small-top-img(:class="{animate: fastTap}"
-              :src="goods.image_id.image_url"
-              :style="translateStyle"
-              v-if="goods.image_id"
-              mode="aspectFill")
+          div.info-down
+            div.price-quantity-container
+              p.price ￥{{goods.price}}
+              p.quantity 库存：{{goods.quantity}}
+            div.cart-text-container(@click="addGoodsToCart" :class="{disabled : cartCount >= goods.quantity}")
+              p {{cartCount < goods.quantity ? '加入购物车' : '库存不足'}}
+              img(src="__IMAGE__/icon/cart.png" v-if="cartCount < goods.quantity")
+              img(src="__IMAGE__/icon/cart@grey.png" v-else)
+              img.small-top-img(:class="{animate: fastTap}"
+                :src="goods.image_id.image_url"
+                :style="translateStyle"
+                v-if="goods.image_id"
+                mode="aspectFill")
 
-    div.photo-text-detail
-      switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs")
-      div.switch-container(:style="switchStyle")
-        div.detail-info-container
-          p {{goods.description}}
-        div.shop-info-container
-          p 345
+      div.photo-text-detail
+        switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs")
+        div.switch-container(:style="switchStyle")
+          div.detail-info-container
+            p {{goods.description}}
+          div.shop-info-container
+            p 345
 </template>
 
 <script>
 import {GoodsModel} from 'model/GoodsModel'
 import {CartModel} from 'model/CartModel'
 import SwitchTab from 'base/switch-tab/switch-tab'
-import {mapGetters, mapActions} from 'vuex'
-import {loadMixin} from 'utils/mixins'
+import {mapGetters, mapActions, mapMutations} from 'vuex'
 import MyLoading from 'base/my-loading/my-loading'
+import {pageEnum} from 'utils/config'
 
 let Goods = new GoodsModel()
 
 export default {
-  mixins: [loadMixin],
   data () {
     return {
       goods: {},
@@ -70,7 +72,8 @@ export default {
       fastTap: false,
       isShake: false,
       translateStyle: '',
-      switchStyle: ''
+      switchStyle: '',
+      pageEnum
     }
   },
   onShow () {
@@ -78,7 +81,17 @@ export default {
     this.selectedCount = 1
     this._getData(id, type)
   },
+  onUnload () {
+    this.goods = {}
+    this.resetLoadingState(pageEnum.GOODS_DETAIL)
+  },
   computed: {
+    showLoading () {
+      return this.loadState[pageEnum.GOODS_DETAIL]
+    },
+    ...mapGetters([
+      'loadState'
+    ]),
     cartCount () {
       let res = CartModel._isExistedThatOne(this.goods.id, this.cartData)
       if (res.index !== -1) {
@@ -158,7 +171,10 @@ export default {
     },
     ...mapActions([
       'addGoods'
-    ])
+    ]),
+    ...mapMutations({
+      resetLoadingState: 'RESET_LOADING_STATE'
+    })
   },
   components: {
     SwitchTab,

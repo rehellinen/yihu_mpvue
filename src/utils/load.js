@@ -20,15 +20,21 @@ let images = {
     total: 5,
     loaded: 0,
     showLoading: true
+  },
+  [pageEnum.GOODS_DETAIL]: {
+    total: 1,
+    loaded: 0,
+    showLoading: true
   }
 }
 
 function load (event) {
   let type = event.currentTarget.dataset.type
+  let loadState = store.state.loadState
   store.commit(types.ADD_LOADED_PHOTOS, type)
-  if (images[type].total === images[type].loaded) {
+  if (loadState[type].total === loadState[type].loaded) {
     store.commit(types.SET_LOADING_STATE, {flag: false, type})
   }
 }
 
-export {pageEnum, load, images}
+export {load, images}

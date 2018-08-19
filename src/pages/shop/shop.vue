@@ -2,7 +2,7 @@
 div
   my-loading(:showLoading="showLoading")
   div.container.shop-container(v-show="!showLoading")
-    search(:pullDown="pullDown")
+    <!--search(:pullDown="pullDown")-->
     div.header-image.header
       img(src="__IMAGE__/theme/shop@header.png")
     shop-list(:shops="shops")

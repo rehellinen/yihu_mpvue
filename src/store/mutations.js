@@ -21,5 +21,9 @@ export const mutations = {
   },
   [types.ADD_LOADED_PHOTOS] (state, type) {
     state.loadState[type].loaded++
+  },
+  [types.RESET_LOADING_STATE] (state, type) {
+    state.loadState[type].loaded = 0
+    state.loadState[type].showLoading = true
   }
 }

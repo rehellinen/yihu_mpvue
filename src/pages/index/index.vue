@@ -7,7 +7,7 @@
       swiper.banner.header-image.header(interval='5000' :indicator-dots='false' :autoplay='true')
           swiper-item(v-for="item in banners" :key="item.image_id.id")
             img(:src="item.image_id.image_url"
-              @load="imageLoaded" data-type="index")
+              @load="imageLoaded" :data-type="pageEnum.INDEX")
 
       // 精选主题
       div.theme
@@ -15,7 +15,7 @@
         div.theme-photo-container
           img(v-for="item in themes", :src="item.image_id.image_url"
             :key="item.image_id.id"
-            @load="imageLoaded" data-type="index")
+            @load="imageLoaded" :data-type="pageEnum.INDEX")
 
       // 发现鲜货
       div.find

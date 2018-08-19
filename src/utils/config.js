@@ -57,8 +57,9 @@ module.exports = {
 
   // 配置7：关于加载中动画
   pageEnum: {
-    INDEX: 'index',
-    GOODS_MORE: 'goods_more',
-    SHOP: 'shop'
+    INDEX: 'INDEX',
+    GOODS_MORE: 'GOODS_MORE',
+    GOODS_DETAIL: 'GOODS_DETAIL',
+    SHOP: 'SHOP'
   }
 }
