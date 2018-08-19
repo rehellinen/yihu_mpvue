@@ -1,6 +1,9 @@
 /**
  * 工具函数：控制“加载中”页面的显示与否
  */
+import store from '../store/index'
+import {types} from '../store/mutation-types'
+
 let pageEnum = {
   INDEX: 'index'
 }
@@ -15,11 +18,9 @@ let images = {
 
 function load (event) {
   let type = event.currentTarget.dataset.type
-  images[type].loaded++
-  console.log('load')
+  store.commit(types.ADD_LOADED_PHOTOS, type)
   if (images[type].total === images[type].loaded) {
-    images[type].showLoading = false
-    console.log(images[type].showLoading)
+    store.commit(types.SET_LOADING_STATE, {flag: false, type})
   }
 }
 

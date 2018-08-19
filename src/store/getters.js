@@ -29,6 +29,15 @@ const getters = {
       }
     }
     return newRes
+  },
+
+  // 获取页面是否出于加载中的状态
+  loadState (state) {
+    let newObj = {}
+    for (let key in state.loadState) {
+      newObj[key] = state.loadState[key].showLoading
+    }
+    return newObj
   }
 }
 

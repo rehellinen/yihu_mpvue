@@ -43,7 +43,8 @@
   import Search from 'base/search/search'
   import {searchMixin} from 'utils/mixins'
   import {GoodsType} from 'utils/config'
-  import {pageEnum, images} from '../../utils/load'
+  import {pageEnum} from '../../utils/load'
+  import {mapGetters} from 'vuex'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()
@@ -64,8 +65,11 @@
     },
     computed: {
       showLoading () {
-        return images[pageEnum.INDEX].showLoading
-      }
+        return this.loadState[pageEnum.INDEX]
+      },
+      ...mapGetters([
+        'loadState'
+      ])
     },
     created () {
       this._getData()

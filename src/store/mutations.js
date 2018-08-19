@@ -15,5 +15,11 @@ export const mutations = {
   },
   [types.SET_ORDERS_CHANGE] (state, flag) {
     state.ordersChange = flag
+  },
+  [types.SET_LOADING_STATE] (state, {flag, type}) {
+    state.loadState[type].showLoading = flag
+  },
+  [types.ADD_LOADED_PHOTOS] (state, type) {
+    state.loadState[type].loaded++
   }
 }
