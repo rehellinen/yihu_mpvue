@@ -3,14 +3,21 @@
  */
 import store from '../store/index'
 import {types} from '../store/mutation-types'
-
-let pageEnum = {
-  INDEX: 'index'
-}
+import {pageEnum} from 'utils/config'
 
 let images = {
   [pageEnum.INDEX]: {
     total: 9,
+    loaded: 0,
+    showLoading: true
+  },
+  [pageEnum.GOODS_MORE]: {
+    total: 6,
+    loaded: 0,
+    showLoading: true
+  },
+  [pageEnum.SHOP]: {
+    total: 5,
     loaded: 0,
     showLoading: true
   }

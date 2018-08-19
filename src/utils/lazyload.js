@@ -27,8 +27,13 @@ export class LazyLoad {
     this.dataStart = dataStart
     // 懒加载的默认图片
     this.lazyImage = '__IMAGE__/theme/loading.jpg'
+    // 用于防止页面刷新过多次数
     this.stop = false
+    // 处理数据
     this._processData()
+    this.interval = setInterval(() => {
+      this.refresh()
+    }, 100)
   }
 
   /**
@@ -36,27 +41,29 @@ export class LazyLoad {
    */
   refresh () {
     // 判断是否加载完成
-    if (this.isLoadedAll) {
+    if (this.isLoadedAll || this.stop) {
       return
     }
-    if (this.stop) {
-      return
-    }
+
     this.stop = true
+
     this.images.boundingClientRect(res => {
       let i = this.index + this.ImagesStart
+      let newData = this.data[this.dataStart + this.index]
+      if (!newData || !res[i]) {
+        setTimeout(() => {
+          this.stop = false
+        }, 100)
+        return
+      }
       if (res[i].top < (this.windowHeight + 40)) {
         // 更改图片URL
-        let newData = this.data[this.dataStart + this.index]
-        if (!newData) {
-          this.stop = false
-          return
-        }
         newData.lazy_url = newData.image_id.image_url
         newData.transition = 'afterShow'
         this.page.$set(this.data, this.index, newData)
 
         if (this.index >= this.length - 1) {
+          clearInterval(this.interval)
           this.isLoadedAll = true
           return
         }

@@ -53,5 +53,12 @@ module.exports = {
   iconType: {
     SUCCESS: '__IMAGE__/icon/success@white.png',
     FAIL: '__IMAGE__/icon/fail@white.png'
+  },
+
+  // 配置7：关于加载中动画
+  pageEnum: {
+    INDEX: 'index',
+    GOODS_MORE: 'goods_more',
+    SHOP: 'shop'
   }
 }

@@ -3,7 +3,8 @@
     div.shop-container(v-for="(item, index) in shops" :key="index")
       div.up(@click="toShopDetail(item.id)")
         div
-          img.shop-avatar(:src="item.avatar_image_id.image_url")
+          img.shop-avatar(:src="item.avatar_image_id.image_url"
+            @load="imageLoaded" :data-type="pageEnum.SHOP")
           p.avatar-text {{item.name}}
         img.come-image(src="__IMAGE__/theme/shop@come.png")
       div.down
@@ -21,7 +22,14 @@
 </template>
 
 <script>
+import {pageEnum} from 'utils/config'
+
 export default {
+  data () {
+    return {
+      pageEnum
+    }
+  },
   props: {
     shops: []
   },

@@ -42,8 +42,7 @@
   import {LazyLoad} from 'utils/lazyload'
   import Search from 'base/search/search'
   import {searchMixin} from 'utils/mixins'
-  import {GoodsType} from 'utils/config'
-  import {pageEnum} from '../../utils/load'
+  import {GoodsType, pageEnum} from 'utils/config'
   import {mapGetters} from 'vuex'
 
   let Banner = new BannerModel()

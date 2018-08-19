@@ -1,8 +1,10 @@
 <template lang="pug">
   div.goods-more-container.header
-    // search(:pullDown="pullDown")
-    title-panel(:title="title")
-    goods-list(:goods="goods", backgroundColor="#f9f9f9")
+    my-loading(:showLoading="showLoading")
+    //search(:pullDown="pullDown")
+    div(v-show="!showLoading")
+      title-panel(:title="title")
+      goods-list(:goods="goods", backgroundColor="#f9f9f9", :from="pageEnum.GOODS_MORE")
 </template>
 
 <script>
@@ -11,8 +13,10 @@ import {searchMixin, pageMixin} from 'utils/mixins'
 import {GoodsModel} from 'model/GoodsModel'
 import {LazyLoad} from 'utils/lazyload'
 import TitlePanel from 'base/title-panel/title-panel'
-import {GoodsType} from 'utils/config'
+import {GoodsType, pageEnum} from 'utils/config'
 import Search from 'base/search/search'
+import MyLoading from 'base/my-loading/my-loading'
+import {mapGetters} from 'vuex'
 
 let Goods = new GoodsModel()
 
@@ -21,12 +25,22 @@ export default {
     return {
       page: 1,
       goods: [],
-      title: ''
+      title: '',
+      size: 12,
+      pageEnum
     }
   },
   mixins: [searchMixin, pageMixin],
   onPageScroll () {
     this.lazyLoad.refresh()
+  },
+  computed: {
+    showLoading () {
+      return this.loadState[pageEnum.GOODS_MORE]
+    },
+    ...mapGetters([
+      'loadState'
+    ])
   },
   mounted () {
     this.type = this.$root.$mp.query.type
@@ -39,9 +53,16 @@ export default {
   },
   methods: {
     _loadData () {
-      Goods.getGoods(this.type, this.page).then(res => {
+      Goods.getGoods(this.type, this.page, this.size).then(res => {
         this.goods = this.goods.concat(res)
-        this.lazyLoad = new LazyLoad(this.goods, this)
+        let start = (this.page - 1) * this.size
+        this.lazyLoad = new LazyLoad({
+          data: this.goods,
+          page: this,
+          imagesStart: start,
+          dataStart: start,
+          dataLength: res.length
+        })
       }).catch(ex => {
         this.hasMore = false
       })
@@ -50,7 +71,8 @@ export default {
   components: {
     GoodsList,
     TitlePanel,
-    Search
+    Search,
+    MyLoading
   }
 }
 </script>

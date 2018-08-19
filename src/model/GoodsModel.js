@@ -57,7 +57,7 @@ export class GoodsModel extends BaseModel {
   }
 
   // 获取所有二手 / 自营商品
-  getGoods (type, page) {
+  getGoods (type, page, size = 14) {
     let url = `oldGoods`
     if (parseInt(type) === GoodsType.NEW_GOODS) {
       url = `newGoods`
@@ -66,7 +66,7 @@ export class GoodsModel extends BaseModel {
       url: url,
       data: {
         page: page,
-        size: 14
+        size
       }
     }
     return this.request(params)

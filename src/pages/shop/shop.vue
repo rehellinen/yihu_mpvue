@@ -1,10 +1,10 @@
 <template lang="pug">
 div
   my-loading(:showLoading="showLoading")
-  div.container.shop-container(v-if="!showLoading")
+  div.container.shop-container(v-show="!showLoading")
     search(:pullDown="pullDown")
     div.header-image.header
-      img(src="__IMAGE__/theme/shop@header.jpg")
+      img(src="__IMAGE__/theme/shop@header.png")
     shop-list(:shops="shops")
 </template>
 
@@ -14,16 +14,24 @@ div
   import Search from 'base/search/search'
   import {ShopModel} from 'model/ShopModel'
   import {searchMixin, pageMixin} from 'utils/mixins'
+  import {mapGetters} from 'vuex'
+  import {pageEnum} from 'utils/config'
 
   let Shop = new ShopModel()
 
   export default {
-    mixins: [searchMixin, pageMixin],
     data () {
       return {
-        showLoading: false,
         shops: []
       }
+    },
+    computed: {
+      showLoading () {
+        return this.loadState[pageEnum.SHOP]
+      },
+      ...mapGetters([
+        'loadState'
+      ])
     },
     mounted () {
       this._loadData()
@@ -41,7 +49,8 @@ div
       MyLoading,
       ShopList,
       Search
-    }
+    },
+    mixins: [searchMixin, pageMixin]
   }
 </script>
 
@@ -67,7 +76,7 @@ div
   .header-image
     width: 100%
     height: 435rpx
-    background-color: white
+    background-color: #F9F9F9
     img
       width: 100%
       height: 435rpx
