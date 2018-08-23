@@ -118,20 +118,14 @@ export class GoodsModel extends BaseModel {
   }
 
   // 根据分类获取商品
-  getGoodsByCategoryID (page, id, cb, ecb) {
+  getGoodsByCategoryID (id, page = 1, size = 12) {
     let params = {
       url: 'goods/category/' + id,
       data: {
-        page: page,
-        size: 12
-      },
-      callBack (res) {
-        cb && cb(res)
-      },
-      eCallBack (res) {
-        ecb && ecb(res)
+        page,
+        size
       }
     }
-    this.request(params)
+    return this.request(params)
   }
 }
