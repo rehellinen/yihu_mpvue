@@ -5,12 +5,12 @@
         :class="{selected: index === currentIndex}"
         @click="switchTabs(index)")
         p {{item.name}}
-    div.theme-right
+    scroll-view.theme-right(scroll-y="true", @scrolltolower="lowerLoad")
       img.category-image(:src="categories[currentIndex].image_id.image_url")
       div.text-container
         p {{categories[currentIndex].name}}
       div.goods-container
-        div.single-goods(v-for="item in goods[currentIndex]")
+        div.single-goods(v-for="item in goods[currentIndex]" :key="item.id")
           img.goods-image(:src="item.image_id.image_url")
           p.goods-text {{item.name}}
 </template>
@@ -27,7 +27,9 @@
       return {
         categories: [],
         currentIndex: 0,
-        goods: []
+        goods: [],
+        page: [1],
+        hasMore: [true]
       }
     },
     onLoad () {
@@ -35,6 +37,16 @@
       this._loadData(themeID)
     },
     methods: {
+      lowerLoad () {
+        this.page[this.currentIndex] ? this.page[this.currentIndex]++ : this.page[this.currentIndex] = 1
+        if (this.hasMore[this.currentIndex] === undefined) {
+          this.hasMore[this.currentIndex] = true
+        }
+        console.log(this.page, this.hasMore)
+        if (this.hasMore[this.currentIndex]) {
+          this._loadGoods()
+        }
+      },
       _loadData (themeID) {
         Theme.getCategory(themeID).then(res => {
           this.categories = res
@@ -43,8 +55,13 @@
       },
       _loadGoods () {
         let categoryID = this.categories[this.currentIndex].id
-        Goods.getGoodsByCategoryID(categoryID).then(res => {
+        Goods.getGoodsByCategoryID(categoryID, this.page[this.currentIndex]).then(res => {
+          if (this.goods[this.currentIndex]) {
+            res = this.goods[this.currentIndex].push(res)
+          }
           this.$set(this.goods, this.currentIndex, res)
+        }).catch(ex => {
+          this.hasMore[this.currentIndex] = false
         })
       },
       switchTabs (index) {
@@ -59,6 +76,7 @@
   .theme-container
     display: flex
     min-height: 100vh
+    color: $base-font-color
 
   .theme-left
     border-right: 1rpx solid $lighter-font-color
@@ -80,10 +98,11 @@
   .theme-right
     display: flex
     flex-direction: column
+    height: 100vh
 
   .category-image
     width: 550rpx
-    height: 300rpx
+    height: 600rpx
     margin-left: 25rpx
     margin-top: 25rpx
 
@@ -95,7 +114,7 @@
     font-size: 28rpx
     height: 80rpx
 
-  .text-container text::before, .text-container text::after
+  .text-container p::before, .text-container p::after
     content: ''
     display: inline-block
     position: relative
@@ -118,11 +137,11 @@
     flex-direction: column
     justify-content: flex-start
     align-items: center
-    margin-bottom: 10rpx
+    margin-bottom: 30rpx
 
   .goods-image
-    width: 100rpx
-    height: 100rpx
+    width: 110rpx
+    height: 110rpx
     border-radius: 120rpx
 
   .goods-text
