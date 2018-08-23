@@ -5,14 +5,17 @@
         :class="{selected: index === currentIndex}"
         @click="switchTabs(index)")
         p {{item.name}}
-    scroll-view.theme-right(scroll-y="true", @scrolltolower="lowerLoad")
-      img.category-image(:src="categories[currentIndex].image_id.image_url")
-      div.text-container
-        p {{categories[currentIndex].name}}
-      div.goods-container
-        div.single-goods(v-for="item in goods[currentIndex]" :key="item.id")
-          img.goods-image(:src="item.image_id.image_url")
-          p.goods-text {{item.name}}
+
+    div.theme-right(:style="switchStyle")
+      scroll-view.scroll(scroll-y="true", @scrolltolower="lowerLoad",
+        v-for="(item, index) in categories", :key="index")
+        img.category-image(:src="item.image_id.image_url")
+        div.text-container
+          p {{item.name}}
+        div.goods-container
+          div.single-goods(v-for="(ware,wareIndex) in goods[index]" :key="ware.id")
+            img.goods-image(:src="ware.image_id.image_url")
+            p.goods-text {{ware.name}}
 </template>
 
 <script>
@@ -21,6 +24,7 @@
 
   let Theme = new ThemeModel()
   let Goods = new GoodsModel()
+  const goodsSize = 12
 
   export default {
     data () {
@@ -29,7 +33,8 @@
         currentIndex: 0,
         goods: [],
         page: [1],
-        hasMore: [true]
+        hasMore: [true],
+        switchStyle: ''
       }
     },
     onLoad () {
@@ -42,7 +47,6 @@
         if (this.hasMore[this.currentIndex] === undefined) {
           this.hasMore[this.currentIndex] = true
         }
-        console.log(this.page, this.hasMore)
         if (this.hasMore[this.currentIndex]) {
           this._loadGoods()
         }
@@ -55,9 +59,9 @@
       },
       _loadGoods () {
         let categoryID = this.categories[this.currentIndex].id
-        Goods.getGoodsByCategoryID(categoryID, this.page[this.currentIndex]).then(res => {
+        Goods.getGoodsByCategoryID(categoryID, this.page[this.currentIndex], goodsSize).then(res => {
           if (this.goods[this.currentIndex]) {
-            res = this.goods[this.currentIndex].push(res)
+            res = this.goods[this.currentIndex].concat(res)
           }
           this.$set(this.goods, this.currentIndex, res)
         }).catch(ex => {
@@ -66,6 +70,12 @@
       },
       switchTabs (index) {
         this.currentIndex = index
+        // 过渡动画
+        this.switchStyle = `transform:translate(0, -${index}00vh)`
+        // 只当此tab没有数据时才加载
+        if (!this.goods[index]) {
+          this._loadGoods()
+        }
       }
     }
   }
@@ -75,8 +85,9 @@
   @import "~css/base"
   .theme-container
     display: flex
-    min-height: 100vh
     color: $base-font-color
+    overflow: hidden
+    height: 100vh
 
   .theme-left
     border-right: 1rpx solid $lighter-font-color
@@ -97,12 +108,18 @@
 
   .theme-right
     display: flex
+    flex-wrap: wrap
+    width: 600rpx
+    transition: all 0.5s ease-in-out
+
+  .scroll
+    display: flex
     flex-direction: column
     height: 100vh
 
   .category-image
     width: 550rpx
-    height: 600rpx
+    height: 300rpx
     margin-left: 25rpx
     margin-top: 25rpx
 
@@ -137,7 +154,7 @@
     flex-direction: column
     justify-content: flex-start
     align-items: center
-    margin-bottom: 30rpx
+    margin-bottom: 40rpx
 
   .goods-image
     width: 110rpx
