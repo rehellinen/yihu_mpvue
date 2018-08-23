@@ -10,9 +10,9 @@
       div.text-container
         p {{categories[currentIndex].name}}
       div.goods-container
-        div.single-goods
-          img
-          p test
+        div.single-goods(v-for="item in goods[currentIndex]")
+          img.goods-image(:src="item.image_id.image_url")
+          p.goods-text {{item.name}}
 </template>
 
 <script>
@@ -20,24 +20,32 @@
   import {GoodsModel} from '../../model/GoodsModel'
 
   let Theme = new ThemeModel()
+  let Goods = new GoodsModel()
 
   export default {
     data () {
       return {
         categories: [],
-        currentIndex: 0
+        currentIndex: 0,
+        goods: []
       }
     },
     onLoad () {
       let themeID = this.$root.$mp.query.id
-      Theme.getCategory(themeID).then(res => {
-        this.categories = res
-        this._loadData()
-      })
+      this._loadData(themeID)
     },
     methods: {
-      _loadData () {
-        this.categoryID = this.categories[this.currentIndex].id
+      _loadData (themeID) {
+        Theme.getCategory(themeID).then(res => {
+          this.categories = res
+          this._loadGoods()
+        })
+      },
+      _loadGoods () {
+        let categoryID = this.categories[this.currentIndex].id
+        Goods.getGoodsByCategoryID(categoryID).then(res => {
+          this.$set(this.goods, this.currentIndex, res)
+        })
       },
       switchTabs (index) {
         this.currentIndex = index
