@@ -14,7 +14,7 @@
         p 精 选 主 题
         div.theme-photo-container
           img(v-for="item in themes", :src="item.image_id.image_url"
-            :key="item.image_id.id"
+            :key="item.image_id.id" @click="toTheme(item.id)"
             @load="imageLoaded" :data-type="pageEnum.INDEX")
 
       // 发现鲜货
@@ -78,6 +78,11 @@
       this.oldGoodsLazyLoad.refresh()
     },
     methods: {
+      toTheme (id) {
+        wx.navigateTo({
+          url: `../theme/main?id=${id}`
+        })
+      },
       toGoodsMore (type) {
         wx.navigateTo({
           url: `../goods-more/main?type=${type}`

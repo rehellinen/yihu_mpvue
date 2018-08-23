@@ -31,7 +31,8 @@ export default {
       'pages/order-confirm/main',
       'pages/pay-result/main',
       'pages/shop-detail/main',
-      'pages/edit-info/main'
+      'pages/edit-info/main',
+      'pages/theme/main'
     ],
     tabBar: {
       list: [
