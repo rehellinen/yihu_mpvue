@@ -6,10 +6,12 @@ div
     div.header-image.header
       img(src="__IMAGE__/theme/shop@header.png")
     shop-list(:shops="shops")
+  page-loading(:hasMore="hasMore")
 </template>
 
 <script>
   import MyLoading from 'base/my-loading/my-loading'
+  import PageLoading from '../../base/page-loading/page-loading'
   import ShopList from 'components/shop-list/shop-list'
   import Search from 'base/search/search'
   import {ShopModel} from 'model/ShopModel'
@@ -22,7 +24,8 @@ div
   export default {
     data () {
       return {
-        shops: []
+        shops: [],
+        hasMore: true
       }
     },
     computed: {
@@ -48,7 +51,8 @@ div
     components: {
       MyLoading,
       ShopList,
-      Search
+      Search,
+      PageLoading
     },
     mixins: [searchMixin, pageMixin]
   }
@@ -71,7 +75,6 @@ div
       color: whitesmoke
   .shop-container
     background-color: #F9F9F9
-    padding-bottom: $card-margin-left
 
   .header-image
     width: 100%
