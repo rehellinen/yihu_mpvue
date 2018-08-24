@@ -2,11 +2,12 @@ import {BaseModel} from './BaseModel.js'
 
 export class ShopModel extends BaseModel {
   // 获取自营商家信息
-  getShops (page) {
+  getShops (page, size = 7) {
     let params = {
       url: 'shop',
       data: {
-        page: page
+        page,
+        size
       }
     }
     return this.request(params)

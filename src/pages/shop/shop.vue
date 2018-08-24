@@ -18,8 +18,10 @@ div
   import {searchMixin, pageMixin} from 'utils/mixins'
   import {mapGetters} from 'vuex'
   import {pageEnum} from 'utils/config'
+  import {LazyLoad} from '../../utils/lazyload'
 
   let Shop = new ShopModel()
+  const shopSize = 8
 
   export default {
     data () {
@@ -41,8 +43,17 @@ div
     },
     methods: {
       _loadData () {
-        Shop.getShops(this.page).then(res => {
+        Shop.getShops(this.page, shopSize).then(res => {
           this.shops = this.shops.concat(res)
+
+          let start = (this.page - 1) * shopSize
+          this.lazyLoad = new LazyLoad({
+            data: this.shops,
+            page: this,
+            imagesStart: start,
+            dataStart: start,
+            dataLength: res.length
+          })
         }).catch(ex => {
           this.hasMore = false
         })

@@ -25,5 +25,8 @@ export const mutations = {
   [types.RESET_LOADING_STATE] (state, type) {
     state.loadState[type].loaded = 0
     state.loadState[type].showLoading = true
+  },
+  [types.SET_IMAGE_URL] (state, {data, type}) {
+    state.loadState[type].images = data
   }
 }

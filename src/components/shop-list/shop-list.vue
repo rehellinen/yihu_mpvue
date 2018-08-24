@@ -3,20 +3,20 @@
     div.shop-container(v-for="(item, index) in shops" :key="index")
       div.up(@click="toShopDetail(item.id)")
         div
-          img.shop-avatar(:src="item.avatar_image_id.image_url"
+          img.shop-avatar.lazy(:src="item.lazy_url",
             @load="imageLoaded" :data-type="pageEnum.SHOP")
           p.avatar-text {{item.name}}
         img.come-image(src="__IMAGE__/theme/shop@come.png")
       div.down
         div.left
-          img(:src="item.main_image_id[0].image_id.image_url",
+          img.lazy(:src="item.lazy_url",
             v-if="item.main_image_id[0]" mode="aspectFill"
             @click="toGoodsDetail(item.main_image_id[0].id)")
         div.right
-          img.right1-image(:src="item.main_image_id[1].image_id.image_url",
+          img.right1-image.lazy(:src="item.lazy_url",
             v-if="item.main_image_id[1]" mode="aspectFill"
             @click="toGoodsDetail(item.main_image_id[0].id)")
-          img.right2-image(:src="item.main_image_id[2].image_id.image_url",
+          img.right2-image.lazy(:src="item.lazy_url",
             v-if="item.main_image_id[2]" mode="aspectFill"
             @click="toGoodsDetail(item.main_image_id[0].id)")
 </template>

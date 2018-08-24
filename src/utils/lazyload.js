@@ -76,10 +76,26 @@ export class LazyLoad {
   }
 
   _processData () {
+    let pageEnum = this.page.$config.pageEnum
+    let images = this.page.$store.state.loadState[pageEnum.SHOP].images
+
     for (let i = this.dataStart; i < (this.dataStart + this.length); i++) {
       let newData = this.data[i]
-      newData.lazy_url = this.lazyImage
+      newData.main_image_id = newData.main_image_id.slice(0, 3)
       this.page.$set(this.data, i, newData)
     }
+    console.log(this.data)
+    this._getAllImagesUrl()
+    this.page.$store.commit('SET_IMAGE_URL', {
+      data: images,
+      type: pageEnum.SHOP
+    })
+  }
+
+  _getAllImagesUrl () {
+    let pattern = new RegExp(/https:\/\/20298479.rehellinen.cn[^"]+/, 'g')
+    let data = JSON.stringify(this.data)
+
+    return data.match(pattern)
   }
 }

@@ -3,11 +3,17 @@
  */
 import store from '../store/index'
 import {types} from '../store/mutation-types'
-import {pageEnum} from 'utils/config'
+import {pageEnum} from './config'
 import {CartModel} from '../model/CartModel'
 
 let Cart = new CartModel()
 
+/**
+ * total -> 该页面一开始需要展示的图片
+ * loaded -> 以及加载出的图片
+ * showLoading -> 是否展示加载中的图标
+ * images -> 存放图片懒加载的实际URL
+ */
 let images = {
   [pageEnum.INDEX]: {
     total: 9,
@@ -22,7 +28,8 @@ let images = {
   [pageEnum.SHOP]: {
     total: 5,
     loaded: 0,
-    showLoading: true
+    showLoading: true,
+    images: []
   },
   [pageEnum.GOODS_DETAIL]: {
     total: 1,
