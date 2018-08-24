@@ -54,7 +54,9 @@ div
             dataStart: start,
             dataLength: res.length
           })
+          console.log(this.lazyLoad)
         }).catch(ex => {
+          console.log(ex)
           this.hasMore = false
         })
       }

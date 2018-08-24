@@ -25,10 +25,10 @@ export class LazyLoad {
     this.ImagesStart = imagesStart
     // 传入的数据从第几个开始
     this.dataStart = dataStart
-    // 懒加载的默认图片
-    this.lazyImage = '__IMAGE__/theme/loading.jpg'
     // 用于防止页面刷新过多次数
     this.stop = false
+    // 加载中图片路径
+    this.lazyImage = '__IMAGE__/theme/loading.jpg'
     // 处理数据
     this._processData()
     this.interval = setInterval(() => {
@@ -46,20 +46,23 @@ export class LazyLoad {
     }
 
     this.stop = true
+    let pageEnum = this.page.$config.pageEnum
+    let images = this.page.$store.state.loadState[pageEnum.SHOP].images
 
     this.images.boundingClientRect(res => {
-      let i = this.index + this.ImagesStart
-      let newData = this.data[this.dataStart + this.index]
-      if (!newData || !res[i]) {
+      let imageIndex = this.index + this.ImagesStart
+      let dataIndex = this.index + this.dataStart
+      let newData = this.data[dataIndex]
+      if (!newData || !res[imageIndex]) {
         setTimeout(() => {
           this.stop = false
         }, 100)
         return
       }
-      if (res[i].top < (this.windowHeight + 40)) {
+      if (res[imageIndex].top < (this.windowHeight + 40)) {
         // 更改图片URL
-        newData.lazy_url = newData.image_id.image_url
         newData.transition = 'afterShow'
+        newData.lazy_url = images[imageIndex]
         this.page.$set(this.data, this.index, newData)
 
         if (this.index >= this.length - 1) {
@@ -82,12 +85,12 @@ export class LazyLoad {
     for (let i = this.dataStart; i < (this.dataStart + this.length); i++) {
       let newData = this.data[i]
       newData.main_image_id = newData.main_image_id.slice(0, 3)
+      newData.lazy_url = this.lazyImage
       this.page.$set(this.data, i, newData)
     }
-    console.log(this.data)
-    this._getAllImagesUrl()
+
     this.page.$store.commit('SET_IMAGE_URL', {
-      data: images,
+      data: images.concat(this._getAllImagesUrl()),
       type: pageEnum.SHOP
     })
   }
