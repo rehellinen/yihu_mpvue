@@ -70,27 +70,28 @@ export class LazyLoad {
     let images = this.page.$store.state.loadState[pageEnum.SHOP].images
     wx.createSelectorQuery().selectAll('.lazy').boundingClientRect(res => {
       // 索引相关
-      let imageIndex = this.index + this.ImagesStart
-      let dataIndex = Math.floor(this.index / this.per) + this.dataStart
-      let lazyIndex = imageIndex % this.per
-      console.log(imageIndex, dataIndex, lazyIndex)
-      let newData = this.data[dataIndex]
-      if (!newData || !res[imageIndex]) {
-        setTimeout(() => {
-          this.stop = false
-        }, 100)
-        return
-      }
-      if (res[imageIndex].top < (this.windowHeight + 40)) {
-        newData.transition = 'afterShow'
-        newData.lazy_url[lazyIndex] = images[imageIndex]
-        this.page.$set(this.data, dataIndex, newData)
-        if (this.index >= (this.length * this.per - 1)) {
-          clearInterval(this.interval)
-          this.isLoadedAll = true
+      for (let i = this.index + this.ImagesStart; i < this.length * this.per; i++) {
+        let imageIndex = this.index + this.ImagesStart
+        let dataIndex = Math.floor(this.index / this.per) + this.dataStart
+        let lazyIndex = imageIndex % this.per
+        let newData = this.data[dataIndex]
+        if (!newData || !res[imageIndex]) {
+          setTimeout(() => {
+            this.stop = false
+          }, 100)
           return
         }
-        this.index++
+        if (res[imageIndex].top < (this.windowHeight + 40)) {
+          newData.transition = 'afterShow'
+          newData.lazy_url[lazyIndex] = images[imageIndex]
+          this.page.$set(this.data, dataIndex, newData)
+          if (this.index >= (this.length * this.per - 1)) {
+            clearInterval(this.interval)
+            this.isLoadedAll = true
+            return
+          }
+          this.index++
+        }
       }
     }).exec()
     setTimeout(() => {
