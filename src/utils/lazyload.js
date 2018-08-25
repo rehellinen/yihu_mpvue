@@ -2,39 +2,54 @@
  *  lazyload.js
  *  Create By rehellinen
  *  Create On 2018/8/13 20:01
+ *  介绍：
+ *  该类为小程序图片懒加载的实现
+ *  一个进行数据绑定的数据需要对应一个LazyLoad实例
  */
 export class LazyLoad {
   /**
    * 构造函数
+   * @param data 需要监听的数据
+   * @param page 页面对象
+   * @param imagesStart 图片第几个开始
+   * @param dataStart 数据第几个开始
+   * @param dataLength 需要监听的数据的长度
+   * @param per 数据数组每一个项包含的图片数量
    */
   constructor ({data, page, imagesStart = 0, dataStart = 0, dataLength, per = 1}) {
-    // 当前页面对象
-    this.page = page
-    // 图片的NodesRef对象实例
-    this.images = wx.createSelectorQuery().selectAll('.lazy')
-    // 进行数据绑定的数据
     this.data = data
-    // 数据绑定的数据的长度
+    this.page = page
+    this.ImagesStart = imagesStart
+    this.dataStart = dataStart
     this.length = dataLength || data.length
+    this.per = per
     // 获取可使用窗口高度
     this.windowHeight = wx.getSystemInfoSync().windowHeight
     // 是否加载完成
     this.isLoadedAll = false
     // 遍历的序号
     this.index = 0
-    // 图片从第几个开始
-    this.ImagesStart = imagesStart
-    // 传入的数据从第几个开始
-    this.dataStart = dataStart
     // 用于防止页面刷新过多次数
     this.stop = false
     // 加载中图片路径
     this.lazyImage = '__IMAGE__/theme/loading.jpg'
-    // 每个数据中含有的图片数量
-    this.per = per
     // 处理数据
     this._processData()
     // 每100ms刷新一次页面
+    this.interval = setInterval(() => {
+      this.refresh()
+    }, 20)
+  }
+
+  /**
+   * 数据变化后进行重置
+   */
+  reset ({data, dataLength}) {
+    this.data = data
+    this.length = dataLength || data.length
+    this.isLoadedAll = false
+    this.stop = false
+    this._processData()
     this.interval = setInterval(() => {
       this.refresh()
     }, 100)
@@ -48,17 +63,17 @@ export class LazyLoad {
     if (this.isLoadedAll || this.stop) {
       return
     }
+
     this.stop = true
-    console.log('wai')
     // 获取store中的images
     let pageEnum = this.page.$config.pageEnum
     let images = this.page.$store.state.loadState[pageEnum.SHOP].images
-    this.images.boundingClientRect(res => {
+    wx.createSelectorQuery().selectAll('.lazy').boundingClientRect(res => {
       // 索引相关
       let imageIndex = this.index + this.ImagesStart
       let dataIndex = Math.floor(this.index / this.per) + this.dataStart
       let lazyIndex = imageIndex % this.per
-      console.log('nei')
+      console.log(imageIndex, dataIndex, lazyIndex)
       let newData = this.data[dataIndex]
       if (!newData || !res[imageIndex]) {
         setTimeout(() => {
@@ -85,18 +100,18 @@ export class LazyLoad {
 
   _processData () {
     let pageEnum = this.page.$config.pageEnum
-    let images = this.page.$store.state.loadState[pageEnum.SHOP].images
-
     for (let i = this.dataStart; i < (this.dataStart + this.length); i++) {
       let newData = this.data[i]
-      newData.lazy_url = []
-      for (let i = 0; i < this.per; i++) {
-        newData.lazy_url[i] = this.lazyImage
+      if (!newData.lazy_url) {
+        newData.lazy_url = []
+        for (let i = 0; i < this.per; i++) {
+          newData.lazy_url[i] = this.lazyImage
+        }
+        this.page.$set(this.data, i, newData)
       }
-      this.page.$set(this.data, i, newData)
     }
     this.page.$store.commit('SET_IMAGE_URL', {
-      data: images.concat(this._getAllImagesUrl()),
+      data: this._getAllImagesUrl(),
       type: pageEnum.SHOP
     })
   }

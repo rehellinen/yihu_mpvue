@@ -43,19 +43,30 @@ div
       this._loadData()
     },
     methods: {
+      onPageScroll () {
+        this.lazyLoad.refresh()
+      },
       _loadData () {
         Shop.getShops(this.page, shopSize).then(res => {
           this.shops = Array.concat(this.shops, res)
           this._processData()
           let start = (this.page - 1) * shopSize
-          this.lazyLoad = new LazyLoad({
-            data: this.shops,
-            page: this,
-            imagesStart: start * 4,
-            dataStart: start,
-            dataLength: 8,
-            per: 4
-          })
+          if (this.lazyLoad) {
+            this.lazyLoad.reset({
+              data: this.shops,
+              imagesStart: start * 4,
+              dataStart: start
+            })
+          } else {
+            this.lazyLoad = new LazyLoad({
+              data: this.shops,
+              page: this,
+              imagesStart: start * 4,
+              dataStart: start,
+              dataLength: res.length,
+              per: 4
+            })
+          }
         }).catch(ex => {
           console.log(ex)
           this.hasMore = false
