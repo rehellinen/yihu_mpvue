@@ -8,6 +8,7 @@ export class LazyLoad {
    * 构造函数
    */
   constructor ({data, page, imagesStart = 0, dataStart = 0, dataLength, per = 1}) {
+    // 当前页面对象
     this.page = page
     // 图片的NodesRef对象实例
     this.images = wx.createSelectorQuery().selectAll('.lazy')
@@ -29,9 +30,11 @@ export class LazyLoad {
     this.stop = false
     // 加载中图片路径
     this.lazyImage = '__IMAGE__/theme/loading.jpg'
+    // 每个数据中含有的图片数量
     this.per = per
     // 处理数据
     this._processData()
+    // 每100ms刷新一次页面
     this.interval = setInterval(() => {
       this.refresh()
     }, 100)
@@ -45,16 +48,17 @@ export class LazyLoad {
     if (this.isLoadedAll || this.stop) {
       return
     }
-
     this.stop = true
+    console.log('wai')
+    // 获取store中的images
     let pageEnum = this.page.$config.pageEnum
     let images = this.page.$store.state.loadState[pageEnum.SHOP].images
-
     this.images.boundingClientRect(res => {
+      // 索引相关
       let imageIndex = this.index + this.ImagesStart
       let dataIndex = Math.floor(this.index / this.per) + this.dataStart
       let lazyIndex = imageIndex % this.per
-
+      console.log('nei')
       let newData = this.data[dataIndex]
       if (!newData || !res[imageIndex]) {
         setTimeout(() => {
@@ -63,7 +67,6 @@ export class LazyLoad {
         return
       }
       if (res[imageIndex].top < (this.windowHeight + 40)) {
-        // 更改图片URL
         newData.transition = 'afterShow'
         newData.lazy_url[lazyIndex] = images[imageIndex]
         this.page.$set(this.data, dataIndex, newData)
@@ -81,7 +84,6 @@ export class LazyLoad {
   }
 
   _processData () {
-    console.log(this.data[1])
     let pageEnum = this.page.$config.pageEnum
     let images = this.page.$store.state.loadState[pageEnum.SHOP].images
 
@@ -101,8 +103,7 @@ export class LazyLoad {
 
   _getAllImagesUrl () {
     let pattern = new RegExp(/image_url":"[^"]+/, 'g')
-    let data = JSON.stringify(this.data)
-
+    let data = JSON.stringify(this.data.slice(this.dataStart, this.dataStart + this.length))
     let res = data.match(pattern)
     for (let i = 0; i < res.length; i++) {
       res[i] = res[i].split(':"')[1]

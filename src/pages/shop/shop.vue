@@ -45,14 +45,15 @@ div
     methods: {
       _loadData () {
         Shop.getShops(this.page, shopSize).then(res => {
-          this.shops = Array.concat(res, this.shops)
+          this.shops = Array.concat(this.shops, res)
           this._processData()
           let start = (this.page - 1) * shopSize
           this.lazyLoad = new LazyLoad({
             data: this.shops,
             page: this,
-            imagesStart: start,
+            imagesStart: start * 4,
             dataStart: start,
+            dataLength: 8,
             per: 4
           })
         }).catch(ex => {
