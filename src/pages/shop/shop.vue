@@ -22,6 +22,7 @@ div
 
   let Shop = new ShopModel()
   const shopSize = 8
+  const imageUrl = '__IMAGE__/icon/no-goods.png'
 
   export default {
     data () {
@@ -44,20 +45,34 @@ div
     methods: {
       _loadData () {
         Shop.getShops(this.page, shopSize).then(res => {
-          this.shops = this.shops.concat(res)
-
+          this.shops = Array.concat(res, this.shops)
+          this._processData()
           let start = (this.page - 1) * shopSize
           this.lazyLoad = new LazyLoad({
             data: this.shops,
             page: this,
             imagesStart: start,
             dataStart: start,
-            dataLength: res.length
+            per: 4
           })
-          console.log(this.lazyLoad)
         }).catch(ex => {
           console.log(ex)
           this.hasMore = false
+        })
+      },
+      _processData () {
+        let imageObj = {image_id: {image_url: imageUrl}}
+        this.shops.forEach(function (item) {
+          let main = item.main_image_id
+          if (main.length >= 3) {
+            item.main_image_id = item.main_image_id.slice(0, 3)
+          } else if (main.length === 2) {
+            item.main_image_id.push(imageObj)
+          } else if (main.length === 1) {
+            item.main_image_id.push(imageObj, imageObj)
+          } else {
+            item.main_image_id.push(imageObj, imageObj, imageObj)
+          }
         })
       }
     },

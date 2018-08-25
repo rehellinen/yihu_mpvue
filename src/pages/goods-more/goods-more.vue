@@ -61,7 +61,7 @@ export default {
           page: this,
           imagesStart: start,
           dataStart: start,
-          dataLength: res.length
+          dataLength: res.length * 4
         })
       }).catch(ex => {
         this.hasMore = false

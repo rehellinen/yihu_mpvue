@@ -7,7 +7,7 @@ export class LazyLoad {
   /**
    * 构造函数
    */
-  constructor ({data, page, imagesStart = 0, dataStart = 0, dataLength}) {
+  constructor ({data, page, imagesStart = 0, dataStart = 0, dataLength, per = 1}) {
     this.page = page
     // 图片的NodesRef对象实例
     this.images = wx.createSelectorQuery().selectAll('.lazy')
@@ -29,6 +29,7 @@ export class LazyLoad {
     this.stop = false
     // 加载中图片路径
     this.lazyImage = '__IMAGE__/theme/loading.jpg'
+    this.per = per
     // 处理数据
     this._processData()
     this.interval = setInterval(() => {
@@ -51,7 +52,9 @@ export class LazyLoad {
 
     this.images.boundingClientRect(res => {
       let imageIndex = this.index + this.ImagesStart
-      let dataIndex = this.index + this.dataStart
+      let dataIndex = Math.floor(this.index / this.per) + this.dataStart
+      let lazyIndex = imageIndex % this.per
+
       let newData = this.data[dataIndex]
       if (!newData || !res[imageIndex]) {
         setTimeout(() => {
@@ -62,10 +65,9 @@ export class LazyLoad {
       if (res[imageIndex].top < (this.windowHeight + 40)) {
         // 更改图片URL
         newData.transition = 'afterShow'
-        newData.lazy_url = images[imageIndex]
-        this.page.$set(this.data, this.index, newData)
-
-        if (this.index >= this.length - 1) {
+        newData.lazy_url[lazyIndex] = images[imageIndex]
+        this.page.$set(this.data, dataIndex, newData)
+        if (this.index >= (this.length * this.per - 1)) {
           clearInterval(this.interval)
           this.isLoadedAll = true
           return
@@ -79,16 +81,18 @@ export class LazyLoad {
   }
 
   _processData () {
+    console.log(this.data[1])
     let pageEnum = this.page.$config.pageEnum
     let images = this.page.$store.state.loadState[pageEnum.SHOP].images
 
     for (let i = this.dataStart; i < (this.dataStart + this.length); i++) {
       let newData = this.data[i]
-      newData.main_image_id = newData.main_image_id.slice(0, 3)
-      newData.lazy_url = this.lazyImage
+      newData.lazy_url = []
+      for (let i = 0; i < this.per; i++) {
+        newData.lazy_url[i] = this.lazyImage
+      }
       this.page.$set(this.data, i, newData)
     }
-
     this.page.$store.commit('SET_IMAGE_URL', {
       data: images.concat(this._getAllImagesUrl()),
       type: pageEnum.SHOP
@@ -96,9 +100,14 @@ export class LazyLoad {
   }
 
   _getAllImagesUrl () {
-    let pattern = new RegExp(/https:\/\/20298479.rehellinen.cn[^"]+/, 'g')
+    let pattern = new RegExp(/image_url":"[^"]+/, 'g')
     let data = JSON.stringify(this.data)
 
-    return data.match(pattern)
+    let res = data.match(pattern)
+    for (let i = 0; i < res.length; i++) {
+      res[i] = res[i].split(':"')[1]
+    }
+
+    return res
   }
 }
