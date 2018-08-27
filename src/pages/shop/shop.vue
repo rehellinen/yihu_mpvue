@@ -43,9 +43,6 @@ div
       this._loadData()
     },
     methods: {
-      onPageScroll () {
-        this.lazyLoad.refresh()
-      },
       _loadData () {
         Shop.getShops(this.page, shopSize).then(res => {
           this.shops = Array.concat(this.shops, res)

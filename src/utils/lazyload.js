@@ -17,6 +17,7 @@ export class LazyLoad {
    * @param per 数据数组每一个项包含的图片数量
    */
   constructor ({data, page, imagesStart, dataStart, dataLength, per}) {
+    console.log(imagesStart)
     this.data = data
     this.page = page
     this.ImagesStart = imagesStart || 0
@@ -34,13 +35,13 @@ export class LazyLoad {
     // 用于防止页面刷新过多次数
     this.stop = false
     // 加载中图片路径
-    this.lazyImage = '__IMAGE__/theme/loading.jpg'
+    this.lazyImage = '__IMAGE__/icon/no-goods.png'
     // 处理数据
     this._processData()
     // 每100ms刷新一次页面
     this.interval = setInterval(() => {
       this.refresh()
-    }, 20)
+    }, 100)
   }
 
   /**
@@ -65,15 +66,14 @@ export class LazyLoad {
     if (this.isLoadedAll || this.stop) {
       return
     }
-
     this.stop = true
-
     wx.createSelectorQuery().selectAll('.lazy').boundingClientRect(res => {
       // 索引相关
-      for (let i = this.index + this.ImagesStart; i < this.length * this.per; i++) {
+      for (let i = this.index + this.ImagesStart; i < this.ImagesStart + this.length * this.per; i++) {
         let imageIndex = this.index + this.ImagesStart
         let dataIndex = Math.floor(this.index / this.per) + this.dataStart
         let lazyIndex = imageIndex % this.per
+        console.log(imageIndex, dataIndex, lazyIndex)
         let newData = this.data[dataIndex]
         if (!newData || !res[imageIndex]) {
           setTimeout(() => {
@@ -83,7 +83,7 @@ export class LazyLoad {
         }
         if (res[imageIndex].top < (this.windowHeight + 40)) {
           newData.transition = 'afterShow'
-          newData.lazy_url[lazyIndex] = this.images[imageIndex]
+          newData.lazy_url[lazyIndex] = this.images[this.index]
           this.page.$set(this.data, dataIndex, newData)
           if (this.index >= (this.length * this.per - 1)) {
             clearInterval(this.interval)

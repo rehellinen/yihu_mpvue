@@ -73,10 +73,6 @@
     onLoad () {
       this._getData()
     },
-    onPageScroll (opt) {
-      this.newGoodsLazyLoad.refresh()
-      this.oldGoodsLazyLoad.refresh()
-    },
     methods: {
       toTheme (id) {
         wx.navigateTo({

@@ -2,7 +2,7 @@
 div.goods-list-container(:style="style")
   div.goods-container(v-for="(item, index) in goods", :key="item.id"
     @click="toGoodsDetail(index)")
-    img.lazy(:src="item.lazy_url" mode='aspectFill'
+    img.lazy(:src="item.lazy_url[0]" mode='aspectFill'
       :data-index="index", :class="item.transition"
       @load="imageLoaded" :data-type="from")
     div.text-container
