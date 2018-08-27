@@ -21,4 +21,12 @@ export class ShopModel extends BaseModel {
 
     return this.request(params)
   }
+
+  getSellerByID (id) {
+    let params = {
+      url: 'seller/' + id
+    }
+
+    return this.request(params)
+  }
 }

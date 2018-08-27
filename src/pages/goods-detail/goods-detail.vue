@@ -48,21 +48,24 @@
       div.photo-text-detail
         switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs")
         div.switch-container(:style="switchStyle")
+          div.card.shop-info-container
+            seller-info(:seller="seller")
           div.card.detail-info-container
             p(v-if="goods.description") {{goods.description}}
             p.no-goods-desc(v-else) 暂无商品介绍
-          div.card.shop-info-container
-            p 345
 </template>
 
 <script>
 import {GoodsModel} from 'model/GoodsModel'
 import {CartModel} from 'model/CartModel'
+import {ShopModel} from 'model/ShopModel'
 import SwitchTab from 'base/switch-tab/switch-tab'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import MyLoading from 'base/my-loading/my-loading'
+import SellerInfo from 'base/seller-info/seller-info'
 
 let Goods = new GoodsModel()
+let Shop = new ShopModel()
 
 export default {
   data () {
@@ -73,13 +76,14 @@ export default {
       isShake: false,
       translateStyle: '',
       switchStyle: '',
-      pageEnum: this.$config.pageEnum
+      pageEnum: this.$config.pageEnum,
+      seller: {}
     }
   },
   onShow () {
     let {id, type} = this.$root.$mp.query
     this.selectedCount = 1
-    this._getData(id, type)
+    this._loadData(id, type)
   },
   onUnload () {
     this.goods = {}
@@ -163,10 +167,19 @@ export default {
         count: this.selectedCount
       })
     },
-    _getData (id, type) {
+    _loadData (id, type) {
       Goods.getGoodsDetail(id, type).then((res) => {
         wx.setNavigationBarTitle({title: res.name})
         this.goods = res
+        if (parseInt(type) === this.$config.GoodsType.NEW_GOODS) {
+          Shop.getShopByID(res.foreign_id).then(res => {
+            this.seller = res
+          })
+        } else {
+          Shop.getSellerByID(res.foreign_id).then(res => {
+            this.seller = res
+          })
+        }
       })
     },
     ...mapActions([
@@ -178,7 +191,8 @@ export default {
   },
   components: {
     SwitchTab,
-    MyLoading
+    MyLoading,
+    SellerInfo
   }
 }
 </script>
@@ -188,6 +202,7 @@ export default {
   .detail-container
     background-color: #f9f9f9
     min-height: 100vh
+    padding-bottom: 20rpx
 
   .cart-container
     position: fixed
