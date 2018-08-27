@@ -17,7 +17,6 @@ div
   import {ShopModel} from 'model/ShopModel'
   import {searchMixin, pageMixin} from 'utils/mixins'
   import {mapGetters} from 'vuex'
-  import {pageEnum} from 'utils/config'
   import {LazyLoad} from '../../utils/lazyload'
 
   let Shop = new ShopModel()
@@ -33,7 +32,7 @@ div
     },
     computed: {
       showLoading () {
-        return this.loadState[pageEnum.SHOP]
+        return this.loadState[this.$config.pageEnum.SHOP]
       },
       ...mapGetters([
         'loadState'

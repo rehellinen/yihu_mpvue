@@ -42,7 +42,6 @@
   import {LazyLoad} from 'utils/lazyload'
   import Search from 'base/search/search'
   import {searchMixin} from 'utils/mixins'
-  import {GoodsType, pageEnum} from 'utils/config'
   import {mapGetters} from 'vuex'
 
   let Banner = new BannerModel()
@@ -58,13 +57,13 @@
         newGoods: [],
         oldGoods: [],
         goodsImages: [],
-        GoodsType,
-        pageEnum
+        GoodsType: this.$config.GoodsType,
+        pageEnum: this.$config.pageEnum
       }
     },
     computed: {
       showLoading () {
-        return this.loadState[pageEnum.INDEX]
+        return this.loadState[this.$config.pageEnum.INDEX]
       },
       ...mapGetters([
         'loadState'

@@ -73,7 +73,6 @@ export class LazyLoad {
         let imageIndex = this.index + this.ImagesStart
         let dataIndex = Math.floor(this.index / this.per) + this.dataStart
         let lazyIndex = imageIndex % this.per
-        console.log(imageIndex, dataIndex, lazyIndex)
         let newData = this.data[dataIndex]
         if (!newData || !res[imageIndex]) {
           setTimeout(() => {

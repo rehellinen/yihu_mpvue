@@ -48,9 +48,10 @@
       div.photo-text-detail
         switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs")
         div.switch-container(:style="switchStyle")
-          div.detail-info-container
-            p {{goods.description}}
-          div.shop-info-container
+          div.card.detail-info-container
+            p(v-if="goods.description") {{goods.description}}
+            p.no-goods-desc(v-else) 暂无商品介绍
+          div.card.shop-info-container
             p 345
 </template>
 
@@ -60,7 +61,6 @@ import {CartModel} from 'model/CartModel'
 import SwitchTab from 'base/switch-tab/switch-tab'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import MyLoading from 'base/my-loading/my-loading'
-import {pageEnum} from 'utils/config'
 
 let Goods = new GoodsModel()
 
@@ -73,7 +73,7 @@ export default {
       isShake: false,
       translateStyle: '',
       switchStyle: '',
-      pageEnum
+      pageEnum: this.$config.pageEnum
     }
   },
   onShow () {
@@ -83,11 +83,11 @@ export default {
   },
   onUnload () {
     this.goods = {}
-    this.resetLoadingState(pageEnum.GOODS_DETAIL)
+    this.resetLoadingState(this.$config.pageEnum.GOODS_DETAIL)
   },
   computed: {
     showLoading () {
-      return this.loadState[pageEnum.GOODS_DETAIL]
+      return this.loadState[this.$config.pageEnum.GOODS_DETAIL]
     },
     ...mapGetters([
       'loadState'
@@ -348,11 +348,15 @@ export default {
   .switch-container
     display: flex
     flex-wrap: nowrap
-    background-color: white
     width: 200vw
     transition: all 0.4s ease-in-out
   .detail-info-container
-    width: 100vw
+    font-size: $small-font-size
+    p
+      margin: 20rpx 15rpx
   .shop-info-container
-    width: 100vw
+    margin-left: 40rpx
+  .no-goods-desc
+    text-align: center
+    margin: 30rpx 0
 </style>
