@@ -31,9 +31,6 @@ export default {
     }
   },
   mixins: [searchMixin, pageMixin],
-  onPageScroll () {
-    this.lazyLoad.refresh()
-  },
   computed: {
     showLoading () {
       return this.loadState[pageEnum.GOODS_MORE]
@@ -55,14 +52,18 @@ export default {
     _loadData () {
       Goods.getGoods(this.type, this.page, this.size).then(res => {
         this.goods = this.goods.concat(res)
-        let start = (this.page - 1) * this.size
-        this.lazyLoad = new LazyLoad({
-          data: this.goods,
-          page: this,
-          imagesStart: start,
-          dataStart: start,
-          dataLength: res.length * 4
-        })
+        // let start = (this.page - 1) * this.size
+        if (this.lazyLoad) {
+          this.lazyLoad.reset({
+            data: this.goods
+          })
+        } else {
+          this.lazyLoad = new LazyLoad({
+            data: this.goods,
+            page: this,
+            dataLength: res.length
+          })
+        }
       }).catch(ex => {
         this.hasMore = false
       })
