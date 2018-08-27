@@ -28,7 +28,6 @@
 <script>
 import TitlePanel from 'base/title-panel/title-panel'
 import {UserModel} from 'model/UserModel'
-import {toast} from 'utils/utils'
 
 let User = new UserModel()
 
@@ -48,7 +47,10 @@ export default {
     formSubmit (event) {
       let data = event.mp.detail.value
       User.updateBuyerInfo(data).then(res => {
-        toast('修改信息成功')
+        wx.showToast({
+          title: '修改信息成功',
+          image: this.$config.iconType.SUCCESS
+        })
       })
     }
   },
@@ -95,7 +97,6 @@ export default {
   .submit-btn
     width: 89%
     margin: 50rpx 5.4%
-    height: 75rpx
 
   .submit-btn p
     font-size: $normal-font-size
