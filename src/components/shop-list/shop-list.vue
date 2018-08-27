@@ -4,23 +4,24 @@
       div.up(@click="toShopDetail(item.id)")
         div
           img.shop-avatar.lazy(:src="item.lazy_url[0]",
-            @load="imageLoaded" :data-type="pageEnum.SHOP")
+            @load="imageLoaded" :data-type="pageEnum.SHOP"
+            :class="{afterShow: item.transition}")
           p.avatar-text {{item.name}}
         img.come-image(src="__IMAGE__/theme/shop@come.png")
       div.down
         div.left
           img.lazy(:src="item.lazy_url[1]",
             v-if="item.main_image_id[0]" mode="aspectFill"
-            :class="{disabled : !item.main_image_id[0].id}"
+            :class="{disabled : !item.main_image_id[0].id, afterShow: item.transition}"
             @click="toGoodsDetail(item.main_image_id[0].id)")
         div.right
           img.right1-image.lazy(:src="item.lazy_url[2]",
             v-if="item.main_image_id[1]" mode="aspectFill"
-            :class="{disabled : !item.main_image_id[1].id}"
+            :class="{disabled : !item.main_image_id[1].id, afterShow: item.transition}"
             @click="toGoodsDetail(item.main_image_id[1].id)")
           img.right2-image.lazy(:src="item.lazy_url[3]",
             v-if="item.main_image_id[2]" mode="aspectFill"
-            :class="{disabled : !item.main_image_id[2].id}"
+            :class="{disabled : !item.main_image_id[2].id, afterShow: item.transition}"
             @click="toGoodsDetail(item.main_image_id[2].id)")
 </template>
 

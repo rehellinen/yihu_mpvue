@@ -28,8 +28,7 @@ let images = {
   [pageEnum.SHOP]: {
     total: 5,
     loaded: 0,
-    showLoading: true,
-    images: []
+    showLoading: true
   },
   [pageEnum.GOODS_DETAIL]: {
     total: 1,

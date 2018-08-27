@@ -16,13 +16,15 @@ export class LazyLoad {
    * @param dataLength 需要监听的数据的长度
    * @param per 数据数组每一个项包含的图片数量
    */
-  constructor ({data, page, imagesStart = 0, dataStart = 0, dataLength, per = 1}) {
+  constructor ({data, page, imagesStart, dataStart, dataLength, per}) {
     this.data = data
     this.page = page
-    this.ImagesStart = imagesStart
-    this.dataStart = dataStart
+    this.ImagesStart = imagesStart || 0
+    this.dataStart = dataStart || 0
     this.length = dataLength || data.length
-    this.per = per
+    // 保存真实图片链接
+    this.images = []
+    this.per = per || 1
     // 获取可使用窗口高度
     this.windowHeight = wx.getSystemInfoSync().windowHeight
     // 是否加载完成
@@ -65,9 +67,7 @@ export class LazyLoad {
     }
 
     this.stop = true
-    // 获取store中的images
-    let pageEnum = this.page.$config.pageEnum
-    let images = this.page.$store.state.loadState[pageEnum.SHOP].images
+
     wx.createSelectorQuery().selectAll('.lazy').boundingClientRect(res => {
       // 索引相关
       for (let i = this.index + this.ImagesStart; i < this.length * this.per; i++) {
@@ -83,7 +83,7 @@ export class LazyLoad {
         }
         if (res[imageIndex].top < (this.windowHeight + 40)) {
           newData.transition = 'afterShow'
-          newData.lazy_url[lazyIndex] = images[imageIndex]
+          newData.lazy_url[lazyIndex] = this.images[imageIndex]
           this.page.$set(this.data, dataIndex, newData)
           if (this.index >= (this.length * this.per - 1)) {
             clearInterval(this.interval)
@@ -100,7 +100,6 @@ export class LazyLoad {
   }
 
   _processData () {
-    let pageEnum = this.page.$config.pageEnum
     for (let i = this.dataStart; i < (this.dataStart + this.length); i++) {
       let newData = this.data[i]
       if (!newData.lazy_url) {
@@ -111,10 +110,7 @@ export class LazyLoad {
         this.page.$set(this.data, i, newData)
       }
     }
-    this.page.$store.commit('SET_IMAGE_URL', {
-      data: this._getAllImagesUrl(),
-      type: pageEnum.SHOP
-    })
+    this._getAllImagesUrl()
   }
 
   _getAllImagesUrl () {
@@ -125,6 +121,6 @@ export class LazyLoad {
       res[i] = res[i].split(':"')[1]
     }
 
-    return res
+    this.images = res
   }
 }

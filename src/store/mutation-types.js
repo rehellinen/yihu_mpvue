@@ -19,7 +19,5 @@ export const types = {
   // 增加已加载的图片
   ADD_LOADED_PHOTOS: 'ADD_LOADED_PHOTOS',
   // 重置加载状态
-  RESET_LOADING_STATE: 'RESET_LOADING_STATE',
-  // 设置懒加载的实际URL
-  SET_IMAGE_URL: 'SET_IMAGE_URL'
+  RESET_LOADING_STATE: 'RESET_LOADING_STATE'
 }
