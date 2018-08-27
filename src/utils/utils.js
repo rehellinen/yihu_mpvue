@@ -29,4 +29,12 @@ function modal (title = '', content = '', cb, showCancel = true) {
   })
 }
 
-export {copyObjArr, toast, modal}
+function getSwitchTabHeight (index) {
+  return new Promise((resolve, reject) => {
+    wx.createSelectorQuery().select(`.switch-${index}`).boundingClientRect(res => {
+      resolve(res.height)
+    }).exec()
+  })
+}
+
+export {copyObjArr, toast, modal, getSwitchTabHeight}

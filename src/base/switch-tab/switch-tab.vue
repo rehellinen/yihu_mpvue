@@ -1,18 +1,25 @@
 <template lang="pug">
-  div.tab-container
-    div.single-tab(
-      v-for="(item, index) in tabs", :key="index"
-      @click="switchTabs(index)"
-      :class="{selected : index === tabIndex}")
-      p {{item}}
+  div
+    div.tab-container
+      div.single-tab(
+        v-for="(item, index) in tabs", :key="index"
+        @click="switchTabs(index)"
+        :class="{selected : index === tabIndex}")
+        p {{item}}
+    div.content(:style="switchStyle")
+      slot
 </template>
 
 <script>
 export default {
   data () {
     return {
-      tabIndex: 0
+      tabIndex: 0,
+      switchStyle: ''
     }
+  },
+  deactivated () {
+    console.log(1)
   },
   props: {
     tabs: {
@@ -25,7 +32,7 @@ export default {
   methods: {
     switchTabs (index) {
       this.tabIndex = index
-      this.$emit('switch', index)
+      this.switchStyle = `transform:translate(-${index * 750}rpx,0)`
     }
   }
 }
@@ -54,4 +61,7 @@ export default {
 .selected
   color: $cart-color
   border-bottom: 2px solid $cart-color
+
+.content
+  transition: all 0.4s ease-in-out
 </style>

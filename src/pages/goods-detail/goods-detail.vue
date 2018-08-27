@@ -47,12 +47,11 @@
 
       div.photo-text-detail
         switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs")
-        div.switch-container(:style="switchStyle")
-          div.card.shop-info-container
-            seller-info(:seller="seller")
-          div.card.detail-info-container
-            p(v-if="goods.description") {{goods.description}}
-            p.no-goods-desc(v-else) 暂无商品介绍
+          div.switch-container
+            div.card.detail-info-container
+              GoodsDesc(:desc="goods.description")
+            div.shop-info-container
+              seller-info(:seller="seller")
 </template>
 
 <script>
@@ -63,6 +62,7 @@ import SwitchTab from 'base/switch-tab/switch-tab'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import MyLoading from 'base/my-loading/my-loading'
 import SellerInfo from 'base/seller-info/seller-info'
+import GoodsDesc from '../../components/goods-desc/goods-desc'
 
 let Goods = new GoodsModel()
 let Shop = new ShopModel()
@@ -82,11 +82,12 @@ export default {
   },
   onShow () {
     let {id, type} = this.$root.$mp.query
-    this.selectedCount = 1
     this._loadData(id, type)
   },
   onUnload () {
     this.goods = {}
+    this.selectedCount = 1
+    this.switchStyle = ''
     this.resetLoadingState(this.$config.pageEnum.GOODS_DETAIL)
   },
   computed: {
@@ -120,9 +121,6 @@ export default {
     ])
   },
   methods: {
-    switchTabs (index) {
-      this.switchStyle = `transform:translate(-${index}00vw,0)`
-    },
     toCart () {
       wx.switchTab({
         url: '../cart/main'
@@ -192,7 +190,8 @@ export default {
   components: {
     SwitchTab,
     MyLoading,
-    SellerInfo
+    SellerInfo,
+    GoodsDesc
   }
 }
 </script>
@@ -250,7 +249,7 @@ export default {
 
   .goods-container
     background-color: white
-    padding-bottom: 15px
+    padding-bottom: 15rpx
 
   .head-image
     width: 750rpx
@@ -365,13 +364,9 @@ export default {
     flex-wrap: nowrap
     width: 200vw
     transition: all 0.4s ease-in-out
+    align-items: flex-start
   .detail-info-container
     font-size: $small-font-size
-    p
-      margin: 20rpx 15rpx
   .shop-info-container
-    margin-left: 40rpx
-  .no-goods-desc
-    text-align: center
-    margin: 30rpx 0
+    margin-left: 20rpx
 </style>

@@ -1,7 +1,8 @@
 <template lang="pug">
-  div.info-container(v-if="seller.id")
+  div.card.info-container(v-if="seller.id", @click="toShop")
     div.avatar
-      img(:src="seller.avatar_image_id.image_url")
+      img(src="__IMAGE__/theme/personal@avatar.jpg" v-if="!seller.avatar_image_id")
+      img(:src="seller.avatar_image_id.image_url" v-else)
       p {{seller.name}}
     div.info
       img(src="__IMAGE__/icon/phone.png")
@@ -23,6 +24,13 @@
           return {}
         }
       }
+    },
+    methods: {
+      toShop () {
+        wx.navigateTo({
+          url: `../shop-detail/main?id=${this.seller.id}`
+        })
+      }
     }
   }
 </script>
@@ -32,19 +40,23 @@
   .info-container
     display: flex
     flex-direction: column
-    margin: 30rpx 20rpx
+    padding: 30rpx 0rpx
   .avatar
     display: flex
     align-items: center
+    margin-bottom: 20rpx
+    margin-left: 20rpx
     img
       width: 150rpx
       height: 150rpx
+      border-radius: 5px
     p
       margin-left: 50rpx
   .info
     display: flex
     align-items: center
     margin-top: 10rpx
+    margin-left: 20rpx
     img
       width: 50rpx
       height: 50rpx
