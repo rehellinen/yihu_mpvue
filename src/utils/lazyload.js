@@ -17,7 +17,6 @@ export class LazyLoad {
    * @param per 数据数组每一个项包含的图片数量
    */
   constructor ({data, page, imagesStart, dataStart, dataLength, per}) {
-    console.log(imagesStart)
     this.data = data
     this.page = page
     this.ImagesStart = imagesStart || 0

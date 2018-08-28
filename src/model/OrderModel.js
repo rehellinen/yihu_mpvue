@@ -28,31 +28,43 @@ class OrderModel extends BaseModel {
    * @param orderIdentify
    * @returns Promise
    */
-  execPay (orderIdentify, cb) {
-    let params = {
-      url: 'preOrder',
-      type: 'POST',
-      data: {order_identify: orderIdentify}
-    }
-    return this.request(params).then((res) => {
-      let timeStamp = res.timeStamp
-      if (timeStamp) {
-        wx.requestPayment({
-          timeStamp: timeStamp.toString(),
-          nonceStr: res.nonceStr,
-          package: res.package,
-          signType: res.signType,
-          paySign: res.paySign,
-          success () {
-            cb && cb(payEnum.PAY_SUCCESS, res)
-          },
-          fail () {
-            cb && cb(payEnum.PAY_FAIL, res)
-          }
-        })
-      } else {
-        cb && cb(payEnum.OUT_OF_STOCK, res)
+  execPay (orderIdentify) {
+    return new Promise((resolve, reject) => {
+      let params = {
+        url: 'preOrder',
+        type: 'POST',
+        data: {order_identify: orderIdentify}
       }
+      this.request(params).then((res) => {
+        let timeStamp = res.timeStamp
+        if (timeStamp) {
+          wx.requestPayment({
+            timeStamp: timeStamp.toString(),
+            nonceStr: res.nonceStr,
+            package: res.package,
+            signType: res.signType,
+            paySign: res.paySign,
+            success () {
+              resolve({
+                status: payEnum.PAY_SUCCESS,
+                res
+              })
+            },
+            fail () {
+              console.log(1)
+              resolve({
+                status: payEnum.PAY_FAIL,
+                res
+              })
+            }
+          })
+        } else {
+          resolve({
+            status: payEnum.OUT_OF_STOCK,
+            res
+          })
+        }
+      })
     })
   }
 

@@ -27,7 +27,7 @@
           img.delete(src="__IMAGE__/icon/delete.png", @click="deleteGoods(index)")
         div.note-container(v-else)
           div.note
-            input(placeholder="请输入备注", placeholder-style="color:#999")
+            input(placeholder="请输入备注", placeholder-style="color:#999", @blur="addRemark" :data-index="index")
           p.count x {{item.count}}
 
 </template>
@@ -64,6 +64,12 @@
       ])
     },
     methods: {
+      addRemark (event) {
+        this.$emit('remark', {
+          remark: event.mp.detail.value,
+          index: event.mp.currentTarget.dataset.index
+        })
+      },
       minusOne (index) {
         this.changeCount({index, count: -1})
       },

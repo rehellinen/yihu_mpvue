@@ -2,7 +2,7 @@
   div.container.order-container
     my-loading(:showLoading="showLoading")
     buyer-info(@isCompleted="complete")
-    cart-list(:isConfirm="true" :from="pageEnum.ORDER_CONFIRM")
+    cart-list(:isConfirm="true" :from="pageEnum.ORDER_CONFIRM" @remark="addRemark")
     div.accounts
       div.total-account
         p 付款合计：￥{{cartDetail.totalPrice}}
@@ -15,9 +15,7 @@ import BuyerInfo from '../../components/buyer-info/buyer-info'
 import MyLoading from 'base/my-loading/my-loading'
 import CartList from '../../components/cart-list/cart-list'
 import {OrderModel} from '../../model/OrderModel'
-import {payEnum} from '../../utils/config'
 import {mapGetters} from 'vuex'
-import {modal} from '../../utils/utils'
 import {pageEnum} from 'utils/config'
 
 let Order = new OrderModel()
@@ -26,7 +24,8 @@ export default {
   data () {
     return {
       isCompleted: false,
-      pageEnum
+      pageEnum,
+      remarks: []
     }
   },
   computed: {
@@ -45,6 +44,9 @@ export default {
     MyLoading
   },
   methods: {
+    addRemark ({index, remark}) {
+      this.remarks[index] = remark
+    },
     complete (flag) {
       this.isCompleted = flag
     },
@@ -57,7 +59,7 @@ export default {
         orderInfo.push({
           goods_id: goodsInfo[i].id,
           count: goodsInfo[i].count,
-          remark: goodsInfo[i].remark
+          remark: this.remarks[i]
         })
       }
 
@@ -71,15 +73,20 @@ export default {
       })
     },
     _execPay (orderNo) {
-      Order.execPay(orderNo, (statusCode, res) => {
-        if (statusCode === payEnum.PAY_SUCCESS) {
+      let payEnum = this.$config.payEnum
+      Order.execPay(orderNo).then(({status, res}) => {
+        console.log(status)
+        if (status === payEnum.PAY_SUCCESS) {
+          // 支付成功
           this.deleteGoods()
           wx.redirectTo({
-            url: `../pay-result/main?status=${statusCode}`
+            url: `../pay-result/main?status=${status}`
           })
-        } else if (statusCode === payEnum.OUT_OF_STOCK) {
+        } else if (status === payEnum.OUT_OF_STOCK) {
+          // 库存不足
           this._orderFail(res)
         } else {
+          // 支付失败
           wx.redirectTo({
             url: `../pay-result/main?status=${payEnum.PAY_FAIL}`
           })
@@ -109,7 +116,13 @@ export default {
         str += '等'
       }
       str += '缺货'
-      modal('下单失败', str)
+
+      wx.showModal({
+        title: '下单失败',
+        content: str,
+        showCancel: false,
+        confirmColor: '#a9936e'
+      })
     }
   }
 }
