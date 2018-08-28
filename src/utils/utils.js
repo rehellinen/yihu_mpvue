@@ -32,7 +32,7 @@ function modal (title = '', content = '', cb, showCancel = true) {
 function getSwitchTabHeight (index) {
   return new Promise((resolve, reject) => {
     wx.createSelectorQuery().select(`.switch-${index}`).boundingClientRect(res => {
-      console.log(res)
+      console.log(res.height, index)
       resolve(res.height)
     }).exec()
   })

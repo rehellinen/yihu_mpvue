@@ -1,9 +1,16 @@
 <template lang="pug">
   div.top-container
     switch-tab(:tabs="tabs", @switch="switchTabs")
-    div.order-container(:style="switchStyle")
-      div.single-type(v-for="(item, index) in orders" :key="index")
-        order-list(:orders="item", card="true", @reload="reload")
+      div(slot="0")
+        order-list(:orders="orders[0]", card="true", @reload="reload")
+      div(slot="1")
+        order-list(:orders="orders[1]", card="true", @reload="reload" slot="1")
+      div(slot="2")
+        order-list(:orders="orders[2]", card="true", @reload="reload" slot="2")
+      div(slot="3")
+        order-list(:orders="orders[3]", card="true", @reload="reload" slot="3")
+      div(slot="4")
+        order-list(:orders="orders[4]", card="true", @reload="reload" slot="4")
 </template>
 
 <script>
@@ -19,6 +26,8 @@ export default {
     if (this.ordersChange) {
       this.reload()
       this.SET_ORDERS_CHANGE(false)
+    } else {
+      this._loadData()
     }
   },
   onHide () {
@@ -42,7 +51,6 @@ export default {
   methods: {
     switchTabs (index) {
       this.currentIndex = index
-      this.switchStyle = `transform:translate(-${index}00vw,0)`
       this._loadData()
     },
     _loadData () {
@@ -81,12 +89,4 @@ export default {
   .top-container
     background-color: $background-color
     min-height: 100vh
-
-  .order-container
-    display: flex
-    flex-wrap: nowrap
-    width: 500vw
-    transition: all 0.5s ease-in-out
-  .single-type
-    width: 100vw
 </style>

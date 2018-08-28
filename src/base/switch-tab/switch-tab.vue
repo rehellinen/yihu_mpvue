@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.wrap-container(:style="heightStyle")
+  div.wrap-container
     div.tab-container
       div.single-tab(
         v-for="(item, index) in tabs", :key="index"
@@ -7,11 +7,16 @@
         :class="{selected : index === tabIndex}")
         p {{item}}
     div.content(:style="widthStyle + switchStyle")
-      slot(name="0")
-      slot(name="1")
-      slot(name="2")
-      slot(name="3")
-      slot(name="4")
+      div.switch-0
+        slot(name="0")
+      div.switch-1
+        slot(name="1")
+      div.switch-2
+        slot(name="2")
+      div.switch-3
+        slot(name="3")
+      div.switch-4
+        slot(name="4")
 </template>
 
 <script>
@@ -41,12 +46,13 @@ export default {
   methods: {
     switchTabs (index) {
       this.tabIndex = index
-      this.switchStyle = `transform:translate(-${index * 750}rpx,0)`
+      this.switchStyle = `transform:translate(-${index * 750}rpx,0);`
+      this.$emit('switch', index)
 
       // const marginTop = 10
       // const tabHeight = 40
       // getSwitchTabHeight(index).then(height => {
-      //   this.heightStyle = `height:${height + marginTop + tabHeight}px`
+      //   this.heightStyle = `height:${height + marginTop + tabHeight}px;overflow:hidden`
       // })
     }
   }
@@ -86,4 +92,6 @@ export default {
   flex-wrap: nowrap
   width: 100vw
   align-items: flex-start
+  > div
+    width: 100vw
 </style>

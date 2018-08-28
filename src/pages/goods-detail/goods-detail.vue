@@ -357,11 +357,4 @@ export default {
   .small-top-img.animate
     opacity: 1
     transition: all 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.275)
-
-  .switch-container
-    display: flex
-    flex-wrap: nowrap
-    width: 200vw
-    transition: all 0.4s ease-in-out
-    align-items: flex-start
 </style>

@@ -22,6 +22,6 @@
     margin: 30rpx 0
     font-size: $small-font-size
   .desc
-    margin: 20rpx 20rpx
+    padding: 20rpx 20rpx
     font-size: $small-font-size
 </style>

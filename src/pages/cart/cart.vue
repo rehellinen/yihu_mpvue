@@ -12,6 +12,7 @@
             img(src="__IMAGE__/icon/all.png" v-else)
             p 全选({{cartDetail.selectedCount}})
           div.all-price-submit(@click="submitOrder()", :class="{disabled : cartDetail.totalPrice === 0}")
+            p.submit-text 下 单
             div.price-text(:class="{disabled : cartDetail.totalPrice === 0}") ￥{{cartDetail.totalPrice}}
             div.arrow-icon
               img(src="__IMAGE__/icon/arrow@rightWhite.png" v-if="cartDetail.totalPrice !== 0")
@@ -122,11 +123,13 @@ export default {
   .all-price-submit
     display: flex
     justify-content: flex-end
-    width: 40%
+    width: 43%
     .price-text.disabled
       color: $lighter-font-color
       border-left: 3rpx dotted $lighter-font-color
-
+    .submit-text
+      font-size: $small-font-size
+      margin-right: 40rpx
   .price-text, .arrow-icon
     display: flex
     align-items: center
@@ -136,11 +139,12 @@ export default {
   .price-text
     width: 35%
     font-size: $small-font-size
-    padding-left: 20rpx
+    padding-left: 15rpx
     border-left: 3rpx dotted #fff
 
   .arrow-icon
-    width: 25%
+    width: 50rpx
+    margin-right: 10rpx
     image
       height: 32rpx
       width: 32rpx
