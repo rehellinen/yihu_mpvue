@@ -16,6 +16,7 @@
 <script>
 import SwitchTab from 'base/switch-tab/switch-tab'
 import OrderList from 'base/order-list/order-list'
+import PageLoading from '../../base/page-loading/page-loading'
 import {OrderModel} from 'model/OrderModel'
 import {mapGetters, mapMutations} from 'vuex'
 
@@ -79,7 +80,8 @@ export default {
   },
   components: {
     SwitchTab,
-    OrderList
+    OrderList,
+    PageLoading
   }
 }
 </script>

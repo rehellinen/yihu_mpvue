@@ -4,9 +4,6 @@
 import store from '../store/index'
 import {types} from '../store/mutation-types'
 import {pageEnum} from './config'
-import {CartModel} from '../model/CartModel'
-
-let Cart = new CartModel()
 
 /**
  * total -> 该页面一开始需要展示的图片
@@ -35,17 +32,7 @@ let images = {
     loaded: 0,
     showLoading: true
   },
-  [pageEnum.CART]: {
-    total: Cart.getCartStorage().length,
-    loaded: 0,
-    showLoading: true
-  },
   [pageEnum.ORDER_CONFIRM]: {
-    total: 1,
-    loaded: 0,
-    showLoading: true
-  },
-  [pageEnum.PERSONAL]: {
     total: 1,
     loaded: 0,
     showLoading: true
@@ -54,6 +41,10 @@ let images = {
 
 function load (event) {
   let type = event.currentTarget.dataset.type
+  if (!type) {
+    return
+  }
+
   let loadState = store.state.loadState
   store.commit(types.ADD_LOADED_PHOTOS, type)
   if (loadState[type].total === loadState[type].loaded) {

@@ -1,29 +1,26 @@
 <template lang="pug">
   div
-    my-loading(:showLoading="showLoading")
-    div(v-show="!showLoading")
-      div.no-data(v-if="cartData.length === 0")
-        p 购 物 车 中 没 有 商 品
-      div.container.cart-container(v-else)
-        cart-list(:from="pageEnum.CART")
-        div.footer-account-box
-          div.all-select(@click="selectAllTap")
-            img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
-            img(src="__IMAGE__/icon/all.png" v-else)
-            p 全选({{cartDetail.selectedCount}})
-          div.all-price-submit(@click="submitOrder()", :class="{disabled : cartDetail.totalPrice === 0}")
-            p.submit-text 下 单
-            div.price-text(:class="{disabled : cartDetail.totalPrice === 0}") ￥{{cartDetail.totalPrice}}
-            div.arrow-icon
-              img(src="__IMAGE__/icon/arrow@rightWhite.png" v-if="cartDetail.totalPrice !== 0")
-              img.disabled(src="__IMAGE__/icon/arrow@rightGrey.png" v-else)
+    div.no-data(v-if="cartData.length === 0")
+      p 购 物 车 中 没 有 商 品
+    div.container.cart-container(v-else)
+      cart-list
+      div.footer-account-box
+        div.all-select(@click="selectAllTap")
+          img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
+          img(src="__IMAGE__/icon/all.png" v-else)
+          p 全选({{cartDetail.selectedCount}})
+        div.all-price-submit(@click="submitOrder()", :class="{disabled : cartDetail.totalPrice === 0}")
+          p.submit-text 下 单
+          div.price-text(:class="{disabled : cartDetail.totalPrice === 0}") ￥{{cartDetail.totalPrice}}
+          div.arrow-icon
+            img(src="__IMAGE__/icon/arrow@rightWhite.png" v-if="cartDetail.totalPrice !== 0")
+            img.disabled(src="__IMAGE__/icon/arrow@rightGrey.png" v-else)
 </template>
 
 <script>
 import {GoodsModel} from 'model/GoodsModel'
 import CartList from 'components/cart-list/cart-list'
 import {mapGetters, mapActions} from 'vuex'
-import MyLoading from 'base/my-loading/my-loading'
 
 let Goods = new GoodsModel()
 
@@ -48,11 +45,9 @@ export default {
     Goods.updateGoods()
   },
   onHide () {
-    // 保存缓存
     this.saveToStorage(this.cartData)
   },
   destroyed () {
-    // 保存缓存
     this.saveToStorage(this.cartData)
   },
   methods: {
@@ -77,8 +72,7 @@ export default {
     ])
   },
   components: {
-    CartList,
-    MyLoading
+    CartList
   }
 }
 </script>
