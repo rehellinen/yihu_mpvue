@@ -23,19 +23,18 @@ import {GoodsModel} from 'model/GoodsModel'
 import CartList from 'components/cart-list/cart-list'
 import {mapGetters, mapActions} from 'vuex'
 import MyLoading from 'base/my-loading/my-loading'
-import {pageEnum} from 'utils/config'
 
 let Goods = new GoodsModel()
 
 export default {
   data () {
     return {
-      pageEnum
+      pageEnum: this.$config.pageEnum
     }
   },
   computed: {
     showLoading () {
-      return this.loadState[pageEnum.CART]
+      return this.loadState[this.$config.pageEnum.CART]
     },
     ...mapGetters([
       'cartData',

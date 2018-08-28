@@ -47,11 +47,10 @@
 
       div.photo-text-detail
         switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs")
-          div.switch-container
-            div.card.detail-info-container
-              GoodsDesc(:desc="goods.description")
-            div.shop-info-container
-              seller-info(:seller="seller")
+          div(slot=0)
+            GoodsDesc(:desc="goods.description")
+          div(slot=1)
+            seller-info(:seller="seller")
 </template>
 
 <script>
@@ -365,8 +364,4 @@ export default {
     width: 200vw
     transition: all 0.4s ease-in-out
     align-items: flex-start
-  .detail-info-container
-    font-size: $small-font-size
-  .shop-info-container
-    margin-left: 20rpx
 </style>
