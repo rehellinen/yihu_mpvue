@@ -11,6 +11,7 @@
         order-list(:orders="orders[3]", card="true", @reload="reload" slot="3")
       div(slot="4")
         order-list(:orders="orders[4]", card="true", @reload="reload" slot="4")
+    page-loading(:hasMore="hasMore[currentIndex]")
 </template>
 
 <script>
@@ -60,7 +61,7 @@ export default {
         Order.getOrder(index, this.page[index]).then(res => {
           this.$set(this.orders, index, this.orders[index].concat(res))
         }).catch((ex) => {
-          this.hasMore[index] = false
+          this.$set(this.hasMore, index, false)
         })
         this.page[index]++
       }

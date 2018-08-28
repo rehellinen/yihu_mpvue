@@ -1,6 +1,5 @@
 <template lang="pug">
 div.order-list-contailer(:class="{'card-container': card}")
-  p.no-order-text(v-if="orders.length === 0") 没 有 相 关 订 单
   div.detail-container(v-for="item in orders" :key="item.id"
     :class="{'card': card}")
     img.detail-image(:src="item.snap_img", mode='aspectFill')
@@ -123,12 +122,4 @@ div.order-list-contailer(:class="{'card-container': card}")
   .delete
     width: 30rpx
     height: 30rpx
-
-  .no-order-text
-    display: flex
-    height: 80rpx
-    font-size: 30rpx
-    color: $light-font-color
-    align-items: center
-    justify-content: center
 </style>
