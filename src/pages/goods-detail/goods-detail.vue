@@ -200,7 +200,6 @@ export default {
   .detail-container
     background-color: #f9f9f9
     min-height: 100vh
-    padding-bottom: 20rpx
 
   .cart-container
     position: fixed

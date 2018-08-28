@@ -3,15 +3,19 @@
     switch-tab(:tabs="tabs", @switch="switchTabs")
       div(slot="0")
         order-list(:orders="orders[0]", card="true", @reload="reload")
+        page-loading(:hasMore="hasMore[0]")
       div(slot="1")
-        order-list(:orders="orders[1]", card="true", @reload="reload" slot="1")
+        order-list(:orders="orders[1]", card="true", @reload="reload")
+        page-loading(:hasMore="hasMore[1]")
       div(slot="2")
-        order-list(:orders="orders[2]", card="true", @reload="reload" slot="2")
+        order-list(:orders="orders[2]", card="true", @reload="reload")
+        page-loading(:hasMore="hasMore[2]")
       div(slot="3")
-        order-list(:orders="orders[3]", card="true", @reload="reload" slot="3")
+        order-list(:orders="orders[3]", card="true", @reload="reload")
+        page-loading(:hasMore="hasMore[3]")
       div(slot="4")
-        order-list(:orders="orders[4]", card="true", @reload="reload" slot="4")
-    page-loading(:hasMore="hasMore[currentIndex]")
+        order-list(:orders="orders[4]", card="true", @reload="reload")
+        page-loading(:hasMore="hasMore[4]")
 </template>
 
 <script>
@@ -22,6 +26,7 @@ import {OrderModel} from 'model/OrderModel'
 import {mapGetters, mapMutations} from 'vuex'
 
 let Order = new OrderModel()
+const orderSize = 12
 
 export default {
   onShow () {
@@ -58,7 +63,10 @@ export default {
     _loadData () {
       let index = this.currentIndex
       if (this.hasMore[index]) {
-        Order.getOrder(index, this.page[index]).then(res => {
+        Order.getOrder(index, this.page[index], orderSize).then(res => {
+          if (res.length < 12) {
+            this.$set(this.hasMore, index, false)
+          }
           this.$set(this.orders, index, this.orders[index].concat(res))
         }).catch((ex) => {
           this.$set(this.hasMore, index, false)

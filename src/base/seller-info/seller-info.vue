@@ -41,6 +41,7 @@
     display: flex
     flex-direction: column
     padding: 30rpx 0rpx
+    margin-bottom: 20rpx
   .avatar
     display: flex
     align-items: center

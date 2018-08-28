@@ -6,28 +6,25 @@
         @click="switchTabs(index)"
         :class="{selected : index === tabIndex}")
         p {{item}}
-    div.content(:style="widthStyle + switchStyle")
-      div.switch-0
+    div.content
+      div.switch-0(v-if="tabIndex === 0", :style="switchStyle[0]")
         slot(name="0")
-      div.switch-1
+      div.switch-1(v-if="tabIndex === 1", :style="switchStyle[1]")
         slot(name="1")
-      div.switch-2
+      div.switch-2(v-if="tabIndex === 2", :style="switchStyle[2]")
         slot(name="2")
-      div.switch-3
+      div.switch-3(v-if="tabIndex === 3", :style="switchStyle[3]")
         slot(name="3")
-      div.switch-4
+      div.switch-4(v-if="tabIndex === 4", :style="switchStyle[4]")
         slot(name="4")
 </template>
 
 <script>
-// import {getSwitchTabHeight} from '../../utils/utils'
-
 export default {
   data () {
     return {
       tabIndex: 0,
-      switchStyle: '',
-      heightStyle: ''
+      switchStyle: ['', '', '', '', '']
     }
   },
   computed: {
@@ -45,15 +42,10 @@ export default {
   },
   methods: {
     switchTabs (index) {
+      // this.switchStyle[this.tabIndex] = `transform:translateX(750rpx)`
+      // this.switchStyle[index] = `opacity:0`
       this.tabIndex = index
-      this.switchStyle = `transform:translate(-${index * 750}rpx,0);`
       this.$emit('switch', index)
-
-      // const marginTop = 10
-      // const tabHeight = 40
-      // getSwitchTabHeight(index).then(height => {
-      //   this.heightStyle = `height:${height + marginTop + tabHeight}px;overflow:hidden`
-      // })
     }
   }
 }
@@ -88,10 +80,7 @@ export default {
 
 .content
   transition: all 0.4s ease-in-out
-  display: flex
-  flex-wrap: nowrap
   width: 100vw
-  align-items: flex-start
   > div
     width: 100vw
 </style>
