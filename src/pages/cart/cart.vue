@@ -119,11 +119,13 @@ export default {
     justify-content: flex-end
     width: 43%
     .price-text.disabled
-      color: $lighter-font-color
-      border-left: 3rpx dotted $lighter-font-color
+      color: $light-font-color
+      border-left: 3rpx dotted $light-font-color
     .submit-text
       font-size: $small-font-size
       margin-right: 40rpx
+    .submit-text.disabled
+      color: $lighter-font-color
   .price-text, .arrow-icon
     display: flex
     align-items: center

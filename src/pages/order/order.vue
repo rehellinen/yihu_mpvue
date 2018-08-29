@@ -23,7 +23,7 @@ import SwitchTab from 'base/switch-tab/switch-tab'
 import OrderList from 'base/order-list/order-list'
 import PageLoading from '../../base/page-loading/page-loading'
 import {OrderModel} from 'model/OrderModel'
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 let Order = new OrderModel()
 const orderSize = 12
@@ -32,13 +32,10 @@ export default {
   onShow () {
     if (this.ordersChange) {
       this.reload()
-      this.SET_ORDERS_CHANGE(false)
+      this.setOrderChange(false)
     } else {
       this._loadData()
     }
-  },
-  onHide () {
-    this.SET_ORDERS_CHANGE(false)
   },
   data () {
     return {
@@ -80,8 +77,8 @@ export default {
       this.hasMore = [true, true, true, true, true]
       this._loadData()
     },
-    ...mapMutations([
-      'SET_ORDERS_CHANGE'
+    ...mapActions([
+      'setOrderChange'
     ])
   },
   onReachBottom () {

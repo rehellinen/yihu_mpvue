@@ -21,8 +21,7 @@ div.order-list-contailer(:class="{'card-container': card}")
   import {orderEnum, iconType} from 'utils/config'
   import {modal, toast} from 'utils/utils'
   import {OrderModel} from 'model/OrderModel'
-  import {mapMutations} from 'vuex'
-  import {types} from '../../store/mutation-types'
+  import {mapActions} from 'vuex'
 
   let Order = new OrderModel()
 
@@ -57,9 +56,9 @@ div.order-list-contailer(:class="{'card-container': card}")
           }
         })
       },
-      ...mapMutations({
-        setOrderChange: types.SET_ORDERS_CHANGE
-      })
+      ...mapActions([
+        'setOrderChange'
+      ])
     }
   }
 </script>

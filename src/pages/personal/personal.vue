@@ -30,7 +30,7 @@
   import OrderList from 'base/order-list/order-list'
   import {orderEnum} from 'utils/config'
   import {OrderModel} from 'model/OrderModel'
-  import {mapGetters, mapMutations} from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
 
   let Order = new OrderModel()
   const ORDER_PAGE = 1
@@ -39,20 +39,17 @@
   export default {
     data () {
       return {
-        showLoading: true,
+        showLoading: false,
         orders: []
       }
     },
-    onLoad () {
+    created () {
       this._loadData()
-      setTimeout(() => {
-        this.showLoading = false
-      })
     },
     onShow () {
       if (this.ordersChange) {
         this.reload()
-        this.SET_ORDERS_CHANGE(false)
+        this.setOrderChange(false)
       }
     },
     computed: {
@@ -89,8 +86,8 @@
           this.orders = order
         }
       },
-      ...mapMutations([
-        'SET_ORDERS_CHANGE'
+      ...mapActions([
+        'setOrderChange'
       ])
     },
     components: {

@@ -1,10 +1,9 @@
 <template lang="pug">
   div.cart-box(v-if="goods.length > 0")
     div.cart-item(v-for="(item, index) in goods" :key="item.id" :class="{deleteThat: deleteIndex === index, deleteAfter: deleteIndex && index > deleteIndex}")
-      div.cart-item-checkbox(@click="selectOneTap(index)", v-if="!isConfirm")
+      div.cart-item-checkbox(@click="selectOneTap(index)", v-if="from !== pageEnum.ORDER_CONFIRM")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
         img(src="__IMAGE__/icon/circle@noselected.png", v-else)
-      div.left(v-else)
 
       div.cart-item-img(@click="toDetail(index)")
         img.goods-image(:src="item.image_id.image_url" mode="aspectFill"
@@ -14,7 +13,7 @@
         div.title-box(@click="toDetail(index)")
           p.name {{item.name}}
           p.price ￥{{item.price}}
-        div.bottom-box(v-if="!isConfirm")
+        div.bottom-box(v-if="from !== pageEnum.ORDER_CONFIRM")
           div.cart-item-count
             img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
             img.disabled(src="__IMAGE__/icon/minus@disabled.png" v-else)
@@ -50,7 +49,8 @@
     },
     data () {
       return {
-        deleteIndex: null
+        deleteIndex: null,
+        pageEnum: this.$config.pageEnum
       }
     },
     methods: {
@@ -90,8 +90,6 @@
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~css/base"
-  .left
-    width: 30rpx
   .cart-box
     display: flex
     flex-direction: column
