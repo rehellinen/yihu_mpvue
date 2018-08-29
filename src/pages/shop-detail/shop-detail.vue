@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.container.shop-detail-container
+  div.container.shop-detail-container(v-if="shop.top_image_id")
     top-image(:top_image="shop.top_image_id.image_url" :avatar="shop.avatar_image_id.image_url"
     :name="shop.name" :quote="shop.major"
     type="shop")

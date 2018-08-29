@@ -46,6 +46,9 @@ function load (event) {
   }
 
   let loadState = store.state.loadState
+  if (loadState[type].total < loadState[type].loaded) {
+    return
+  }
   store.commit(types.ADD_LOADED_PHOTOS, type)
   if (loadState[type].total === loadState[type].loaded) {
     store.commit(types.SET_LOADING_STATE, {flag: false, type})

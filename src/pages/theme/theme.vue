@@ -39,7 +39,18 @@
     },
     onLoad () {
       let themeID = this.$root.$mp.query.id
+      wx.setNavigationBarTitle({
+        title: this.$root.$mp.query.name
+      })
       this._loadData(themeID)
+    },
+    onUnload () {
+      this.categories = {}
+      this.goods = []
+      this.currentIndex = 0
+      this.page = [1]
+      this.hasMore = [true]
+      this.switchStyle = ''
     },
     methods: {
       lowerLoad () {
