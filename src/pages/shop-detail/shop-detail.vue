@@ -1,13 +1,14 @@
 <template lang="pug">
   div.container.shop-detail-container
     top-image(:top_image="shop.top_image_id.image_url" :avatar="shop.avatar_image_id.image_url"
-      :name="shop.name" :quote="shop.major"
-      type="shop")
+    :name="shop.name" :quote="shop.major"
+    type="shop")
     div.goods-container
       switch-tab(:tabs="tabs" @switch="switchTabs")
-      div.goods(:style="switchStyle")
-        goods-list(:goods="allGoods")
-        goods-list(:goods="recentGoods")
+        div(slot="0")
+          goods-list(:goods="allGoods")
+        div(slot="1")
+          goods-list(:goods="recentGoods")
 </template>
 
 <script>
@@ -29,7 +30,6 @@ export default {
       allGoods: [],
       recentGoods: [],
       index: 0,
-      switchStyle: '',
       page: 1,
       hasMore: true
     }
@@ -55,26 +55,22 @@ export default {
     _loadData () {
       Goods.getGoodsByShopId(this.shopID, this.page).then(res => {
         this.allGoods = this.allGoods.concat(res)
-        let start = (this.page - 1) * 10
-        this.lazyLoad = new LazyLoad({
-          data: this.allGoods,
-          page: this,
-          imagesStart: start,
-          dataStart: start,
-          dataLength: res.length
-        })
+        if (!this.lazyLoad) {
+          this.lazyLoad = new LazyLoad({
+            data: this.allGoods,
+            page: this,
+            dataLength: res.length
+          })
+        } else {
+          this.lazyLoad.reset({data: this.allGoods})
+        }
       }).catch((ex) => {
         this.hasMore = false
       })
     },
     switchTabs (index) {
       this.index = index
-      this.switchStyle = `transform:translate(-${index}00vw,0)`
     }
-  },
-  onPageScroll (opt) {
-    this.lazyLoad.refresh()
-    this.recentLazyLoad.refresh()
   },
   components: {
     TopImage,
@@ -98,10 +94,4 @@ export default {
     margin-top: 20rpx
     padding-bottom: 20rpx
     background-color: white
-  .goods
-    display: flex
-    flex-wrap: nowrap
-    width: 200vw
-    transition: all 0.5s ease-in-out
-    align-items: flex-start
 </style>
