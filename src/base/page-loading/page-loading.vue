@@ -6,6 +6,12 @@
 </template>
 
 <script>
+  /**
+   * 组件介绍：加载中组件
+   * props：
+   * 1. hasMore true时显示加载中对应的样式
+   * 2. backgroundColor 组件的背景颜色
+   */
   export default {
     props: {
       hasMore: {

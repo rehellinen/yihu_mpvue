@@ -13,6 +13,12 @@ div.goods-list-container(:style="style")
 </template>
 
 <script>
+  /**
+   * 组件介绍：商品列表
+   * props：
+   * 1. goods 商品数组
+   * 2. backgroundColor 背景颜色
+   */
   export default {
     props: {
       goods: {
@@ -23,7 +29,7 @@ div.goods-list-container(:style="style")
       },
       backgroundColor: {
         type: String,
-        default: 'white'
+        default: ''
       },
       from: {
         type: String,
@@ -32,7 +38,11 @@ div.goods-list-container(:style="style")
     },
     computed: {
       style () {
-        return `background-color:${this.backgroundColor}`
+        if (this.backgroundColor === this.$config.color.BACKGROUND_COLOR) {
+          return `background-color:${this.$config.color.BACKGROUND_COLOR}`
+        } else {
+          return `background-color:${this.$config.color.WHITE}`
+        }
       }
     },
     methods: {

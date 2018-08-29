@@ -12,6 +12,9 @@
 </template>
 
 <script>
+  /**
+   * 组件介绍：电费查询
+   */
   import {ElectricityModel} from 'model/ElectricityModel'
 
   let Electricity = new ElectricityModel()

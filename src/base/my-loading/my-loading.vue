@@ -4,6 +4,11 @@ div.loading-container(v-if="showLoading")
 </template>
 
 <script>
+  /**
+   * 组件介绍：加载中样式（全屏）
+   * props：
+   * 1. showLoading true时展示，false时收起
+   */
   export default {
     props: {
       showLoading: {
