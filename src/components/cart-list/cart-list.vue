@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.cart-box(v-if="cartData.length > 0")
+  div.cart-box(v-if="goods.length > 0")
     div.cart-item(v-for="(item, index) in goods" :key="item.id" :class="{deleteThat: deleteIndex === index, deleteAfter: deleteIndex && index > deleteIndex}")
       div.cart-item-checkbox(@click="selectOneTap(index)", v-if="!isConfirm")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
@@ -33,13 +33,15 @@
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex'
+  import {mapActions} from 'vuex'
 
   export default {
     props: {
-      isConfirm: {
-        type: Boolean,
-        default: false
+      goods: {
+        type: Array,
+        default () {
+          return []
+        }
       },
       from: {
         type: String,
@@ -50,18 +52,6 @@
       return {
         deleteIndex: null
       }
-    },
-    computed: {
-      goods () {
-        if (this.isConfirm) {
-          return this.selectedCartData
-        }
-        return this.cartData
-      },
-      ...mapGetters([
-        'cartData',
-        'selectedCartData'
-      ])
     },
     methods: {
       addRemark (event) {

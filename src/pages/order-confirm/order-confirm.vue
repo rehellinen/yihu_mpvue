@@ -2,7 +2,7 @@
   div.container.order-container
     my-loading(:showLoading="showLoading")
     buyer-info(@isCompleted="complete")
-    cart-list(:isConfirm="true" :from="pageEnum.ORDER_CONFIRM" @remark="addRemark")
+    cart-list(:goods="selectedCartData" :from="pageEnum.ORDER_CONFIRM" @remark="addRemark")
     div.accounts
       div.total-account
         p 付款合计：￥{{cartDetail.totalPrice}}
@@ -34,7 +34,7 @@ export default {
     },
     ...mapGetters([
       'cartDetail',
-      'cartData',
+      'selectedCartData',
       'loadState'
     ])
   },
@@ -52,7 +52,7 @@ export default {
     },
     preOrder (event) {
       let orderInfo = []
-      let goodsInfo = this.cartData
+      let goodsInfo = this.selectedCartData
 
       // 订单中商品的信息
       for (let i = 0; i < goodsInfo.length; i++) {
@@ -78,7 +78,7 @@ export default {
         console.log(status)
         if (status === payEnum.PAY_SUCCESS) {
           // 支付成功
-          this.deleteGoods()
+          this.deleteAllGoods()
           wx.redirectTo({
             url: `../pay-result/main?status=${status}`
           })
@@ -92,6 +92,10 @@ export default {
           })
         }
       })
+    },
+    // 删除所有下单成功的商品
+    deleteAllGoods () {
+
     },
     _orderFail (data) {
       let nameArr = []
