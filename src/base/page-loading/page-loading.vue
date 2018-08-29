@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.container.load-container
+  div.container.load-container(:style="colorStyle")
     p(v-if="hasMore") 加载中
     p(v-else) 暂无更多内容
     img(src="__IMAGE__/theme/page-loading.gif", v-if="hasMore")
@@ -11,6 +11,19 @@
       hasMore: {
         type: Boolean,
         default: true
+      },
+      backgroundColor: {
+        type: String,
+        default: ''
+      }
+    },
+    computed: {
+      colorStyle () {
+        if (this.backgroundColor === this.$config.color.WHITE) {
+          return `background-color:${this.$config.color.WHITE}`
+        } else {
+          return `background-color:${this.$config.color.BACKGROUND_COLOR}`
+        }
       }
     }
   }
@@ -19,7 +32,6 @@
 <style scoped lang="sass">
   @import "~css/base"
   .load-container
-    background-color: $background-color
     height: 100rpx
     color: $light-font-color
     display: flex

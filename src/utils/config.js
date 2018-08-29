@@ -64,5 +64,11 @@ module.exports = {
     CART: 'CART',
     ORDER_CONFIRM: 'ORDER_CONFIRM',
     PERSONAL: 'PERSONAL'
+  },
+
+  // 配置8：关于颜色
+  color: {
+    WHITE: 'white',
+    BACKGROUND_COLOR: '#f9f9f9'
   }
 }

@@ -16,11 +16,13 @@
           div.single-goods(v-for="(ware,wareIndex) in goods[index]" :key="ware.id")
             img.goods-image(:src="ware.image_id.image_url")
             p.goods-text {{ware.name}}
+        page-loading(:hasMore="hasMore[index]", :backgroundColor="backgroundColor")
 </template>
 
 <script>
   import {ThemeModel} from '../../model/ThemeModel'
   import {GoodsModel} from '../../model/GoodsModel'
+  import PageLoading from '../../base/page-loading/page-loading'
 
   let Theme = new ThemeModel()
   let Goods = new GoodsModel()
@@ -32,9 +34,10 @@
         categories: [],
         currentIndex: 0,
         goods: [],
-        page: [1],
-        hasMore: [true],
-        switchStyle: ''
+        page: [],
+        hasMore: [],
+        switchStyle: '',
+        backgroundColor: this.$config.color.WHITE
       }
     },
     onLoad () {
@@ -48,16 +51,13 @@
       this.categories = {}
       this.goods = []
       this.currentIndex = 0
-      this.page = [1]
-      this.hasMore = [true]
+      this.page = []
+      this.hasMore = []
       this.switchStyle = ''
     },
     methods: {
       lowerLoad () {
-        this.page[this.currentIndex] ? this.page[this.currentIndex]++ : this.page[this.currentIndex] = 1
-        if (this.hasMore[this.currentIndex] === undefined) {
-          this.hasMore[this.currentIndex] = true
-        }
+        this.page[this.currentIndex]++
         if (this.hasMore[this.currentIndex]) {
           this._loadGoods()
         }
@@ -65,6 +65,7 @@
       _loadData (themeID) {
         Theme.getCategory(themeID).then(res => {
           this.categories = res
+          this._processData()
           this._loadGoods()
         })
       },
@@ -75,8 +76,11 @@
             res = this.goods[this.currentIndex].concat(res)
           }
           this.$set(this.goods, this.currentIndex, res)
+          if (res.length < goodsSize) {
+            this.$set(this.hasMore, this.currentIndex, false)
+          }
         }).catch(ex => {
-          this.hasMore[this.currentIndex] = false
+          this.$set(this.hasMore, this.currentIndex, false)
         })
       },
       switchTabs (index) {
@@ -84,10 +88,20 @@
         // 过渡动画
         this.switchStyle = `transform:translate(0, -${index}00vh)`
         // 只当此tab没有数据时才加载
-        if (!this.goods[index]) {
+        if (!this.goods[index] && this.hasMore[index]) {
           this._loadGoods()
         }
+      },
+      _processData () {
+        let length = this.categories.length
+        for (let i = 0; i < length; i++) {
+          this.hasMore[i] = true
+          this.page[i] = 1
+        }
       }
+    },
+    components: {
+      PageLoading
     }
   }
 </script>

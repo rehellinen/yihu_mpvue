@@ -31,7 +31,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 10,
 			"list": [
 				{
 					"id": -1,
@@ -94,10 +94,10 @@
 					"query": "id=9"
 				},
 				{
-					"id": -1,
+					"id": 10,
 					"name": "主题",
 					"pathName": "pages/theme/main",
-					"query": "id=1"
+					"query": "id=1&name=123"
 				}
 			]
 		}
