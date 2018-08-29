@@ -15,7 +15,7 @@ import BuyerInfo from '../../components/buyer-info/buyer-info'
 import MyLoading from 'base/my-loading/my-loading'
 import CartList from '../../components/cart-list/cart-list'
 import {OrderModel} from '../../model/OrderModel'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import {pageEnum} from 'utils/config'
 
 let Order = new OrderModel()
@@ -78,10 +78,10 @@ export default {
         console.log(status)
         if (status === payEnum.PAY_SUCCESS) {
           // 支付成功
-          this.deleteAllGoods()
           wx.redirectTo({
             url: `../pay-result/main?status=${status}`
           })
+          this.deleteAllGoods()
         } else if (status === payEnum.OUT_OF_STOCK) {
           // 库存不足
           this._orderFail(res)
@@ -90,12 +90,18 @@ export default {
           wx.redirectTo({
             url: `../pay-result/main?status=${payEnum.PAY_FAIL}`
           })
+          this.deleteAllGoods()
         }
       })
     },
     // 删除所有下单成功的商品
     deleteAllGoods () {
-
+      let ids = []
+      for (let i = 0; i < this.selectedCartData.length; i++) {
+        ids.push(this.selectedCartData[i].id)
+      }
+      this.deleteGoods(ids)
+      this.setOrderChange(true)
     },
     _orderFail (data) {
       let nameArr = []
@@ -127,7 +133,11 @@ export default {
         showCancel: false,
         confirmColor: '#a9936e'
       })
-    }
+    },
+    ...mapActions([
+      'deleteGoods',
+      'setOrderChange'
+    ])
   }
 }
 </script>

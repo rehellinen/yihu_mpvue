@@ -158,4 +158,15 @@ export class CartModel extends BaseModel {
     })
     return result
   }
+
+  static getIndexByID (id, cartData) {
+    let index = -1
+    for (let i = 0; i < cartData.length; i++) {
+      if (cartData[i].id === id) {
+        index = i
+        break
+      }
+    }
+    return index
+  }
 }

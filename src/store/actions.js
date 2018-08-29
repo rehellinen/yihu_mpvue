@@ -51,12 +51,26 @@ const actions = {
     data[index].count += count
     commit(types.SAVE_CART_DATA, data)
   },
-  // 删除
-  deleteOne ({commit, state}, index) {
-    console.log(index)
+  /**
+   * 删除商品
+   * @param commit
+   * @param state
+   * @param ids ids可以为单个数字，也可以为一个数组
+   */
+  deleteGoods ({commit, state}, ids) {
     let data = copyObjArr(state.cartData)
-    data.splice(index, 1)
+    if (Array.isArray(ids)) {
+      data = data.filter((item) => {
+        return ids.indexOf(item.id) === -1
+      })
+    } else {
+      let index = CartModel.getIndexByID(ids, state.cartData)
+      data.splice(index, 1)
+    }
     commit(types.SAVE_CART_DATA, data)
+  },
+  setOrderChange ({commit}, flag) {
+    commit(types.SET_ORDERS_CHANGE, flag)
   }
 }
 

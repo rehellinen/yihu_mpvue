@@ -51,7 +51,6 @@ class OrderModel extends BaseModel {
               })
             },
             fail () {
-              console.log(1)
               resolve({
                 status: payEnum.PAY_FAIL,
                 res

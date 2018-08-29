@@ -24,7 +24,7 @@
             img(src="__IMAGE__/icon/plus.png", @click="plusOne(index)" v-if="item.count < item.quantity")
             img.disabled(src="__IMAGE__/icon/plus@disabled.png" v-else)
 
-          img.delete(src="__IMAGE__/icon/delete.png", @click="deleteGoods(index)")
+          img.delete(src="__IMAGE__/icon/delete.png", @click="deleteGoods(item.id)")
         div.note-container(v-else)
           div.note
             input(placeholder="请输入备注", placeholder-style="color:#999", @blur="addRemark" :data-index="index")
@@ -68,24 +68,21 @@
       },
       // 单选按钮
       selectOneTap (index) {
-        let selected = !this.cartData[index].selected
+        let selected = !this.goods[index].selected
         this.selectOne({index, selected})
       },
       // 跳转商品详情
       toDetail (index) {
-        let id = this.cartData[index].id
-        let type = this.cartData[index].type
+        let id = this.goods[index].id
+        let type = this.goods[index].type
         wx.navigateTo({
           url: `../goods-detail/main?id=${id}&type=${type}`
         })
       },
-      deleteGoods (index) {
-        this.deleteOne(index)
-      },
       ...mapActions([
         'selectOne',
         'changeCount',
-        'deleteOne'
+        'deleteGoods'
       ])
     }
   }
