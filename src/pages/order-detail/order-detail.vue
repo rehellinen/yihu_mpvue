@@ -9,17 +9,27 @@
           p.key 订单编号：
           p.value {{order.order_no}}
       div.order-status
-        p.order-status-txt(v-if="order.status", :class="statusClass") {{statusText}}
+        p(v-if="order.status", :class="statusClass") {{statusText}}
+
     order-list
+
+    div.order-accounts
+      div.total-account 付款合计：￥{{order.total_price}}
+      div.pay(v-if="order.status === orderEnum.UNPAID") 去付款
 </template>
 
 <script>
   import OrderList from '../../base/order-list/order-list'
+  import {OrderModel} from '../../model/OrderModel'
 
   export default {
+    onLoad () {
+      let orderID = this.$root.$mp.query.id
+    },
     data () {
       return {
-        order: {}
+        order: {},
+        orderEnum: this.$config.orderEnum
       }
     },
     computed: {
