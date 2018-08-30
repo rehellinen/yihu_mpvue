@@ -7,9 +7,9 @@
           p.value {{order.create_time}}
         div
           p.key 订单编号：
-          p.value {{order.order_no}}
+          p.order-no-text.value {{order.order_no}}
       div.order-status
-        p(v-if="order.status", :class="statusClass") {{statusText}}
+        p(:class="statusClass") {{statusText}}
 
     order-list
 
@@ -20,11 +20,12 @@
 
 <script>
   import OrderList from '../../base/order-list/order-list'
-  import {OrderModel} from '../../model/OrderModel'
+  // import {OrderModel} from '../../model/OrderModel'
 
   export default {
     onLoad () {
       let orderID = this.$root.$mp.query.id
+      console.log(orderID)
     },
     data () {
       return {
@@ -69,5 +70,71 @@
 </script>
 
 <style scoped lang="sass">
+  @import "~css/base"
 
+  .order-basic-info
+    border-bottom: 1rpx solid $lighter-font-color
+    display: flex
+    padding: 20rpx 0
+    width: 750rpx
+    font-size: $small-font-size
+
+  .order-time-no
+    flex: 1
+    margin-left: 30rpx
+    div:first-child
+      margin-bottom: 20rpx
+
+  .key
+    color: #999
+
+  .val
+    margin-left: 10rpx
+    color: #333
+
+  .order-no-txt
+    letter-spacing: 2rpx
+    color: #999
+
+  .order-status
+    display: flex
+    flex-basis: 110rpx
+    align-items: center
+    justify-content: flex-end
+    margin-right: 30rpx
+    font-size: $smaller-font-size
+    .unpay
+      color: #b42f2d
+    .payed
+      color: #ab956d
+    .done
+      color: #57ab53
+
+  .order-accounts
+    background-color: #fff
+    position: fixed
+    bottom: 0
+    height: 90rpx
+    width: 100%
+    display: flex
+    border-top: 1rpx solid $lighter-font-color
+    border-bottom: 1rpx solid $lighter-font-color
+    > view
+      display: flex
+      align-items: center
+
+  .total-account
+    flex: 1
+    color: #93312e
+    padding-left: 25rpx
+    font-size: $small-font-size
+
+  .pay
+    flex-basis: 240rpx
+    background-color: #ab956d
+    color: #fff
+    justify-content: center
+    font-size: $big-font-size
+    .pay:active
+      background: #84704d
 </style>
