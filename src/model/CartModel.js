@@ -34,22 +34,6 @@ export class CartModel extends BaseModel {
     wx.setStorageSync(this._storageKeyName, data)
   }
 
-  // 删除购物车中的商品
-  // 1. ids [id的数组]
-  delete (ids) {
-    if (!(ids instanceof Array)) {
-      ids = [ids]
-    }
-    let cartData = this.getCartDataFromLocal()
-    for (let item of ids) {
-      let isExisted = this._isExistedThatOne(item, cartData)
-      if (isExisted.index !== -1) {
-        cartData.splice(isExisted.index, 1)
-      }
-    }
-    this.setCartStorage(cartData)
-  }
-
   // 获取购物车所有商品数量
   // 1. flag [true，考虑商品的选中状态]
   getCartTotalCount (flag = false) {
@@ -69,11 +53,11 @@ export class CartModel extends BaseModel {
   }
 
   /**
-   * 更新缓存中商品信息
+   * 获取更新后的商品信息
    * @param res 服务器获取的商品信息
    * @param goods 缓存中的商品信息
    */
-  updateStorageGoods (res, goods) {
+  static getNewGoods (res, goods) {
     let data = []
     for (let item of res) {
       let id = item.id
@@ -85,7 +69,7 @@ export class CartModel extends BaseModel {
       data[index].count = storageGoods.count
       data[index].selected = storageGoods.selected
     }
-    this.setCartStorage(data)
+    return data
   }
 
   /**

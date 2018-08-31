@@ -53,7 +53,9 @@ export default {
   },
   onShow () {
     // 更新购物车数据
-    Goods.updateGoods()
+    Goods.updateGoods(this.cartData).then(res => {
+      this.saveToStorage(res)
+    })
   },
   onHide () {
     this.saveToStorage(this.cartData)

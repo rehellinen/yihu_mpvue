@@ -39,7 +39,7 @@ let images = {
   [pageEnum.CART]: {
     total: 0,
     loaded: 0,
-    showLoading: false
+    showLoading: true
   },
   [pageEnum.ORDER_DETAIL]: {
     total: 0,
