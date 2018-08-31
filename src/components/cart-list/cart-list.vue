@@ -147,7 +147,7 @@
     justify-content: space-between
     padding: 8rpx 0 8rpx 30rpx
     color: $base-font-color
-    /*width: 380rpx*/
+    width: 490rpx
 
   .title-box
     display: flex
