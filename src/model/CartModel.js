@@ -34,24 +34,6 @@ export class CartModel extends BaseModel {
     wx.setStorageSync(this._storageKeyName, data)
   }
 
-  // 获取购物车所有商品数量
-  // 1. flag [true，考虑商品的选中状态]
-  getCartTotalCount (flag = false) {
-    let cartData = this.getCartDataFromLocal()
-    let count = 0
-
-    for (let item of cartData) {
-      if (flag) {
-        if (item.selected === true) {
-          count += item.count
-        }
-      } else {
-        count += item.count
-      }
-    }
-    return count
-  }
-
   /**
    * 获取更新后的商品信息
    * @param res 服务器获取的商品信息

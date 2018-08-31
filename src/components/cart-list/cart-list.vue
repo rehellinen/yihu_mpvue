@@ -29,6 +29,7 @@
             input(placeholder="请输入备注", placeholder-style="color:#999", @blur="addRemark" :data-index="index")
           p.count x {{item.count}}
         div.count-container(v-if="from === pageEnum.ORDER_DETAIL")
+          p.remark {{item.remark}}
           p.count x {{item.count}}
 </template>
 
@@ -151,7 +152,7 @@
   .title-box
     display: flex
     justify-content: space-between
-    width: 400rpx
+    width: 100%
     .name
       flex-basis: 70%
     .price
@@ -195,6 +196,9 @@
   .count-container
     width: 100%
     display: flex
-    justify-content: flex-end
+    justify-content: space-between
     margin-bottom: 10rpx
+    .remark
+      width: 70%
+      word-wrap: break-word
 </style>
