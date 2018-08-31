@@ -1,7 +1,7 @@
 <template lang="pug">
-  div.container(@click="toEdit")
-    div(v-if="!isCompleted")
-      p + 补充信息
+  div.container.info(@click="toEdit")
+    div.supply(v-if="!isCompleted")
+      p + &nbsp;补充信息
     div.info-container(v-else)
       div.photo-name
         div
@@ -63,6 +63,13 @@ export default {
   .container
     background-color: white
     font-size: 15px
+    height: 140rpx
+  .supply
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 100%
+    width: 100%
   .info-container
     display: flex
     flex-direction: column
