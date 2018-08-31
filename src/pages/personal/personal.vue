@@ -16,7 +16,7 @@
       div.order-container
         div.image-container(v-if="orders.length !== 0")
           img(src="__IMAGE__/theme/personal@order.png")
-        order-list(:orders="orders" @reload="reload")
+        order-list(:orders="orders", @reload="reload", :from="pageEnum.PERSONAL")
         div(v-if="orders.length !==0", @click="toOrderMore")
           see-more
       // 我的订单
@@ -39,11 +39,11 @@
   export default {
     data () {
       return {
-        showLoading: false,
-        orders: []
+        orders: [],
+        pageEnum: this.$config.pageEnum
       }
     },
-    created () {
+    onLoad () {
       this._loadData()
     },
     onShow () {
@@ -53,8 +53,12 @@
       }
     },
     computed: {
+      showLoading () {
+        return this.loadState[this.pageEnum.PERSONAL]
+      },
       ...mapGetters([
-        'ordersChange'
+        'ordersChange',
+        'loadState'
       ])
     },
     methods: {
@@ -75,7 +79,19 @@
       _loadData () {
         // 获取订单
         Order.getOrder(orderEnum.ALL, ORDER_PAGE, ORDER_COUNT).then(res => {
+          this._setLoading(res.length)
           this._processOrder(res)
+        })
+      },
+      _setLoading (length) {
+        let flag = true
+        if (length === 0) {
+          flag = false
+        }
+        this.setLoadingState({
+          total: length > 2 ? 2 : length,
+          type: this.pageEnum.PERSONAL,
+          flag: flag
         })
       },
       _processOrder (order) {
@@ -87,7 +103,8 @@
         }
       },
       ...mapActions([
-        'setOrderChange'
+        'setOrderChange',
+        'setLoadingState'
       ])
     },
     components: {
