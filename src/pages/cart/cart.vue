@@ -5,7 +5,8 @@
       p 购 物 车 中 没 有 商 品
     div.container.cart-container(v-else)
       cart-list(:goods="cartData", :from="pageEnum.CART")
-      div.footer-account-box
+
+      div.footer-account-box(v-if="!showLoading")
         div.all-select(@click="selectAllTap")
           img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
           img(src="__IMAGE__/icon/all.png" v-else)
@@ -53,9 +54,11 @@ export default {
   },
   onShow () {
     // 更新购物车数据
-    Goods.updateGoods(this.cartData).then(res => {
-      this.saveToStorage(res)
-    })
+    if (this.cartData.length > 0) {
+      Goods.updateGoods(this.cartData).then(res => {
+        this.saveToStorage(res)
+      })
+    }
   },
   onHide () {
     this.saveToStorage(this.cartData)

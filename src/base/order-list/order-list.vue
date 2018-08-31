@@ -3,7 +3,7 @@ div.order-list-contailer(:class="{'card-container': card}")
   div.detail-container(v-for="item in orders" :key="item.id"
     :class="{'card': card}")
     img.detail-image(:src="item.snap_img", mode='aspectFill',
-      @click="toDetail({id: item.id, type: item.type})",
+      @click="toDetail(item.id)",
       @load="imageLoaded", :data-type="from")
     div.two-text(@click="toDetail(item.id)")
       p.name-text {{item.snap_name}}
@@ -49,9 +49,9 @@ div.order-list-contailer(:class="{'card-container': card}")
       }
     },
     methods: {
-      toDetail ({id, type}) {
+      toDetail (id) {
         wx.navigateTo({
-          url: `../order-detail/main?id=${id}&type=${type}`
+          url: `../order-detail/main?id=${id}`
         })
       },
       deleteOne (id) {

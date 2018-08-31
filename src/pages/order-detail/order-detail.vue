@@ -37,6 +37,11 @@
       let {id} = this.$root.$mp.query
       this._loadData(id)
     },
+    onUnload () {
+      this.order = {}
+      this.seller = {}
+      this.resetLoadingState(this.$config.pageEnum.ORDER_DETAIL)
+    },
     methods: {
       _loadData (id) {
         Order.getOrderByID(id).then(res => {
@@ -58,7 +63,8 @@
         })
       },
       ...mapActions([
-        'setLoadingState'
+        'setLoadingState',
+        'resetLoadingState'
       ])
     },
     data () {

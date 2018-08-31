@@ -44,7 +44,9 @@
       }
     },
     onLoad () {
-      this._loadData()
+      if (!this.ordersChange) {
+        this._loadData()
+      }
     },
     onShow () {
       if (this.ordersChange) {
