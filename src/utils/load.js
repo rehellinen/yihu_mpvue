@@ -2,7 +2,6 @@
  * 工具函数：控制“加载中”页面的显示与否
  */
 import store from '../store/index'
-import {types} from '../store/mutation-types'
 import {pageEnum} from './config'
 
 /**
@@ -36,6 +35,16 @@ let images = {
     total: 1,
     loaded: 0,
     showLoading: true
+  },
+  [pageEnum.CART]: {
+    total: 0,
+    loaded: 0,
+    showLoading: true
+  },
+  [pageEnum.ORDER_DETAIL]: {
+    total: 0,
+    loaded: 0,
+    showLoading: true
   }
 }
 
@@ -49,9 +58,9 @@ function load (event) {
   if (loadState[type].total < loadState[type].loaded) {
     return
   }
-  store.commit(types.ADD_LOADED_PHOTOS, type)
+  store.dispatch('addLoadedPhoto', type)
   if (loadState[type].total === loadState[type].loaded) {
-    store.commit(types.SET_LOADING_STATE, {flag: false, type})
+    store.dispatch('setLoadingState', {flag: false, type})
   }
 }
 

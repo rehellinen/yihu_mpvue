@@ -71,6 +71,17 @@ const actions = {
   },
   setOrderChange ({commit}, flag) {
     commit(types.SET_ORDERS_CHANGE, flag)
+  },
+  setLoadingState ({commit}, {type, flag, total}) {
+    commit(types.SET_LOADING_STATE, {type, flag, total})
+  },
+  resetLoadingState ({commit}, {type}) {
+    commit(types.SET_LOADING_STATE, {type, flag: true})
+  },
+  addLoadedPhoto ({commit, state}, type) {
+    let loaded = state.loadState[type].loaded
+    loaded++
+    commit(types.SET_LOADING_STATE, {type, loaded})
   }
 }
 

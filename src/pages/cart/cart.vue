@@ -3,7 +3,7 @@
     div.no-data(v-if="cartData.length === 0")
       p 购 物 车 中 没 有 商 品
     div.container.cart-container(v-else)
-      cart-list(:goods="cartData")
+      cart-list(:goods="cartData", :from="pageEnum.CART")
       div.footer-account-box
         div.all-select(@click="selectAllTap")
           img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
@@ -29,6 +29,9 @@ export default {
     return {
       pageEnum: this.$config.pageEnum
     }
+  },
+  mounted () {
+    console.log(this.cartData.length)
   },
   computed: {
     showLoading () {

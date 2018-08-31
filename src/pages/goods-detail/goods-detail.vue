@@ -88,7 +88,7 @@ export default {
     this.selectedCount = 1
     this.switchStyle = ''
     this.resetLoadingState(this.$config.pageEnum.GOODS_DETAIL)
-    console.log(this.$refs.switch)
+    this.$refs.switch.switchTabs(0)
   },
   computed: {
     showLoading () {

@@ -42,8 +42,6 @@ export default {
   },
   methods: {
     switchTabs (index) {
-      // this.switchStyle[this.tabIndex] = `transform:translateX(750rpx)`
-      // this.switchStyle[index] = `opacity:0`
       this.tabIndex = index
       this.$emit('switch', index)
     }
