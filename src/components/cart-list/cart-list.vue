@@ -1,7 +1,7 @@
 <template lang="pug">
   div.cart-box(v-if="goods.length > 0")
     div.cart-item(v-for="(item, index) in goods" :key="item.id" :class="{deleteThat: deleteIndex === index, deleteAfter: deleteIndex && index > deleteIndex}")
-      div.cart-item-checkbox(@click="selectOneTap(index)", v-if="from !== pageEnum.ORDER_CONFIRM")
+      div.cart-item-checkbox(@click="selectOneTap(index)", v-if="from === pageEnum.CART")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
         img(src="__IMAGE__/icon/circle@noselected.png", v-else)
 
@@ -13,7 +13,7 @@
         div.title-box(@click="toDetail(index)")
           p.name {{item.name}}
           p.price ￥{{item.price}}
-        div.bottom-box(v-if="from !== pageEnum.ORDER_CONFIRM")
+        div.bottom-box(v-if="from === pageEnum.CART")
           div.cart-item-count
             img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
             img.disabled(src="__IMAGE__/icon/minus@disabled.png" v-else)
@@ -24,11 +24,12 @@
             img.disabled(src="__IMAGE__/icon/plus@disabled.png" v-else)
 
           img.delete(src="__IMAGE__/icon/delete.png", @click="deleteGoods(item.id)")
-        div.note-container(v-else)
+        div.note-container(v-if="from === pageEnum.ORDER_CONFIRM")
           div.note
             input(placeholder="请输入备注", placeholder-style="color:#999", @blur="addRemark" :data-index="index")
           p.count x {{item.count}}
-
+        div.count-container(v-if="from === pageEnum.ORDER_DETAIL")
+          p.count x {{item.count}}
 </template>
 
 <script>
@@ -191,4 +192,9 @@
       color: $grey-font-color
   .count
     margin-right: 20rpx
+  .count-container
+    width: 100%
+    display: flex
+    justify-content: flex-end
+    margin-bottom: 10rpx
 </style>

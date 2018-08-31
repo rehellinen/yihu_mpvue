@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.container
+  div.container.order-detail-container
     div.order-basic-info
       div.order-time-no
         div
@@ -11,7 +11,7 @@
       div.order-status
         p(:class="statusClass") {{statusText}}
 
-    order-list
+    cart-list(:goods="order.snap_items" :from="pageEnum.ORDER_DETAIL")
 
     div.order-accounts
       div.total-account 付款合计：￥{{order.total_price}}
@@ -19,18 +19,23 @@
 </template>
 
 <script>
-  import OrderList from '../../base/order-list/order-list'
-  // import {OrderModel} from '../../model/OrderModel'
+  import CartList from '../../components/cart-list/cart-list'
+  import {OrderModel} from '../../model/OrderModel'
+
+  let Order = new OrderModel()
 
   export default {
     onLoad () {
-      let orderID = this.$root.$mp.query.id
-      console.log(orderID)
+      let {id, type} = this.$root.$mp.query
+      Order.getOrderByID(id, type).then(res => {
+        this.order = res
+      })
     },
     data () {
       return {
         order: {},
-        orderEnum: this.$config.orderEnum
+        orderEnum: this.$config.orderEnum,
+        pageEnum: this.$config.pageEnum
       }
     },
     computed: {
@@ -64,14 +69,15 @@
       }
     },
     components: {
-      OrderList
+      CartList
     }
   }
 </script>
 
 <style scoped lang="sass">
   @import "~css/base"
-
+  .order-detail-container
+    background-color: $background-color
   .order-basic-info
     border-bottom: 1rpx solid $lighter-font-color
     display: flex
@@ -82,6 +88,8 @@
   .order-time-no
     flex: 1
     margin-left: 30rpx
+    div
+      display: flex
     div:first-child
       margin-bottom: 20rpx
 

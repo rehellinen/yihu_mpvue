@@ -2,7 +2,7 @@
 div.order-list-contailer(:class="{'card-container': card}")
   div.detail-container(v-for="item in orders" :key="item.id"
     :class="{'card': card}")
-    img.detail-image(:src="item.snap_img", mode='aspectFill', @click="toDetail(item.id)")
+    img.detail-image(:src="item.snap_img", mode='aspectFill', @click="toDetail({id: item.id, type: item.type})")
     div.two-text(@click="toDetail(item.id)")
       p.name-text {{item.snap_name}}
       p.status-text(v-if="item.status === orderEnum.UNPAID") 待付款
@@ -43,9 +43,9 @@ div.order-list-contailer(:class="{'card-container': card}")
       }
     },
     methods: {
-      toDetail (id) {
+      toDetail ({id, type}) {
         wx.navigateTo({
-          url: `../order-detail/main?id=${id}`
+          url: `../order-detail/main?id=${id}&type=${type}`
         })
       },
       deleteOne (id) {

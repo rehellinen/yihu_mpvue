@@ -100,10 +100,10 @@
 					"query": "id=1&name=123"
 				},
 				{
-					"id": -1,
-					"name": "主题",
+					"id": 11,
+					"name": "订单详情",
 					"pathName": "pages/order-detail/main",
-					"query": "id=433"
+					"query": "id=433&type=1"
 				}
 			]
 		}

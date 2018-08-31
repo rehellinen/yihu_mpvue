@@ -63,7 +63,8 @@ module.exports = {
     SHOP: 'SHOP',
     CART: 'CART',
     ORDER_CONFIRM: 'ORDER_CONFIRM',
-    PERSONAL: 'PERSONAL'
+    PERSONAL: 'PERSONAL',
+    ORDER_DETAIL: 'ORDER_DETAIL'
   },
 
   // 配置8：关于颜色
