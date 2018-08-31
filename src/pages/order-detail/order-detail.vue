@@ -17,7 +17,8 @@
 
     div.order-accounts(v-if="!showLoading")
       div.total-account 付款合计：￥{{order.total_price}}
-      div.pay(v-if="order.status === orderEnum.UNPAID") 去付款
+      div.pay(v-if="order.status === orderEnum.UNPAID", @click="toPay") 去付款
+      div.pay(v-if="order.status === orderEnum.DELIVERED" @click="toConfirm") 确认收货
 </template>
 
 <script>
@@ -43,6 +44,29 @@
       this.resetLoadingState(this.$config.pageEnum.ORDER_DETAIL)
     },
     methods: {
+      toConfirm () {
+        wx.showModal({
+          content: '是否确认收货',
+          success: (res) => {
+            if (res.confirm) {
+              Order.confirm(this.order.id).then(() => {
+                wx.showToast({
+                  title: '已确认收货',
+                  image: this.$config.iconType.SUCCESS
+                })
+                this.order.status = this.$config.orderEnum.COMPLETED
+                this.setOrderChange(true)
+              }).catch(ex => {
+                console.log(ex)
+                wx.showToast({
+                  title: '确认收货失败',
+                  image: this.$config.iconType.FAIL
+                })
+              })
+            }
+          }
+        })
+      },
       _loadData (id) {
         Order.getOrderByID(id).then(res => {
           this._setLoading(res.snap_items.length)
@@ -64,7 +88,8 @@
       },
       ...mapActions([
         'setLoadingState',
-        'resetLoadingState'
+        'resetLoadingState',
+        'setOrderChange'
       ])
     },
     data () {
@@ -189,7 +214,5 @@
     background-color: #ab956d
     color: #fff
     justify-content: center
-    font-size: $big-font-size
-    .pay:active
-      background: #84704d
+    font-size: $normal-font-size
 </style>

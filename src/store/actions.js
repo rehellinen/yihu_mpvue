@@ -67,6 +67,7 @@ const actions = {
       let index = CartModel.getIndexByID(ids, state.cartData)
       data.splice(index, 1)
     }
+    Cart.setCartStorage(data)
     commit(types.SAVE_CART_DATA, data)
   },
   setOrderChange ({commit}, flag) {

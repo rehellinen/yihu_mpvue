@@ -48,6 +48,9 @@
         this._loadData()
       }
     },
+    onHide () {
+      this.setOrderChange(false)
+    },
     onShow () {
       if (this.ordersChange) {
         this.reload()
@@ -81,7 +84,9 @@
       _loadData () {
         // 获取订单
         Order.getOrder(orderEnum.ALL, ORDER_PAGE, ORDER_COUNT).then(res => {
-          this._setLoading(res.length)
+          if (this.showLoading) {
+            this._setLoading(res.length)
+          }
           this._processOrder(res)
         })
       },

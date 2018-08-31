@@ -1,6 +1,6 @@
 <template lang="pug">
   div.top-container
-    switch-tab(:tabs="tabs", @switch="switchTabs")
+    switch-tab(:tabs="tabs", @switch="switchTabs", ref="switch")
       div(slot="0")
         order-list(:orders="orders[0]", card="true", @reload="reload")
         page-loading(:hasMore="hasMore[0]")
@@ -23,19 +23,16 @@ import SwitchTab from 'base/switch-tab/switch-tab'
 import OrderList from 'base/order-list/order-list'
 import PageLoading from '../../base/page-loading/page-loading'
 import {OrderModel} from 'model/OrderModel'
-import {mapGetters, mapActions} from 'vuex'
 
 let Order = new OrderModel()
 const orderSize = 10
 
 export default {
   onShow () {
-    if (this.ordersChange) {
-      this.reload()
-      this.setOrderChange(false)
-    } else {
-      this._loadData()
-    }
+    this.reload()
+  },
+  onUnload () {
+    this.$refs.switch.switchTabs(0)
   },
   data () {
     return {
@@ -46,11 +43,6 @@ export default {
       tabs: ['全部', '待付款', '待发货', '待收货', '已完成'],
       switchStyle: ''
     }
-  },
-  computed: {
-    ...mapGetters([
-      'ordersChange'
-    ])
   },
   methods: {
     switchTabs (index) {
@@ -76,10 +68,7 @@ export default {
       this.page = [1, 1, 1, 1, 1]
       this.hasMore = [true, true, true, true, true]
       this._loadData()
-    },
-    ...mapActions([
-      'setOrderChange'
-    ])
+    }
   },
   onReachBottom () {
     this._loadData()
