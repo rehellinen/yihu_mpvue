@@ -19,7 +19,7 @@ export const mutations = {
     if (flag !== undefined) {
       state.loadState[type].showLoading = flag
     }
-    if (flag !== undefined) {
+    if (total !== undefined) {
       state.loadState[type].total = total
     }
     if (loaded !== undefined) {

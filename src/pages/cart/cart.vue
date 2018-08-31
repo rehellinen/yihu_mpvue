@@ -1,5 +1,6 @@
 <template lang="pug">
   div
+    my-loading(:showLoading="showLoading")
     div.no-data(v-if="cartData.length === 0")
       p 购 物 车 中 没 有 商 品
     div.container.cart-container(v-else)
@@ -20,6 +21,7 @@
 <script>
 import {GoodsModel} from 'model/GoodsModel'
 import CartList from 'components/cart-list/cart-list'
+import MyLoading from 'base/my-loading/my-loading'
 import {mapGetters, mapActions} from 'vuex'
 
 let Goods = new GoodsModel()
@@ -31,11 +33,14 @@ export default {
     }
   },
   mounted () {
-    console.log(this.cartData.length)
+    this.setLoadingState({
+      total: this.cartData.length,
+      type: this.pageEnum.CART
+    })
   },
   computed: {
     showLoading () {
-      return this.loadState[this.$config.pageEnum.CART]
+      return this.loadState[this.pageEnum.CART]
     },
     ...mapGetters([
       'cartData',
@@ -71,11 +76,13 @@ export default {
     ...mapActions([
       'add',
       'selectAll',
-      'saveToStorage'
+      'saveToStorage',
+      'setLoadingState'
     ])
   },
   components: {
-    CartList
+    CartList,
+    MyLoading
   }
 }
 </script>

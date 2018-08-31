@@ -58,7 +58,7 @@ import {GoodsModel} from 'model/GoodsModel'
 import {CartModel} from 'model/CartModel'
 import {ShopModel} from 'model/ShopModel'
 import SwitchTab from 'base/switch-tab/switch-tab'
-import {mapGetters, mapActions, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import MyLoading from 'base/my-loading/my-loading'
 import SellerInfo from 'base/seller-info/seller-info'
 import GoodsDesc from '../../components/goods-desc/goods-desc'
@@ -181,11 +181,9 @@ export default {
       })
     },
     ...mapActions([
-      'addGoods'
-    ]),
-    ...mapMutations({
-      resetLoadingState: 'RESET_LOADING_STATE'
-    })
+      'addGoods',
+      'resetLoadingState'
+    ])
   },
   components: {
     SwitchTab,
