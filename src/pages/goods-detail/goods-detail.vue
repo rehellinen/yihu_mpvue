@@ -46,7 +46,7 @@
                 mode="aspectFill")
 
       div.photo-text-detail
-        switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs")
+        switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs", ref="switch")
           div(slot=0)
             GoodsDesc(:desc="goods.description")
           div(slot=1)
@@ -88,6 +88,7 @@ export default {
     this.selectedCount = 1
     this.switchStyle = ''
     this.resetLoadingState(this.$config.pageEnum.GOODS_DETAIL)
+    console.log(this.$refs.switch)
   },
   computed: {
     showLoading () {
@@ -345,6 +346,7 @@ export default {
 
   .photo-text-detail
     margin-top: 20rpx
+    margin-bottom: 20rpx
 
   .small-top-img
     height: 300rpx

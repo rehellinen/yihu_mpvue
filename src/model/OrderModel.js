@@ -75,7 +75,7 @@ class OrderModel extends BaseModel {
    */
   getOrder (status, page = 1, size = 12) {
     let params = {
-      url: 'order/' + status,
+      url: 'orders/' + status,
       data: {
         page: page,
         size
@@ -90,9 +90,9 @@ class OrderModel extends BaseModel {
    * @param type
    * @returns {*}
    */
-  getOrderByID (id, type) {
+  getOrderByID (id) {
     let params = {
-      url: 'order/' + id + '/' + type
+      url: 'order/' + id
     }
     return this.request(params)
   }

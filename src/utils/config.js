@@ -1,7 +1,7 @@
 module.exports = {
   // 配置1：URL基地址
-  // restUrl: 'http://localhost/fleamarket/public/api/v2/',
-  restUrl: 'https://20298479.rehellinen.cn/fleamarket/public/api/v1/',
+  restUrl: 'http://localhost/fleamarket/public/api/v2/',
+  // restUrl: 'https://20298479.rehellinen.cn/fleamarket/public/api/v1/',
 
   // 配置2：加载中图标自动隐藏时间
   loadingHiddenTime: 1500,

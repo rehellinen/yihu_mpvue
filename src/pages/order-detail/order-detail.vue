@@ -11,6 +11,7 @@
       div.order-status
         p(:class="statusClass") {{statusText}}
 
+    seller-info(:seller="seller")
     cart-list(:goods="order.snap_items" :from="pageEnum.ORDER_DETAIL")
 
     div.order-accounts
@@ -20,20 +21,31 @@
 
 <script>
   import CartList from '../../components/cart-list/cart-list'
+  import SellerInfo from '../../base/seller-info/seller-info'
   import {OrderModel} from '../../model/OrderModel'
+  import {ShopModel} from '../../model/ShopModel'
 
   let Order = new OrderModel()
+  let Shop = new ShopModel()
 
   export default {
     onLoad () {
-      let {id, type} = this.$root.$mp.query
-      Order.getOrderByID(id, type).then(res => {
+      let {id} = this.$root.$mp.query
+      Order.getOrderByID(id).then(res => {
         this.order = res
+        if (res.type === this.$config.GoodsType.NEW_GOODS) {
+          return Shop.getShopByID(res.foreign_id)
+        } else {
+          return Shop.getSellerByID(res.foreign_id)
+        }
+      }).then(res => {
+        this.seller = res
       })
     },
     data () {
       return {
         order: {},
+        seller: {},
         orderEnum: this.$config.orderEnum,
         pageEnum: this.$config.pageEnum
       }
@@ -69,7 +81,8 @@
       }
     },
     components: {
-      CartList
+      CartList,
+      SellerInfo
     }
   }
 </script>
@@ -78,12 +91,14 @@
   @import "~css/base"
   .order-detail-container
     background-color: $background-color
+    min-height: 100vh
   .order-basic-info
     border-bottom: 1rpx solid $lighter-font-color
     display: flex
     padding: 20rpx 0
     width: 750rpx
     font-size: $small-font-size
+    background-color: white
 
   .order-time-no
     flex: 1
