@@ -1,5 +1,6 @@
 <template lang="pug">
   div.container.order-detail-container
+    my-loading(:showLoading="showLoading")
     div.order-basic-info
       div.order-time-no
         div
@@ -11,10 +12,10 @@
       div.order-status
         p(:class="statusClass") {{statusText}}
 
-    seller-info(:seller="seller")
+    seller-info(:seller="seller" :from="pageEnum.ORDER_DETAIL")
     cart-list(:goods="order.snap_items" :from="pageEnum.ORDER_DETAIL")
 
-    div.order-accounts
+    div.order-accounts(v-if="!showLoading")
       div.total-account 付款合计：￥{{order.total_price}}
       div.pay(v-if="order.status === orderEnum.UNPAID") 去付款
 </template>
@@ -22,25 +23,43 @@
 <script>
   import CartList from '../../components/cart-list/cart-list'
   import SellerInfo from '../../base/seller-info/seller-info'
+  import MyLoading from 'base/my-loading/my-loading'
   import {OrderModel} from '../../model/OrderModel'
   import {ShopModel} from '../../model/ShopModel'
+  import {mapActions, mapGetters} from 'vuex'
 
   let Order = new OrderModel()
   let Shop = new ShopModel()
+  const sellerPhotosCount = 4
 
   export default {
     onLoad () {
       let {id} = this.$root.$mp.query
-      Order.getOrderByID(id).then(res => {
-        this.order = res
-        if (res.type === this.$config.GoodsType.NEW_GOODS) {
-          return Shop.getShopByID(res.foreign_id)
-        } else {
-          return Shop.getSellerByID(res.foreign_id)
-        }
-      }).then(res => {
-        this.seller = res
-      })
+      this._loadData(id)
+    },
+    methods: {
+      _loadData (id) {
+        Order.getOrderByID(id).then(res => {
+          this._setLoading(res.snap_items.length)
+          this.order = res
+          if (res.type === this.$config.GoodsType.NEW_GOODS) {
+            return Shop.getShopByID(res.foreign_id)
+          } else {
+            return Shop.getSellerByID(res.foreign_id)
+          }
+        }).then(res => {
+          this.seller = res
+        })
+      },
+      _setLoading (length) {
+        this.setLoadingState({
+          total: length + sellerPhotosCount,
+          type: this.pageEnum.ORDER_DETAIL
+        })
+      },
+      ...mapActions([
+        'setLoadingState'
+      ])
     },
     data () {
       return {
@@ -51,6 +70,9 @@
       }
     },
     computed: {
+      showLoading () {
+        return this.loadState[this.pageEnum.ORDER_DETAIL]
+      },
       statusText () {
         let orderStatus = this.$config.orderEnum
         if (this.order.status === orderStatus.UNPAID) {
@@ -78,11 +100,15 @@
         } else {
           return 'unpay'
         }
-      }
+      },
+      ...mapGetters([
+        'loadState'
+      ])
     },
     components: {
       CartList,
-      SellerInfo
+      SellerInfo,
+      MyLoading
     }
   }
 </script>

@@ -26,7 +26,7 @@ import {OrderModel} from 'model/OrderModel'
 import {mapGetters, mapActions} from 'vuex'
 
 let Order = new OrderModel()
-const orderSize = 12
+const orderSize = 10
 
 export default {
   onShow () {

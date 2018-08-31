@@ -33,15 +33,13 @@ export default {
     }
   },
   mounted () {
-    let flag = true
-    if (this.cartData.length === 0) {
-      flag = false
+    if (this.cartData.length !== 0) {
+      this.setLoadingState({
+        total: this.cartData.length,
+        type: this.pageEnum.CART,
+        flag: true
+      })
     }
-    this.setLoadingState({
-      total: this.cartData.length,
-      type: this.pageEnum.CART,
-      flag
-    })
   },
   computed: {
     showLoading () {

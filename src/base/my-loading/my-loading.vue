@@ -26,7 +26,6 @@ div.loading-container(v-if="showLoading")
     align-items: center
     width: 750rpx
     min-height: 100vh
-
     img
       width: 300rpx
       height: 300rpx
