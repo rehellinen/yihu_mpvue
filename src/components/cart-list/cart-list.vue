@@ -15,15 +15,18 @@
           p.price ￥{{item.price}}
         div.bottom-box(v-if="from === pageEnum.CART")
           div.cart-item-count
-            img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
-            img.disabled(src="__IMAGE__/icon/minus@disabled.png" v-else)
+            div
+              img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
+              img.disabled(src="__IMAGE__/icon/minus@disabled.png" v-else)
 
             div {{item.count}}
 
-            img(src="__IMAGE__/icon/plus.png", @click="plusOne(index)" v-if="item.count < item.quantity")
-            img.disabled(src="__IMAGE__/icon/plus@disabled.png" v-else)
+            div
+              img(src="__IMAGE__/icon/plus.png", @click="plusOne(index)" v-if="item.count < item.quantity")
+              img.disabled(src="__IMAGE__/icon/plus@disabled.png" v-else)
 
-          img.delete(src="__IMAGE__/icon/delete.png", @click="deleteGoods(item.id)")
+          div.delete
+            img(src="__IMAGE__/icon/delete.png", @click="deleteGoods(item.id)")
         div.note-container(v-if="from === pageEnum.ORDER_CONFIRM")
           div.note
             input(placeholder="请输入备注", placeholder-style="color:#999", @blur="addRemark" :data-index="index")
@@ -171,15 +174,26 @@
     justify-content: space-between
     align-items: center
     color: $base-font-color
+    height: 100%
     img
       width: 30rpx
       height: 30rpx
     div
+      display: flex
+      height: 100%
+      align-items: center
+      width: 50rpx
+      justify-content: center
       font-size: $small-font-size
   .delete
     width: 30rpx
-    height: 30rpx
+    height: 100%
     margin-right: 20rpx
+    display: flex
+    align-items: center
+    img
+      width: 30rpx
+      height: 30rpx
 
   .note-container
     display: flex

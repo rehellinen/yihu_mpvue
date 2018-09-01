@@ -146,6 +146,8 @@
     background-color: $background-color
     padding-bottom: $card-margin-top
     min-height: 100vh
+    width: 750rpx
+    overflow: hidden
 
   .order-container
     display: flex
