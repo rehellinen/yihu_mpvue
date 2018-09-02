@@ -71,7 +71,7 @@ div.goods-list-container(:style="style")
     display: flex
     flex-direction: column
     width: 350rpx
-    height: 365rpx
+    min-height: 355rpx
     margin-left: 17rpx
     margin-top: 25rpx
     box-shadow: 0 0 6px #ebebeb
@@ -86,12 +86,13 @@ div.goods-list-container(:style="style")
     display: flex
     flex-direction: column
     justify-content: space-around
-    height: 115rpx
+    flex-grow: 1
+    min-height: 105rpx
     color: $deep-font-color
     font-size: $small-font-size
     margin-top: 8rpx
     div
-      margin-left: 20rpx
+      margin: 0 15rpx
     .two-handed
       font-size: $smallest-font-size
       margin-right: 8rpx
@@ -99,5 +100,5 @@ div.goods-list-container(:style="style")
     color: #fa3e3d
     font-size: $normal-font-size
     width: 50%
-    margin-left: 20rpx
+    margin: 10rpx 0 10rpx 15rpx
 </style>
