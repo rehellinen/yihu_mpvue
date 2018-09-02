@@ -8,8 +8,10 @@
       switch-tab(:tabs="tabs" @switch="switchTabs" ref="switch")
         div(slot="0")
           goods-list(:goods="allGoods" :from="pageEnum.SHOP_DETAIL")
+          page-loading(:hasMore="hasMore" backgroundColor="white")
         div(slot="1")
           goods-list(:goods="recentGoods")
+          page-loading(:hasMore="false" backgroundColor="white")
 </template>
 
 <script>
@@ -17,6 +19,7 @@ import TopImage from '../../base/top-image/top-image'
 import GoodsList from '../../base/goods-list/goods-list'
 import MyLoading from 'base/my-loading/my-loading'
 import SwitchTab from '../../base/switch-tab/switch-tab'
+import PageLoading from '../../base/page-loading/page-loading'
 import {ShopModel} from '../../model/ShopModel'
 import {GoodsModel} from '../../model/GoodsModel'
 import {LazyLoad} from '../../utils/lazyload'
@@ -63,6 +66,8 @@ export default {
     this.page = 1
     this.hasMore = true
     this.$refs.switch.switchTabs(0)
+    this.recentLazyLoad = undefined
+    this.lazyLoad = undefined
     this.resetLoadingState(this.$config.pageEnum.SHOP_DETAIL)
   },
   methods: {
@@ -119,7 +124,8 @@ export default {
     TopImage,
     SwitchTab,
     GoodsList,
-    MyLoading
+    MyLoading,
+    PageLoading
   },
   onReachBottom () {
     if (this.hasMore && this.index === 0) {
@@ -136,6 +142,5 @@ export default {
     background-color: $background-color
   .goods-container
     margin-top: 20rpx
-    padding-bottom: 20rpx
     background-color: white
 </style>
