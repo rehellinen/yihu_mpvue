@@ -1,9 +1,9 @@
 <template lang="pug">
 div.info
-  img.header-image(:src="top_image")
+  img.header-image(:src="top_image", @load="imageLoaded", :data-type="from")
   open-data.avatar-name(type="userNickName", v-if="type === 'user'")
   open-data.avatar(type="userAvatarUrl", v-if="type === 'user'")
-  img.avatar(:src="avatar", v-if="type !== 'user'")
+  img.avatar(:src="avatar", v-if="type !== 'user'", @load="imageLoaded", :data-type="from")
   p.avatar-name(v-if="type !== 'user'") {{name}}
   p.avatar-quote {{quote}}
 </template>
@@ -30,6 +30,10 @@ div.info
       type: {
         type: String,
         default: 'user'
+      },
+      from: {
+        type: String,
+        default: ''
       }
     }
   }

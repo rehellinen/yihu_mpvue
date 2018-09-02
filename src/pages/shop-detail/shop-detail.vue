@@ -1,23 +1,26 @@
 <template lang="pug">
   div.container.shop-detail-container(v-if="shop.top_image_id")
+    my-loading(:showLoading="showLoading")
     top-image(:top_image="shop.top_image_id.image_url" :avatar="shop.avatar_image_id.image_url"
     :name="shop.name" :quote="shop.major"
-    type="shop")
+    type="shop", :from="pageEnum.SHOP_DETAIL")
     div.goods-container
       switch-tab(:tabs="tabs" @switch="switchTabs" ref="switch")
         div(slot="0")
-          goods-list(:goods="allGoods")
+          goods-list(:goods="allGoods" :from="pageEnum.SHOP_DETAIL")
         div(slot="1")
           goods-list(:goods="recentGoods")
 </template>
 
 <script>
 import TopImage from '../../base/top-image/top-image'
+import GoodsList from '../../base/goods-list/goods-list'
+import MyLoading from 'base/my-loading/my-loading'
 import SwitchTab from '../../base/switch-tab/switch-tab'
 import {ShopModel} from '../../model/ShopModel'
 import {GoodsModel} from '../../model/GoodsModel'
-import GoodsList from '../../base/goods-list/goods-list'
 import {LazyLoad} from '../../utils/lazyload'
+import {mapGetters, mapActions} from 'vuex'
 
 let Shop = new ShopModel()
 let Goods = new GoodsModel()
@@ -31,11 +34,13 @@ export default {
       recentGoods: [],
       index: 0,
       page: 1,
-      hasMore: true
+      hasMore: true,
+      pageEnum: this.$config.pageEnum
     }
   },
   onLoad () {
     this.shopID = this.$root.$mp.query.id
+    this._loadData()
     Shop.getShopByID(this.shopID).then((res) => {
       this.shop = res
       wx.setNavigationBarTitle({
@@ -49,7 +54,6 @@ export default {
         page: this
       })
     })
-    this._loadData()
   },
   onUnload () {
     this.shop = {}
@@ -59,10 +63,25 @@ export default {
     this.page = 1
     this.hasMore = true
     this.$refs.switch.switchTabs(0)
+    this.resetLoadingState(this.$config.pageEnum.SHOP_DETAIL)
   },
   methods: {
+    _setLoading (length) {
+      let total
+      const topImageCount = 2
+      if (length > 4) {
+        total = 4 + topImageCount
+      } else {
+        total = length + topImageCount
+      }
+      this.setLoadingState({
+        type: this.pageEnum.SHOP_DETAIL,
+        total
+      })
+    },
     _loadData () {
       Goods.getGoodsByShopId(this.shopID, this.page).then(res => {
+        this._setLoading(res.length)
         this.allGoods = this.allGoods.concat(res)
         if (!this.lazyLoad) {
           this.lazyLoad = new LazyLoad({
@@ -75,16 +94,32 @@ export default {
         }
       }).catch((ex) => {
         this.hasMore = false
+        if (this.page === 1) {
+          this._setLoading(0)
+        }
       })
     },
     switchTabs (index) {
       this.index = index
-    }
+    },
+    ...mapActions([
+      'setLoadingState',
+      'resetLoadingState'
+    ])
+  },
+  computed: {
+    showLoading () {
+      return this.loadState[this.pageEnum.SHOP_DETAIL]
+    },
+    ...mapGetters([
+      'loadState'
+    ])
   },
   components: {
     TopImage,
     SwitchTab,
-    GoodsList
+    GoodsList,
+    MyLoading
   },
   onReachBottom () {
     if (this.hasMore && this.index === 0) {

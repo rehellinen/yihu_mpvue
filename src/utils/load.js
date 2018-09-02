@@ -50,6 +50,11 @@ let images = {
     total: 0,
     loaded: 0,
     showLoading: true
+  },
+  [pageEnum.SHOP_DETAIL]: {
+    total: 0,
+    loaded: 0,
+    showLoading: true
   }
 }
 
