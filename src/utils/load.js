@@ -55,6 +55,11 @@ let images = {
     total: 0,
     loaded: 0,
     showLoading: true
+  },
+  [pageEnum.THEME]: {
+    total: 0,
+    loaded: 0,
+    showLoading: true
   }
 }
 

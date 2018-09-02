@@ -1,28 +1,34 @@
 <template lang="pug">
-  div.theme-container(v-if="categories.length !== 0")
-    div.theme-left
-      div.category(v-for="(item,index) in categories" :key="index"
-        :class="{selected: index === currentIndex}"
-        @click="switchTabs(index)")
-        p {{item.name}}
-
-    div.theme-right(:style="switchStyle")
-      scroll-view.scroll(scroll-y="true", @scrolltolower="lowerLoad",
-        v-for="(item, index) in categories", :key="index")
-        img.category-image(:src="item.image_id.image_url")
-        div.text-container
+  div
+    my-loading(:showLoading="showLoading")
+    div.theme-container(v-if="categories.length !== 0")
+      div.theme-left
+        div.category(v-for="(item,index) in categories" :key="index"
+          :class="{selected: index === currentIndex}"
+          @click="switchTabs(index)")
           p {{item.name}}
-        div.goods-container
-          div.single-goods(v-for="(ware,wareIndex) in goods[index]" :key="ware.id" @click="toDetail({id: ware.id, type: ware.type})")
-            img.goods-image(:src="ware.image_id.image_url")
-            p.goods-text {{ware.name}}
-        page-loading(:hasMore="hasMore[index]", :backgroundColor="backgroundColor")
+
+      div.theme-right(:style="switchStyle")
+        scroll-view.scroll(scroll-y="true", @scrolltolower="lowerLoad",
+          v-for="(item, index) in categories", :key="index")
+          img.category-image(:src="item.image_id.image_url"
+            @load="imageLoaded" :data-type="pageEnum.THEME")
+          div.text-container
+            p {{item.name}}
+          div.goods-container
+            div.single-goods(v-for="(ware,wareIndex) in goods[index]" :key="ware.id" @click="toDetail({id: ware.id, type: ware.type})")
+              img.goods-image(:src="ware.image_id.image_url"
+                @load="imageLoaded" :data-type="pageEnum.THEME")
+              p.goods-text {{ware.name}}
+          page-loading(:hasMore="hasMore[index]", :backgroundColor="backgroundColor")
 </template>
 
 <script>
   import {ThemeModel} from '../../model/ThemeModel'
   import {GoodsModel} from '../../model/GoodsModel'
   import PageLoading from '../../base/page-loading/page-loading'
+  import MyLoading from 'base/my-loading/my-loading'
+  import {mapGetters, mapActions} from 'vuex'
 
   let Theme = new ThemeModel()
   let Goods = new GoodsModel()
@@ -37,7 +43,8 @@
         page: [],
         hasMore: [],
         switchStyle: '',
-        backgroundColor: this.$config.color.WHITE
+        backgroundColor: this.$config.color.WHITE,
+        pageEnum: this.$config.pageEnum
       }
     },
     onLoad () {
@@ -54,8 +61,22 @@
       this.page = []
       this.hasMore = []
       this.switchStyle = ''
+      this.resetLoadingState(this.$config.pageEnum.THEME)
     },
     methods: {
+      _setLoading (length) {
+        let total
+        const topImageCount = 1
+        if (length > 12) {
+          total = 12 + topImageCount
+        } else {
+          total = length + topImageCount
+        }
+        this.setLoadingState({
+          type: this.pageEnum.THEME,
+          total
+        })
+      },
       toDetail ({id, type}) {
         wx.navigateTo({
           url: `../goods-detail/main?id=${id}&type=${type}`
@@ -77,6 +98,7 @@
       _loadGoods () {
         let categoryID = this.categories[this.currentIndex].id
         Goods.getGoodsByCategoryID(categoryID, this.page[this.currentIndex], goodsSize).then(res => {
+          this._setLoading(res.length)
           if (this.goods[this.currentIndex]) {
             res = this.goods[this.currentIndex].concat(res)
           }
@@ -103,10 +125,23 @@
           this.hasMore[i] = true
           this.page[i] = 1
         }
-      }
+      },
+      ...mapActions([
+        'setLoadingState',
+        'resetLoadingState'
+      ])
+    },
+    computed: {
+      showLoading () {
+        return this.loadState[this.pageEnum.THEME]
+      },
+      ...mapGetters([
+        'loadState'
+      ])
     },
     components: {
-      PageLoading
+      PageLoading,
+      MyLoading
     }
   }
 </script>

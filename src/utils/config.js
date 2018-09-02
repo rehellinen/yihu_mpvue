@@ -65,7 +65,8 @@ module.exports = {
     ORDER_CONFIRM: 'ORDER_CONFIRM',
     PERSONAL: 'PERSONAL',
     ORDER_DETAIL: 'ORDER_DETAIL',
-    SHOP_DETAIL: 'SHOP_DETAIL'
+    SHOP_DETAIL: 'SHOP_DETAIL',
+    THEME: 'THEME'
   },
 
   // 配置8：关于颜色
