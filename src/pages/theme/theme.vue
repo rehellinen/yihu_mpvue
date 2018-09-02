@@ -13,7 +13,7 @@
         div.text-container
           p {{item.name}}
         div.goods-container
-          div.single-goods(v-for="(ware,wareIndex) in goods[index]" :key="ware.id")
+          div.single-goods(v-for="(ware,wareIndex) in goods[index]" :key="ware.id" @click="toDetail({id: ware.id, type: ware.type})")
             img.goods-image(:src="ware.image_id.image_url")
             p.goods-text {{ware.name}}
         page-loading(:hasMore="hasMore[index]", :backgroundColor="backgroundColor")
@@ -56,6 +56,11 @@
       this.switchStyle = ''
     },
     methods: {
+      toDetail ({id, type}) {
+        wx.navigateTo({
+          url: `../goods-detail/main?id=${id}&type=${type}`
+        })
+      },
       lowerLoad () {
         this.page[this.currentIndex]++
         if (this.hasMore[this.currentIndex]) {
@@ -187,6 +192,6 @@
     border-radius: 120rpx
 
   .goods-text
-    font-size: $small-font-size
+    font-size: $smaller-font-size
     margin-top: 10rpx
 </style>
