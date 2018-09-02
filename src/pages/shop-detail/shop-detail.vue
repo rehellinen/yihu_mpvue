@@ -4,7 +4,7 @@
     :name="shop.name" :quote="shop.major"
     type="shop")
     div.goods-container
-      switch-tab(:tabs="tabs" @switch="switchTabs")
+      switch-tab(:tabs="tabs" @switch="switchTabs" ref="switch")
         div(slot="0")
           goods-list(:goods="allGoods")
         div(slot="1")
@@ -50,6 +50,15 @@ export default {
       })
     })
     this._loadData()
+  },
+  onUnload () {
+    this.shop = {}
+    this.allGoods = []
+    this.recentGoods = []
+    this.index = 0
+    this.page = 1
+    this.hasMore = true
+    this.$refs.switch.switchTabs(0)
   },
   methods: {
     _loadData () {
