@@ -77,12 +77,12 @@ const actions = {
     commit(types.SET_LOADING_STATE, {type, flag, total, loaded})
   },
   resetLoadingState ({commit}, type) {
-    commit(types.SET_LOADING_STATE, {type, flag: true, loaded: 0})
+    commit(types.RESET_LOADING_STATE, type)
   },
   addLoadedPhoto ({commit, state}, type) {
     let loaded = state.loadState[type].loaded
     loaded++
-    commit(types.SET_LOADING_STATE, {type, loaded})
+    commit(types.ADD_LOADED_PHOTO, {type, loaded})
   }
 }
 

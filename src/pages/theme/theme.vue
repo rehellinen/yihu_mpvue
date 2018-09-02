@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     my-loading(:showLoading="showLoading")
-    div.theme-container(v-if="categories.length !== 0")
+    div.theme-container(v-if="goods.length !== 0")
       div.theme-left
         div.category(v-for="(item,index) in categories" :key="index"
           :class="{selected: index === currentIndex}"
@@ -55,7 +55,7 @@
       this._loadData(themeID)
     },
     onUnload () {
-      this.categories = {}
+      this.categories = []
       this.goods = []
       this.currentIndex = 0
       this.page = []
@@ -65,6 +65,9 @@
     },
     methods: {
       _setLoading (length) {
+        if (this.currentIndex !== 0) {
+          return
+        }
         let total
         const topImageCount = 1
         if (length > 12) {
@@ -108,6 +111,7 @@
           }
         }).catch(ex => {
           this.$set(this.hasMore, this.currentIndex, false)
+          this._setLoading(0)
         })
       },
       switchTabs (index) {
