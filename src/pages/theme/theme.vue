@@ -29,6 +29,7 @@
   import PageLoading from '../../base/page-loading/page-loading'
   import MyLoading from 'base/my-loading/my-loading'
   import {mapGetters, mapActions} from 'vuex'
+  import {share} from '../../utils/utils'
 
   let Theme = new ThemeModel()
   let Goods = new GoodsModel()
@@ -47,12 +48,16 @@
         pageEnum: this.$config.pageEnum
       }
     },
+    onShareAppMessage (res) {
+      return share(this.title, `page/theme/main?id=${this.id}`)
+    },
     onLoad () {
-      let themeID = this.$root.$mp.query.id
+      this.id = this.$root.$mp.query.id
+      this.title = this.$root.$mp.query.name
       wx.setNavigationBarTitle({
-        title: this.$root.$mp.query.name
+        title: this.title
       })
-      this._loadData(themeID)
+      this._loadData(this.id)
     },
     onUnload () {
       this.categories = []

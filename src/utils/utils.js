@@ -38,4 +38,23 @@ function getSwitchTabHeight (index) {
   })
 }
 
-export {copyObjArr, toast, modal, getSwitchTabHeight}
+function share (title, path) {
+  return {
+    title,
+    path,
+    success: (res) => {
+      wx.showToast({
+        title: '分享成功',
+        image: iconType.SUCCESS
+      })
+    },
+    fail: (res) => {
+      wx.showToast({
+        title: '分享失败',
+        image: iconType.FAIL
+      })
+    }
+  }
+}
+
+export {copyObjArr, toast, modal, getSwitchTabHeight, share}

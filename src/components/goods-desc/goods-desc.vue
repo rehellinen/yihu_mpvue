@@ -33,6 +33,7 @@
     img
       width: 35rpx
       height: 35rpx
+      margin-left: 20rpx
     p
       font-size: $small-font-size
       margin-left: 15rpx

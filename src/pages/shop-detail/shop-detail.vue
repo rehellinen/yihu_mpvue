@@ -24,6 +24,7 @@ import {ShopModel} from '../../model/ShopModel'
 import {GoodsModel} from '../../model/GoodsModel'
 import {LazyLoad} from '../../utils/lazyload'
 import {mapGetters, mapActions} from 'vuex'
+import {share} from '../../utils/utils'
 
 let Shop = new ShopModel()
 let Goods = new GoodsModel()
@@ -57,6 +58,9 @@ export default {
         page: this
       })
     })
+  },
+  onShareAppMessage (res) {
+    return share(this.shop.name, `page/shop-detail/main?id=${this.shop.id}`)
   },
   onUnload () {
     this.shop = {}

@@ -43,6 +43,7 @@
   import Search from 'base/search/search'
   import {searchMixin} from 'utils/mixins'
   import {mapGetters} from 'vuex'
+  import {share} from '../../utils/utils'
 
   let Banner = new BannerModel()
   let Theme = new ThemeModel()
@@ -71,6 +72,9 @@
     },
     onLoad () {
       this._getData()
+    },
+    onShareAppMessage (res) {
+      return share('校园易乎', 'page/index/main')
     },
     methods: {
       toTheme ({id, name}) {

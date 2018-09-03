@@ -18,6 +18,7 @@ div
   import {searchMixin, pageMixin} from 'utils/mixins'
   import {mapGetters} from 'vuex'
   import {LazyLoad} from '../../utils/lazyload'
+  import {share} from '../../utils/utils'
 
   let Shop = new ShopModel()
   const shopSize = 8
@@ -29,6 +30,9 @@ div
         shops: [],
         hasMore: true
       }
+    },
+    onShareAppMessage (res) {
+      return share('自营商店', 'page/shop/main')
     },
     computed: {
       showLoading () {

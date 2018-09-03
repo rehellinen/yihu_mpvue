@@ -62,6 +62,7 @@ import {mapGetters, mapActions} from 'vuex'
 import MyLoading from 'base/my-loading/my-loading'
 import SellerInfo from 'base/seller-info/seller-info'
 import GoodsDesc from '../../components/goods-desc/goods-desc'
+import {share} from '../../utils/utils'
 
 let Goods = new GoodsModel()
 let Shop = new ShopModel()
@@ -82,6 +83,9 @@ export default {
   onShow () {
     let {id, type} = this.$root.$mp.query
     this._loadData(id, type)
+  },
+  onShareAppMessage (res) {
+    return share(this.goods.name, `page/goods=detail/main?id=${this.goods.id}&type=${this.goods.type}`)
   },
   onUnload () {
     this.goods = {}
