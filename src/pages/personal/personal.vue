@@ -14,11 +14,13 @@
 
       // 我的订单
       div.order-container
-        div.image-container(v-if="orders.length !== 0")
+        div.image-container
           img(src="__IMAGE__/theme/personal@order.png")
         order-list(:orders="orders", @reload="reload", :from="pageEnum.PERSONAL")
         div(v-if="orders.length !==0", @click="toOrderMore")
           see-more
+        div(v-else)
+          page-loading(:hasMore="false" backgroundColor="white")
       // 我的订单
 </template>
 
@@ -26,6 +28,7 @@
   import MyLoading from 'base/my-loading/my-loading'
   import TopImage from 'base/top-image/top-image'
   import Electricity from 'base/electricity/electricity'
+  import PageLoading from '../../base/page-loading/page-loading'
   import SeeMore from 'base/see-more/see-more'
   import OrderList from 'base/order-list/order-list'
   import {orderEnum} from 'utils/config'
@@ -88,6 +91,8 @@
             this._setLoading(res.length)
           }
           this._processOrder(res)
+        }).catch(ex => {
+          this._setLoading(0)
         })
       },
       _setLoading (length) {
@@ -119,7 +124,8 @@
       TopImage,
       Electricity,
       SeeMore,
-      OrderList
+      OrderList,
+      PageLoading
     }
   }
 </script>
