@@ -1,5 +1,5 @@
 # yihu_webpack
 易乎小程序的代码重构
 
-__STATIC__为静态资源目录
-__IMAGE__为存放图片的目录
+使用mpvue重构整个项目
+使用vuex管理部分数据
