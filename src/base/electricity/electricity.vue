@@ -4,17 +4,34 @@
     title(title="我的电量" img="__IMAGE__/icon/elec.png")
     div.detail
       div
-        p.count 78
+        p.count {{surplus}}
         p.comment 剩余电量
       div
-        p.count 66
+        p.count {{threeDays}}
         p.comment 最近三天用电
 </template>
 
 <script>
 import Title from './title'
+import {ElectricityModel} from '../../model/ElectricityModel'
+
+let elec = new ElectricityModel()
 
 export default {
+  data () {
+    return {
+      surplus: 0,
+      threeDays: 0
+    }
+  },
+  onLoad () {
+    elec.getThreeDays().then((res) => {
+      this.threeDays = res.elec
+    })
+    elec.getSurplus().then((res) => {
+      this.surplus = res.elec
+    })
+  },
   components: {
     Title
   }
@@ -39,7 +56,7 @@ export default {
     z-index: 10
     display: flex
     width: 100%
-    padding: 20rpx 0 50rpx 0
+    padding: 20rpx 0 40rpx 0
     div:first-child
       border-right: 1px solid $nav-color
     div
