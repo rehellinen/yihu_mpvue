@@ -4,7 +4,7 @@ module.exports = {
   restUrl: 'https://20298479.rehellinen.cn/fleamarket/public/api/v2/',
 
   // 配置2：加载中图标自动隐藏时间
-  loadingHiddenTime: 1500,
+  loadingHiddenTime: 3000,
 
   // 配置3：关于全局字符串替换
   replace: {

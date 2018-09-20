@@ -2,7 +2,7 @@
  * 工具函数：控制“加载中”页面的显示与否
  */
 import store from '../store/index'
-import {pageEnum} from './config'
+import {pageEnum, loadingHiddenTime} from './config'
 
 /**
  * total -> 该页面一开始需要展示的图片
@@ -73,6 +73,13 @@ function load (event) {
   if (loadState[type].total < loadState[type].loaded) {
     return
   }
+
+  if (loadState[type].loaded === 0) {
+    setTimeout(() => {
+      store.dispatch('setLoadingState', {flag: false, type})
+    }, loadingHiddenTime)
+  }
+
   store.dispatch('addLoadedPhoto', type)
   if (loadState[type].total === loadState[type].loaded) {
     store.dispatch('setLoadingState', {flag: false, type})
