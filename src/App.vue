@@ -1,10 +1,10 @@
 <script>
-  // import {Token} from './utils/token'
+  import {Token} from './utils/token'
 
   export default {
     created () {
-      // let token = new Token()
-      // token.verify()
+      let token = new Token()
+      token.verify()
     }
   }
 </script>

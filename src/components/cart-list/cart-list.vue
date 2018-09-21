@@ -62,6 +62,10 @@
       from: {
         type: String,
         default: ''
+      },
+      goodsType: {
+        type: Number,
+        default: null
       }
     },
     data () {
@@ -92,6 +96,10 @@
       toDetail (index) {
         let id = this.goods[index].id
         let type = this.goods[index].type
+        if (this.goodsType) {
+          type = this.goodsType
+          id = this.goods[index].goods_id
+        }
         wx.navigateTo({
           url: `../goods-detail/main?id=${id}&type=${type}`
         })

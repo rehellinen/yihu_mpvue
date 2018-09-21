@@ -13,7 +13,7 @@
         p(:class="statusClass") {{statusText}}
 
     seller-info(:seller="seller" :from="pageEnum.ORDER_DETAIL")
-    cart-list(:goods="order.snap_items" :from="pageEnum.ORDER_DETAIL")
+    cart-list(:goods="order.snap_items" :from="pageEnum.ORDER_DETAIL", :goodsType="order.type")
 
     div.order-accounts(v-if="!showLoading")
       div.total-account 付款合计：￥{{order.total_price}}
