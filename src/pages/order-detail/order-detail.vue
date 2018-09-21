@@ -35,8 +35,8 @@
 
   export default {
     onLoad () {
-      let {id} = this.$root.$mp.query
-      this._loadData(id)
+      let {id, type} = this.$root.$mp.query
+      this._loadData(id, type)
     },
     onUnload () {
       this.order = {}
@@ -67,8 +67,8 @@
           }
         })
       },
-      _loadData (id) {
-        Order.getOrderByID(id).then(res => {
+      _loadData (id, type) {
+        Order.getOrderByID(id, type).then(res => {
           this._setLoading(res.snap_items.length)
           this.order = res
           if (res.type === this.$config.GoodsType.NEW_GOODS) {

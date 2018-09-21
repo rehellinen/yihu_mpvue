@@ -13,9 +13,9 @@ export class BaseModel {
    *  1. url [api地址]
    *  2. type [http请求方式]
    *  3. data [请求时携带的参数]
-   * @param noReFetch 是否重新发送请求
+   * @param reFetch 是否重新发送请求
    */
-  request (params, noReFetch = false) {
+  request (params, reFetch = true) {
     return new Promise((resolve, reject) => {
       let that = this
       let url = this.baseUrl + params.url
@@ -36,11 +36,15 @@ export class BaseModel {
           let startChar = code.charAt(0)
           if (startChar === '2') {
             // 处理成功时的情况
-            resolve(res.data.data)
+            let returnData = res.data.data
+            if (res.data.data.current_page) {
+              returnData = res.data.data.data
+            }
+            resolve(returnData)
           } else {
             if (code === '401') {
               // 处理Token无效的情况
-              if (!noReFetch) {
+              if (reFetch) {
                 that._reFetch(params)
               } else {
                 reject(res.data)
@@ -63,8 +67,8 @@ export class BaseModel {
   // 重新发送请求
   _reFetch (params) {
     let token = new Token()
-    token.getTokenFromServer((token) => {
-      this.request(params, true)
+    token.getTokenFromServer().then((token) => {
+      this.request(params, false)
     })
   }
 }

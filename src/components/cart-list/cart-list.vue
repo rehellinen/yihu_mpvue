@@ -1,18 +1,28 @@
 <template lang="pug">
   div.cart-box(v-if="goods.length > 0")
     div.cart-item(v-for="(item, index) in goods" :key="item.id" :class="{deleteThat: deleteIndex === index, deleteAfter: deleteIndex && index > deleteIndex}")
+      // 最左侧的复选框
       div.cart-item-checkbox(@click="selectOneTap(index)", v-if="from === pageEnum.CART")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
         img(src="__IMAGE__/icon/circle@noselected.png", v-else)
+      div.left-holder(v-else)
+      // 最左侧的复选框
 
+      // 商品图片
       div.cart-item-img(@click="toDetail(index)")
-        img.goods-image(:src="item.image_id.image_url" mode="aspectFill"
+        img(:src="item.image_id.image_url" mode="aspectFill"
           @load="imageLoaded", :data-type="from")
+      // 商品图片
 
+      // 右侧详细信息
       div.cart-item-word
+        // 上部分
         div.title-box(@click="toDetail(index)")
           p.name {{item.name}}
           p.price ￥{{item.price}}
+        // 上部分
+
+        // 下部分
         div.bottom-box(v-if="from === pageEnum.CART")
           div.cart-item-count
             div
@@ -34,6 +44,8 @@
         div.count-container(v-if="from === pageEnum.ORDER_DETAIL")
           p.remark {{item.remark}}
           p.count x {{item.count}}
+        // 下部分
+      // 右侧详细信息
 </template>
 
 <script>
@@ -132,6 +144,9 @@
     img
       height: 44rpx
       width: 44rpx
+
+  .left-holder
+    width: 30rpx
 
   .cart-item-img
     width: 186rpx
