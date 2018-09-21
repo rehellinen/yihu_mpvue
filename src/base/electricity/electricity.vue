@@ -58,7 +58,7 @@ export default {
     width: 100%
     padding: 20rpx 0 40rpx 0
     div:first-child
-      border-right: 1px solid $nav-color
+      border-right: 1px solid $grey-font-color
     div
       width: 50%
       display: flex

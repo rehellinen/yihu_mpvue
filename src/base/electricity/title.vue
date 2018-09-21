@@ -26,6 +26,7 @@ export default {
     height: 60rpx
     display: flex
     align-items: center
+    justify-content: center
     p
       font-size: $small-font-size
     img

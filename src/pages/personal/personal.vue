@@ -24,11 +24,7 @@
       // 我的订单
 
       // 跳转到其他小程序
-      div.redirect-container.card
-        div
-          navigator(target="miniProgram", app-id="wx026b7698d91e0904", hover-class="none") 商家版
-        div
-          navigator(target="miniProgram", app-id="wxe869b1edab698fd5", hover-class="none") 暨先生
+      about-us
       // 跳转到其他小程序
 </template>
 
@@ -37,6 +33,7 @@
   import TopImage from 'base/top-image/top-image'
   import Electricity from 'base/electricity/electricity'
   import PageLoading from '../../base/page-loading/page-loading'
+  import AboutUs from '../../components/about-us'
   import SeeMore from 'base/see-more/see-more'
   import OrderList from 'base/order-list/order-list'
   import {orderEnum} from 'utils/config'
@@ -133,7 +130,8 @@
       Electricity,
       SeeMore,
       OrderList,
-      PageLoading
+      PageLoading,
+      AboutUs
     }
   }
 </script>
@@ -183,18 +181,4 @@
       img
         width: 170rpx
         height: 50rpx
-  .redirect-container
-    display: flex
-    justify-content: space-around
-    align-items: center
-    font-size: $normal-font-size
-    height: 100rpx
-    div
-      padding: 10rpx 0
-      flex-basis: 50%
-      text-align: center
-    div:first-child
-      border-right: 1rpx solid $lighter-font-color
-
-  .de
 </style>
