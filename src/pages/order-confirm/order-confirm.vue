@@ -84,7 +84,7 @@ export default {
           this.deleteAllGoods()
         } else if (status === payEnum.OUT_OF_STOCK) {
           // 库存不足
-          this._orderFail(res)
+          this.orderFail(res)
         } else {
           // 支付失败
           wx.redirectTo({
@@ -103,7 +103,7 @@ export default {
       this.deleteGoods(ids)
       this.setOrderChange(true)
     },
-    _orderFail (data) {
+    orderFail (data) {
       let nameArr = []
       let name = ''
       let str = ''
