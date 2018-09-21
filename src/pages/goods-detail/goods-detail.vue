@@ -82,7 +82,6 @@ export default {
   },
   onShow () {
     let {id, type} = this.$root.$mp.query
-    console.log(type)
     this._loadData(id, type)
   },
   onShareAppMessage (res) {

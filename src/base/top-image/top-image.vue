@@ -63,12 +63,12 @@ div.info
     overflow: hidden
 
   .avatar-name
-    margin-top: 80rpx
+    margin-top: 85rpx
     color: $theme-color
     font-size: $biggest-font-size
 
   .avatar-quote
     color: $light-font-color
     font-size: $smaller-font-size
-    margin: 10rpx 20rpx 20rpx 20rpx
+    margin: 15rpx 20rpx 20rpx 20rpx
 </style>
