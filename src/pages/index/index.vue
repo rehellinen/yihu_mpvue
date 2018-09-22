@@ -33,15 +33,15 @@
 </template>
 
 <script>
-  import MyLoading from 'base/my-loading/my-loading'
-  import SeeMore from 'base/see-more/see-more'
-  import GoodsList from 'base/goods-list/goods-list'
-  import {BannerModel} from 'model/BannerModel'
-  import {ThemeModel} from 'model/ThemeModel'
-  import {GoodsModel} from 'model/GoodsModel'
-  import {LazyLoad} from 'utils/lazyload'
-  import Search from 'base/search/search'
-  import {searchMixin} from 'utils/mixins'
+  import MyLoading from '../../base/my-loading'
+  import SeeMore from '../../base/see-more'
+  import GoodsList from '../../base/goods-list'
+  import {BannerModel} from '../../model/BannerModel'
+  import {ThemeModel} from '../../model/ThemeModel'
+  import {GoodsModel} from '../../model/GoodsModel'
+  import {LazyLoad} from '../../utils/lazyload'
+  import Search from '../../base/search'
+  import {searchMixin} from '../../utils/mixins'
   import {mapGetters} from 'vuex'
   import {share} from '../../utils/utils'
 

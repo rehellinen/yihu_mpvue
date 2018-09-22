@@ -22,10 +22,10 @@
 </template>
 
 <script>
-  import CartList from '../../components/cart-list/cart-list'
+  import CartList from '../../base/cart-list'
   // import OrderConfirm from '../order-confirm/order-confirm'
-  import SellerInfo from '../../base/seller-info/seller-info'
-  import MyLoading from 'base/my-loading/my-loading'
+  import SellerInfo from '../../base/seller-info'
+  import MyLoading from '../../base/my-loading'
   import {OrderModel} from '../../model/OrderModel'
   import {ShopModel} from '../../model/ShopModel'
   import {mapActions, mapGetters} from 'vuex'

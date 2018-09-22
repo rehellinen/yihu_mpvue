@@ -14,17 +14,17 @@
             img(src="__IMAGE__/icon/jixiansheng.jpg")
             p 暨先生
           p.info 暨大查询小神器
-    see-more(text="关于我们")
+    about-us-text(text="关于我们")
 </template>
 
 <script>
-import Title from '../base/electricity/title'
-import SeeMore from '../base/electricity/see-more'
+import Title from '../base/title'
+import AboutUsText from '../base/about-us-text'
 
 export default {
   components: {
     Title,
-    SeeMore
+    AboutUsText
   }
 }
 </script>
@@ -40,7 +40,7 @@ export default {
     height: 100rpx
     letter-spacing: 2px
     > div:first-child
-      border-right: 2px solid $lighter-font-color
+      border-right: 3rpx solid $lighter-font-color
     > div
       padding: 10rpx 0
       flex-basis: 50%

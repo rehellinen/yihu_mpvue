@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import Title from './title'
-import {ElectricityModel} from '../../model/ElectricityModel'
+import Title from '../base/title'
+import {ElectricityModel} from '../model/ElectricityModel'
 
 let elec = new ElectricityModel()
 

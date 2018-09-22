@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import SwitchTab from 'base/switch-tab/switch-tab'
-import OrderList from 'base/order-list/order-list'
-import PageLoading from '../../base/page-loading/page-loading'
-import {OrderModel} from 'model/OrderModel'
+import SwitchTab from '../../base/switch-tab'
+import OrderList from '../../base/order-list'
+import PageLoading from '../../base/page-loading'
+import {OrderModel} from '../../model/OrderModel'
 
 let Order = new OrderModel()
 const orderSize = 10

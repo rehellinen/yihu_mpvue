@@ -54,14 +54,14 @@
 </template>
 
 <script>
-import {GoodsModel} from 'model/GoodsModel'
-import {CartModel} from 'model/CartModel'
-import {ShopModel} from 'model/ShopModel'
-import SwitchTab from 'base/switch-tab/switch-tab'
+import {GoodsModel} from '../../model/GoodsModel'
+import {CartModel} from '../../model/CartModel'
+import {ShopModel} from '../../model/ShopModel'
+import SwitchTab from '../../base/switch-tab'
 import {mapGetters, mapActions} from 'vuex'
-import MyLoading from 'base/my-loading/my-loading'
-import SellerInfo from 'base/seller-info/seller-info'
-import GoodsDesc from '../../components/goods-desc/goods-desc'
+import MyLoading from '../../base/my-loading'
+import SellerInfo from '../../base/seller-info'
+import GoodsDesc from '../../base/goods-desc'
 import {share} from '../../utils/utils'
 
 let Goods = new GoodsModel()

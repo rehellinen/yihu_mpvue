@@ -29,15 +29,15 @@
 </template>
 
 <script>
-  import MyLoading from 'base/my-loading/my-loading'
-  import TopImage from 'base/top-image/top-image'
-  import Electricity from 'base/electricity/electricity'
-  import PageLoading from '../../base/page-loading/page-loading'
+  import MyLoading from '../../base/my-loading'
+  import TopImage from '../../base/top-image'
+  import Electricity from '../../components/electricity'
+  import PageLoading from '../../base/page-loading'
   import AboutUs from '../../components/about-us'
-  import SeeMore from 'base/see-more/see-more'
-  import OrderList from 'base/order-list/order-list'
-  import {orderEnum} from 'utils/config'
-  import {OrderModel} from 'model/OrderModel'
+  import SeeMore from '../../base/see-more'
+  import OrderList from '../../base/order-list'
+  import {orderEnum} from '../../utils/config'
+  import {OrderModel} from '../../model/OrderModel'
   import {mapGetters, mapActions} from 'vuex'
 
   let Order = new OrderModel()

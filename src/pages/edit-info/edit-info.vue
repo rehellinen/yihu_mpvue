@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import TitlePanel from 'base/title-panel/title-panel'
-import {UserModel} from 'model/UserModel'
+import TitlePanel from '../../base/title-panel'
+import {UserModel} from '../../model/UserModel'
 
 let User = new UserModel()
 

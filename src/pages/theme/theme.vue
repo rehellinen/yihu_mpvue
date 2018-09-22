@@ -26,8 +26,8 @@
 <script>
   import {ThemeModel} from '../../model/ThemeModel'
   import {GoodsModel} from '../../model/GoodsModel'
-  import PageLoading from '../../base/page-loading/page-loading'
-  import MyLoading from 'base/my-loading/my-loading'
+  import PageLoading from '../../base/page-loading'
+  import MyLoading from '../../base/my-loading'
   import {mapGetters, mapActions} from 'vuex'
   import {share} from '../../utils/utils'
 
