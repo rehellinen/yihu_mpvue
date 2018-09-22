@@ -14,7 +14,8 @@
             img(src="__IMAGE__/icon/jixiansheng.jpg")
             p 暨先生
           p.info 暨大查询小神器
-    about-us-text(text="关于我们")
+    div(@click="toAboutUs")
+      about-us-text(text="关于我们")
 </template>
 
 <script>
@@ -22,6 +23,13 @@ import Title from '../base/title'
 import AboutUsText from '../base/about-us-text'
 
 export default {
+  methods: {
+    toAboutUs () {
+      wx.navigateTo({
+        url: '../about-us/main'
+      })
+    }
+  },
   components: {
     Title,
     AboutUsText

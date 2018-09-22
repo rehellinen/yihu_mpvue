@@ -40,5 +40,4 @@ export default {
       color: $deep-font-color
       font-size: $bigger-font-size
       letter-spacing: 2px
-  .de
 </style>

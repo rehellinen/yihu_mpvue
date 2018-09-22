@@ -3,7 +3,7 @@
     my-loading(:showLoading="showLoading")
     //search(:pullDown="pullDown")
     div(v-show="!showLoading")
-      title-panel(:title="title", :image="image")
+      title-panel(:title="title", :image="image()")
       goods-list(:goods="goods", backgroundColor="#f9f9f9", :from="pageEnum.GOODS_MORE")
       page-loading(:hasMore="hasMore")
 </template>
@@ -36,13 +36,6 @@ export default {
     showLoading () {
       return this.loadState[this.$config.pageEnum.GOODS_MORE]
     },
-    image () {
-      if (parseInt(this.type) === this.$config.GoodsType.NEW_GOODS) {
-        return '__IMAGE__/icon/find.png'
-      } else {
-        return '__IMAGE__/icon/old.png'
-      }
-    },
     ...mapGetters([
       'loadState'
     ])
@@ -74,6 +67,13 @@ export default {
       }).catch(ex => {
         this.hasMore = false
       })
+    },
+    image () {
+      if (parseInt(this.type) === this.$config.GoodsType.NEW_GOODS) {
+        return '__IMAGE__/icon/find.png'
+      } else {
+        return '__IMAGE__/icon/old.png'
+      }
     }
   },
   components: {

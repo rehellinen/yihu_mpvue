@@ -1,6 +1,6 @@
 <template lang="pug">
   div.container.edit-container
-    title-panel(:title="title")
+    title-panel(:title="title", image="__IMAGE__/icon/edit.png")
     div.form-container
       form(@submit="formSubmit")
         div.section
