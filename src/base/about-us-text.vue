@@ -25,7 +25,7 @@ export default {
   .more-container
     z-index: 10
     width: 100%
-    height: 75rpx
+    height: 95rpx
     display: flex
     justify-content: center
     align-items: center

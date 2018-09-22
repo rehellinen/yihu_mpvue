@@ -56,7 +56,7 @@ export default {
     z-index: 10
     display: flex
     width: 100%
-    padding: 20rpx 0 40rpx 0
+    padding-bottom: 40rpx
     div:first-child
       border-right: 1px solid $grey-font-color
     div

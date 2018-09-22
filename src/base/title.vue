@@ -23,11 +23,10 @@ export default {
   @import "~css/base"
   .title
     z-index: 10
-    height: 60rpx
+    height: 95rpx
     display: flex
     align-items: center
     justify-content: center
-    margin: 15rpx 0
     letter-spacing: 2px
     p
       font-size: $small-font-size
