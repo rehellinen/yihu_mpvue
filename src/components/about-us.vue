@@ -47,6 +47,7 @@ export default {
     font-size: $normal-font-size
     height: 100rpx
     letter-spacing: 2px
+    margin: 10rpx 0
     > div:first-child
       border-right: 3rpx solid $lighter-font-color
     > div
