@@ -27,6 +27,8 @@ export default {
     display: flex
     align-items: center
     justify-content: center
+    margin: 15rpx 0
+    letter-spacing: 2px
     p
       font-size: $small-font-size
     img

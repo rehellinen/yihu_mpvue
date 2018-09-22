@@ -1,11 +1,19 @@
 <template lang="pug">
   div.card
-    title(title="更多" img="__IMAGE__/icon/more.png")
+    title(title="相关小程序" img="__IMAGE__/icon/share@personal.png")
     div.redirect-container
       div
-        navigator(target="miniProgram", app-id="wx026b7698d91e0904", hover-class="none") 商家版
+        navigator(target="miniProgram", app-id="wx026b7698d91e0904", hover-class="none")
+          div.name
+            img(src="__IMAGE__/icon/yishang.png")
+            p 易乎商家版
+          p.info 来成为一名优秀小商家
       div
-        navigator(target="miniProgram", app-id="wxe869b1edab698fd5", hover-class="none") 暨先生
+        navigator(target="miniProgram", app-id="wxe869b1edab698fd5", hover-class="none")
+          div.name
+            img(src="__IMAGE__/icon/jixiansheng.jpg")
+            p 暨先生
+          p.info 暨大查询小神器
     see-more(text="关于我们")
 </template>
 
@@ -30,14 +38,25 @@ export default {
     align-items: center
     font-size: $normal-font-size
     height: 100rpx
-    div
-      padding: 20rpx 0
+    letter-spacing: 2px
+    > div:first-child
+      border-right: 2px solid $lighter-font-color
+    > div
+      padding: 10rpx 0
       flex-basis: 50%
       text-align: center
-    div:first-child
-      border-right: 1px solid $grey-font-color
-    .about-us
-      font-size: $small-font-size
-      text-align: center
-      margin-bottom: 15rpx
+      .name
+        display: flex
+        justify-content: center
+        align-items: center
+        font-size: $normal-font-size
+        img
+          width: 35rpx
+          height: 35rpx
+          margin-right: 15rpx
+      .info
+        font-size: $smallest-font-size
+        color: $grey-font-color
+        margin-top: 10rpx
+  .de
 </style>

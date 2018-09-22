@@ -7,7 +7,9 @@
       div.icon-container(@click="toEdit")
         img(src="__IMAGE__/icon/edit.png")
       // 个人信息栏
-
+      // 跳转到其他小程序
+      about-us
+      // 跳转到其他小程序
       // 电费栏
       electricity
       // 电费栏
@@ -23,9 +25,7 @@
           page-loading(:hasMore="false" backgroundColor="white")
       // 我的订单
 
-      // 跳转到其他小程序
-      about-us
-      // 跳转到其他小程序
+
 </template>
 
 <script>

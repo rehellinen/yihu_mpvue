@@ -23,7 +23,7 @@
 
 <script>
   import CartList from '../../components/cart-list/cart-list'
-  import OrderConfirm from '../order-confirm/order-confirm'
+  // import OrderConfirm from '../order-confirm/order-confirm'
   import SellerInfo from '../../base/seller-info/seller-info'
   import MyLoading from 'base/my-loading/my-loading'
   import {OrderModel} from '../../model/OrderModel'
@@ -58,7 +58,7 @@
           } else if (status === payEnum.OUT_OF_STOCK) {
             this.setOrderChange(true)
             // 库存不足
-            OrderConfirm.methods.orderFail()
+            // OrderConfirm.methods.orderFail()
           } else {
             // 支付失败
             wx.redirectTo({
