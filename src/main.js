@@ -18,7 +18,7 @@ export default {
       'navigationBarTitleText': '校园易乎',
       'navigationBarTextStyle': '#FFFFFF',
       'navigationBarBackgroundColor': '#a9936e',
-      'backgroundColor': '#f9f9f9',
+      'backgroundColor': '#f8f8f8',
       'backgroundTextStyle': 'dark',
       'enablePullDownRefresh': false
     },

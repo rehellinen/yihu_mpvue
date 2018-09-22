@@ -1,6 +1,8 @@
 <template lang="pug">
   div.panel-container
-    p {{title}}
+    img(:src="image")
+    div
+      p {{title}}
 </template>
 
 <script>
@@ -9,6 +11,10 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    image: {
+      type: String,
+      default: '__IMAGE__/icon/find.png'
     }
   }
 }
@@ -17,15 +23,22 @@ export default {
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~css/base"
   .panel-container
-    width: $card-width
-    margin-left: $card-margin-left
+    width: 750rpx
     background-color: white
-    height: 110rpx
-    border-radius: $card-border-radius
+    height: 150rpx
     display: flex
     align-items: center
-    justify-content: center
-    margin-top: $card-margin-top
-    color: $grey-font-color
-
+    justify-content: space-between
+    img
+      width: 90rpx
+      height: 90rpx
+      margin-left: 50rpx
+    div
+      flex: 1
+      text-align: center
+    p
+      color: $deep-font-color
+      font-size: $bigger-font-size
+      letter-spacing: 2px
+  .de
 </style>
