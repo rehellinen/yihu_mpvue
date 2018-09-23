@@ -128,6 +128,42 @@ class OrderModel extends BaseModel {
     }
     return this.request(params)
   }
+
+  /**
+   * 下单失败后需要执行的方法
+   * @param data
+   */
+  orderFail (data) {
+    let nameArr = []
+    let name = ''
+    let str = ''
+    let goods = data.goodsStatusArray
+
+    for (let i = 0; i < goods.length; i++) {
+      if (!goods[i].haveStock) {
+        name = goods[i].name
+        if (name.length > 15) {
+          name = name.substr(0, 12) + '...'
+        }
+        nameArr.push(name)
+        if (nameArr.length > 2) {
+          break
+        }
+      }
+    }
+    str += nameArr.join('、')
+    if (nameArr.length > 2) {
+      str += '等'
+    }
+    str += '缺货'
+
+    wx.showModal({
+      title: '下单失败',
+      content: str,
+      showCancel: false,
+      confirmColor: '#a9936e'
+    })
+  }
 }
 
 export {OrderModel}

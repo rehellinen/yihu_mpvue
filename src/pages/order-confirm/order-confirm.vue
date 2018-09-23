@@ -84,7 +84,7 @@ export default {
           this.deleteAllGoods()
         } else if (status === payEnum.OUT_OF_STOCK) {
           // 库存不足
-          this.orderFail(res)
+          Order.orderFail(res)
         } else {
           // 支付失败
           wx.redirectTo({
@@ -102,37 +102,6 @@ export default {
       }
       this.deleteGoods(ids)
       this.setOrderChange(true)
-    },
-    orderFail (data) {
-      let nameArr = []
-      let name = ''
-      let str = ''
-      let goods = data.goodsStatusArray
-
-      for (let i = 0; i < goods.length; i++) {
-        if (!goods[i].haveStock) {
-          name = goods[i].name
-          if (name.length > 15) {
-            name = name.substr(0, 12) + '...'
-          }
-          nameArr.push(name)
-          if (nameArr.length > 2) {
-            break
-          }
-        }
-      }
-      str += nameArr.join('、')
-      if (nameArr.length > 2) {
-        str += '等'
-      }
-      str += '缺货'
-
-      wx.showModal({
-        title: '下单失败',
-        content: str,
-        showCancel: false,
-        confirmColor: '#a9936e'
-      })
     },
     ...mapActions([
       'deleteGoods',

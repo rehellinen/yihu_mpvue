@@ -1,4 +1,5 @@
 {
   "enablePullDownRefresh": false,
-  "navigationBarTitleText": "校园易乎"
+  "navigationBarTitleText": "校园易乎",
+  "disableScroll": true
 }

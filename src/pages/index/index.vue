@@ -1,5 +1,6 @@
 <template lang="pug">
   div
+    search(@touchmove="touchmove")
     my-loading(:showLoading="showLoading")
     div.container.index-container(v-show="!showLoading")
       <!--search(:pullDown="pullDown")-->
@@ -77,6 +78,9 @@
       return share('校园易乎', 'page/index/main')
     },
     methods: {
+      touchmove (event) {
+        console.log(event)
+      },
       toTheme ({id, name}) {
         wx.navigateTo({
           url: `../theme/main?id=${id}&name=${name}`

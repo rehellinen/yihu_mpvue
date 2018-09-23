@@ -30,8 +30,8 @@ export default {
     align-items: center
     justify-content: space-between
     img
-      width: 90rpx
-      height: 90rpx
+      width: 75rpx
+      height: 75rpx
       margin-left: 50rpx
     div
       flex: 1
