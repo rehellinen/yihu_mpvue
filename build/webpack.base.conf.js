@@ -7,6 +7,7 @@ var MpvuePlugin = require('webpack-mpvue-asset-plugin')
 var glob = require('glob')
 var StringReplace = require('string-replace-webpack-plugin')
 var pathConfig = require('../src/utils/config')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
 var replace = pathConfig.replace
 
 function resolve(dir) {
@@ -132,6 +133,12 @@ module.exports = {
   },
   plugins: [
     new StringReplace(),
-    new MpvuePlugin()
+    new MpvuePlugin(),
+    new CopyWebpackPlugin([{
+      from: '**/*.json',
+      to: ''
+    }], {
+      context: 'src/'
+    })
   ]
 }

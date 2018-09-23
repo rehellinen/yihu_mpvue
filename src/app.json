@@ -1,0 +1,59 @@
+{
+  "window": {
+    "navigationBarTitleText": "校园易乎",
+    "navigationBarTextStyle": "#FFFFFF",
+    "navigationBarBackgroundColor": "#a9936e",
+    "backgroundColor": "#f8f8f8",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false
+  },
+  "pages": [
+    "pages/index/main",
+    "pages/about-us/main",
+    "pages/cart/main",
+    "pages/edit-info/main",
+    "pages/goods-detail/main",
+    "pages/goods-more/main",
+    "pages/order-confirm/main",
+    "pages/order-detail/main",
+    "pages/order/main",
+    "pages/pay-result/main",
+    "pages/personal/main",
+    "pages/shop-detail/main",
+    "pages/shop/main",
+    "pages/theme/main"
+  ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/main",
+        "iconPath": "/static/images/toolbar/home.png",
+        "selectedIconPath": "/static/images/toolbar/home@selected.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/shop/main",
+        "iconPath": "/static/images/toolbar/shop.png",
+        "selectedIconPath": "/static/images/toolbar/shop@selected.png",
+        "text": "自营"
+      },
+      {
+        "pagePath": "pages/cart/main",
+        "iconPath": "/static/images/toolbar/cart.png",
+        "selectedIconPath": "/static/images/toolbar/cart@selected.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/personal/main",
+        "iconPath": "/static/images/toolbar/personal.png",
+        "selectedIconPath": "/static/images/toolbar/personal@selected.png",
+        "text": "我的"
+      }
+    ],
+    "backgroundColor": "#F5F5F5",
+    "selectedColor": "#AB956D",
+    "color": "#989898",
+    "borderStyle": "white",
+    "position": "bottom"
+  }
+}
