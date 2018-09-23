@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    search(@touchmove="touchmove")
+    <!--search(@touchmove="touchmove")-->
     my-loading(:showLoading="showLoading")
     div.container.index-container(v-show="!showLoading")
       <!--search(:pullDown="pullDown")-->

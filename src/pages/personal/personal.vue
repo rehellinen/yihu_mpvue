@@ -9,7 +9,7 @@
       // 个人信息栏
 
       // 电费栏
-      electricity
+      //electricity
       // 电费栏
 
       // 我的订单
