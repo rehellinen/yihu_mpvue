@@ -11,8 +11,12 @@
     "lint": "eslint --fix --ext .js,.vue src"
   },
   "dependencies": {
+    "apollo-boost": "^0.1.17",
+    "graphql": "^14.0.2",
     "mpvue": "^1.0.11",
-    "vuex": "^3.0.1"
+    "vue-apollo": "^3.0.0-beta.25",
+    "vuex": "^3.0.1",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",

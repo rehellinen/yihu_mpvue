@@ -9,5 +9,7 @@ Vue.prototype.$store = store
 Vue.prototype.$config = conf
 Vue.prototype.imageLoaded = load
 
-const app = new Vue(App)
+const app = new Vue({
+  render: h => h(App)
+})
 app.$mount()
