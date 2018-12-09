@@ -29,13 +29,13 @@
 </template>
 
 <script>
-  import MyLoading from '../../base/my-loading'
-  import TopImage from '../../base/top-image'
-  import Electricity from '../../components/electricity'
-  import PageLoading from '../../base/page-loading'
-  import AboutUs from '../../components/about-us'
-  import SeeMore from '../../base/see-more'
-  import OrderList from '../../base/order-list'
+  import MyLoading from '../../components/my-loading/my-loading'
+  import TopImage from '../../components/top-image/top-image'
+  import Electricity from '../../components/electricity/electricity'
+  import PageLoading from '../../components/page-loading/page-loading'
+  import AboutUs from '../../components/about-us/about-us'
+  import SeeMore from '../../components/see-more/see-more'
+  import OrderList from '../../components/order-list/order-list'
   import {orderEnum} from '../../utils/config'
   import {OrderModel} from '../../model/OrderModel'
   import {mapGetters, mapActions} from 'vuex'

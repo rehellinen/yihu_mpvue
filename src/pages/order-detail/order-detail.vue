@@ -22,9 +22,9 @@
 </template>
 
 <script>
-  import CartList from '../../base/cart-list'
-  import SellerInfo from '../../base/seller-info'
-  import MyLoading from '../../base/my-loading'
+  import CartList from '../../components/cart-list/cart-list'
+  import SellerInfo from '../../components/seller-info/seller-info'
+  import MyLoading from '../../components/my-loading/my-loading'
   import {OrderModel} from '../../model/OrderModel'
   import {ShopModel} from '../../model/ShopModel'
   import {mapActions, mapGetters} from 'vuex'

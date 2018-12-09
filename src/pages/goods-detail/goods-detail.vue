@@ -57,11 +57,11 @@
 import {GoodsModel} from '../../model/GoodsModel'
 import {CartModel} from '../../model/CartModel'
 import {ShopModel} from '../../model/ShopModel'
-import SwitchTab from '../../base/switch-tab'
+import SwitchTab from '../../components/switch-tab/switch-tab'
 import {mapGetters, mapActions} from 'vuex'
-import MyLoading from '../../base/my-loading'
-import SellerInfo from '../../base/seller-info'
-import GoodsDesc from '../../base/goods-desc'
+import MyLoading from '../../components/my-loading/my-loading'
+import SellerInfo from '../../components/seller-info/seller-info'
+import GoodsDesc from '../../components/goods-desc/goods-desc'
 import {share} from '../../utils/utils'
 
 let Goods = new GoodsModel()

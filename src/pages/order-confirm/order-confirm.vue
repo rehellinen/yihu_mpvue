@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import BuyerInfo from '../../base/buyer-info'
-import MyLoading from '../../base/my-loading'
-import CartList from '../../base/cart-list'
+import BuyerInfo from '../../components/buyer-info/buyer-info'
+import MyLoading from '../../components/my-loading/my-loading'
+import CartList from '../../components/cart-list/cart-list'
 import {OrderModel} from '../../model/OrderModel'
 import {mapGetters, mapActions} from 'vuex'
 import {pageEnum} from '../../utils/config'

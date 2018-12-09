@@ -10,10 +10,10 @@ div
 </template>
 
 <script>
-  import MyLoading from '../../base/my-loading'
-  import PageLoading from '../../base/page-loading'
-  import ShopList from '../../base/shop-list'
-  import Search from '../../base/search'
+  import MyLoading from '../../components/my-loading/my-loading'
+  import PageLoading from '../../components/page-loading/page-loading'
+  import ShopList from '../../components/shop-list/shop-list'
+  import Search from '../../components/search/search'
   import {ShopModel} from '../../model/ShopModel'
   import {searchMixin, pageMixin} from '../../utils/mixins'
   import {mapGetters} from 'vuex'

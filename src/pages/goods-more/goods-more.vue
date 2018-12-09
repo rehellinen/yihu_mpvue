@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import GoodsList from '../../base/goods-list'
-import PageLoading from '../../base/page-loading'
+import GoodsList from '../../components/goods-list/goods-list'
+import PageLoading from '../../components/page-loading/page-loading'
 import {searchMixin, pageMixin} from '../../utils/mixins'
 import {GoodsModel} from '../../model/GoodsModel'
 import {LazyLoad} from '../../utils/lazyload'
-import TitlePanel from '../../base/title-panel'
-import Search from '../../base/search'
-import MyLoading from '../../base/my-loading'
+import TitlePanel from '../../components/title-panel/title-panel'
+import Search from '../../components/search/search'
+import MyLoading from '../../components/my-loading/my-loading'
 import {mapGetters} from 'vuex'
 
 let Goods = new GoodsModel()

@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Title from '../base/title'
-import AboutUsText from '../base/about-us-text'
+import Title from '../title/title'
+import AboutUsText from '../about-us-text/about-us-text'
 
 export default {
   methods: {

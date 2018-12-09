@@ -21,8 +21,8 @@
 
 <script>
 import {GoodsModel} from '../../model/GoodsModel'
-import CartList from '../../base/cart-list'
-import MyLoading from '../../base/my-loading'
+import CartList from '../../components/cart-list/cart-list'
+import MyLoading from '../../components/my-loading/my-loading'
 import {mapGetters, mapActions} from 'vuex'
 
 let Goods = new GoodsModel()

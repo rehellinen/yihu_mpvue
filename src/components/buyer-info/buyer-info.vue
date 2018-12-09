@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {UserModel} from '../model/UserModel'
+import {UserModel} from '../../model/UserModel'
 
 let User = new UserModel()
 

@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import TopImage from '../../base/top-image'
-import GoodsList from '../../base/goods-list'
-import MyLoading from '../../base/my-loading'
-import SwitchTab from '../../base/switch-tab'
-import PageLoading from '../../base/page-loading'
+import TopImage from '../../components/top-image/top-image'
+import GoodsList from '../../components/goods-list/goods-list'
+import MyLoading from '../../components/my-loading/my-loading'
+import SwitchTab from '../../components/switch-tab/switch-tab'
+import PageLoading from '../../components/page-loading/page-loading'
 import {ShopModel} from '../../model/ShopModel'
 import {GoodsModel} from '../../model/GoodsModel'
 import {LazyLoad} from '../../utils/lazyload'

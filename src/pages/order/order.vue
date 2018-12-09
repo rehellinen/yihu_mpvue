@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import SwitchTab from '../../base/switch-tab'
-import OrderList from '../../base/order-list'
-import PageLoading from '../../base/page-loading'
+import SwitchTab from '../../components/switch-tab/switch-tab'
+import OrderList from '../../components/order-list/order-list'
+import PageLoading from '../../components/page-loading/page-loading'
 import {OrderModel} from '../../model/OrderModel'
 
 let Order = new OrderModel()
