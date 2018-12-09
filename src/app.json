@@ -5,7 +5,8 @@
     "navigationBarBackgroundColor": "#a9936e",
     "backgroundColor": "#f8f8f8",
     "backgroundTextStyle": "dark",
-    "enablePullDownRefresh": false
+    "enablePullDownRefresh": false,
+    "navigationStyle": "custom"
   },
   "pages": [
     "pages/index/main",

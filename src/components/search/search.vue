@@ -1,35 +1,35 @@
 <template lang="pug">
-  div.search-container(:class="containerClass", :style="containerStyle")
-    input(
-      placeholder="请输入搜索内容",
-    :class="inputClass"
-        )
+  .two
+    .placeholder(:style="placeHolderStyle")
+    .search-container(:style="containerStyle")
+      .input-container(:style="inputStyle")
+        .input-fake
+          img(src="__IMAGE__/icon/search.png")
+          p 请输入搜索内容
+
 </template>
 
 <script>
 export default {
-  props: {
-    pullDown: {
-      type: Number,
-      default: 0
-    }
+  mounted () {
+    const res = wx.getMenuButtonBoundingClientRect()
+    console.log(res)
+    // define the parameters of the search box and the container
+    const inputWidth = res.left
+    const containerHeight = res.bottom - res.top
+    const containerPaddingTop = res.top
+    const containerPaddingBottom = 15 / 2 - 1
+
+    this.inputStyle = `width:${inputWidth}px`
+    this.containerStyle = `height:${containerHeight}px;
+      padding-top:${containerPaddingTop}px`
+    this.placeHolderStyle = `height:${containerHeight + containerPaddingTop + containerPaddingBottom}px`
   },
   data () {
     return {
-      containerClass: '',
       containerStyle: '',
-      inputClass: 'up'
-    }
-  },
-  watch: {
-    pullDown (newValue) {
-      if (-newValue > 50) {
-        this.containerClass = 'down-container'
-        this.inputClass = 'down'
-      } else {
-        this.containerClass = ''
-        this.inputClass = 'up'
-      }
+      inputStyle: '',
+      placeHolderStyle: ''
     }
   }
 }
@@ -39,31 +39,32 @@ export default {
   @import "~css/base"
   .search-container
     display: flex
-    justify-content: center
     align-items: center
-    height: 100rpx
     width: 100%
+    padding-bottom: 15rpx
+    background-color: $nav-color
     position: fixed
     top: 0
-    transition: all 0.4s
     z-index: 100
-  .relative
-    position: relative
-  .down-container
-    background-color: $nav-color
-
-  input
-    width: 85%
-    height: 65rpx
-    border-radius: 42px
-    font-size: $small-font-size
-    padding-left: 10px
-    border: 2px solid $nav-color
-  .up
-    background-color: white
-    color: $base-font-color
-
-  .down
-    background-color: white
-    color: $base-font-color
+    .input-container
+      display: flex
+      justify-content: center
+      height: 95%
+      .input-fake
+        display: flex
+        align-items: center
+        width: 90%
+        height: 100%
+        border-radius: 40rpx
+        background-color: white
+        img
+          width: 40rpx
+          height: 40rpx
+          margin-left: 35rpx
+        p
+          margin-left: 20rpx
+          font-size: $small-font-size
+          color: $base-font-color
+      .holder
+        margin-left: 25rpx
 </style>

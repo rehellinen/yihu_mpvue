@@ -7,9 +7,9 @@
 		"minified": true,
 		"newFeature": true
 	},
-	"miniprogramRoot": "./dist/",
+	"miniprogramRoot": "dist/",
 	"compileType": "miniprogram",
-	"libVersion": "1.9.91",
+	"libVersion": "2.4.1",
 	"appid": "wx1b2ecb8981e28b61",
 	"projectname": "yihu_mpvue",
 	"isGameTourist": false,
