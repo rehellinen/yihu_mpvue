@@ -12,7 +12,7 @@ import {pageEnum, loadingHiddenTime} from './config'
  */
 let images = {
   [pageEnum.INDEX]: {
-    total: 9,
+    total: 7,
     loaded: 0,
     showLoading: true
   },

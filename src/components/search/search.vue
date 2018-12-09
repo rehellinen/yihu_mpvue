@@ -24,7 +24,6 @@ export default {
   methods: {
     _setStyle () {
       const res = wx.getMenuButtonBoundingClientRect()
-      console.log(res)
       // define the parameters of the search box and the container
       const inputWidth = res.left
       const containerHeight = res.bottom - res.top
@@ -49,8 +48,8 @@ export default {
     padding-bottom: 15rpx
     background-color: $nav-color
     position: fixed
-    top: 0
     z-index: 100
+    top: 0
     .input-container
       display: flex
       justify-content: center

@@ -28,8 +28,9 @@
     justify-content: center
     align-items: center
     width: 750rpx
-    z-index: 999
+    z-index: 50
     min-height: 100vh
+    background-color: white
     img
       width: 300rpx
       height: 300rpx
