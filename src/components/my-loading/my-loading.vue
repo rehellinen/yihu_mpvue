@@ -1,6 +1,6 @@
 <template lang="pug">
-div.loading-container(v-if="showLoading")
-  img(src="__IMAGE__/theme/loading.gif")
+  .loading-container(v-if="showLoading")
+    img(src="__IMAGE__/theme/loading.gif")
 </template>
 
 <script>
@@ -21,10 +21,14 @@ div.loading-container(v-if="showLoading")
 
 <style scoped lang="sass" rel="stylesheet/sass">
   .loading-container
+    position: absolute
+    top: 0
+    left: 0
     display: flex
     justify-content: center
     align-items: center
     width: 750rpx
+    z-index: 999
     min-height: 100vh
     img
       width: 300rpx
