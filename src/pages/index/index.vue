@@ -2,8 +2,7 @@
   div
     search(@touchmove="touchmove")
     my-loading(:showLoading="showLoading")
-    div.container.index-container(v-show="!showLoading")
-      <!--search(:pullDown="pullDown")-->
+    div.container.index-container(:class="showLoading ? 'hidden' : ''")
       // 轮播图
       swiper.banner.header-image.header(interval='5000' :indicator-dots='false' :autoplay='true')
           swiper-item(v-for="item in banners" :key="item.image_id.id")
@@ -11,7 +10,7 @@
               @load="imageLoaded" :data-type="pageEnum.INDEX")
 
       // 精选主题
-      div.theme
+      div.theme(v-show="false")
         p 精 选 主 题
         div.theme-photo-container
           img(v-for="item in themes", :src="item.image_id.image_url"
@@ -42,7 +41,6 @@
   import {GoodsModel} from '../../model/GoodsModel'
   import {LazyLoad} from '../../utils/lazyload'
   import Search from '../../components/search/search'
-  import {searchMixin} from '../../utils/mixins'
   import {mapGetters} from 'vuex'
   import {share} from '../../utils/utils'
 
@@ -51,7 +49,6 @@
   let Goods = new GoodsModel()
 
   export default {
-    mixins: [searchMixin],
     data () {
       return {
         banners: [],

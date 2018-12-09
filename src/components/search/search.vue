@@ -65,6 +65,4 @@ export default {
           margin-left: 20rpx
           font-size: $small-font-size
           color: $base-font-color
-      .holder
-        margin-left: 25rpx
 </style>
