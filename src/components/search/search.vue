@@ -12,24 +12,29 @@
 <script>
 export default {
   mounted () {
-    const res = wx.getMenuButtonBoundingClientRect()
-    console.log(res)
-    // define the parameters of the search box and the container
-    const inputWidth = res.left
-    const containerHeight = res.bottom - res.top
-    const containerPaddingTop = res.top
-    const containerPaddingBottom = 15 / 2 - 1
-
-    this.inputStyle = `width:${inputWidth}px`
-    this.containerStyle = `height:${containerHeight}px;
-      padding-top:${containerPaddingTop}px`
-    this.placeHolderStyle = `height:${containerHeight + containerPaddingTop + containerPaddingBottom}px`
+    this._setStyle()
   },
   data () {
     return {
       containerStyle: '',
       inputStyle: '',
       placeHolderStyle: ''
+    }
+  },
+  methods: {
+    _setStyle () {
+      const res = wx.getMenuButtonBoundingClientRect()
+      console.log(res)
+      // define the parameters of the search box and the container
+      const inputWidth = res.left
+      const containerHeight = res.bottom - res.top
+      const containerPaddingTop = res.top
+      const containerPaddingBottom = 15 / 2 - 1
+
+      this.inputStyle = `width:${inputWidth}px`
+      this.containerStyle = `height:${containerHeight}px;
+      padding-top:${containerPaddingTop}px`
+      this.placeHolderStyle = `height:${containerHeight + containerPaddingTop + containerPaddingBottom}px`
     }
   }
 }
