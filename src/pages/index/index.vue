@@ -2,7 +2,7 @@
   div
     search(@touchmove="touchmove")
     my-loading(:showLoading="showLoading")
-    .container.index-container(:class="showLoading ? 'hidden' : ''")
+    div.container.index-container(:class="showLoading ? 'hidden' : ''")
       swiper.banner(interval='5000', :indicator-dots='false', :autoplay='true')
           swiper-item(v-for="item in banner", :key="item.image_id.id")
             img(:src="item.image_id.image_url")
@@ -87,14 +87,14 @@
         })
       },
       _setLazyLoad () {
-        this.newGoodsLazyLoad = new LazyLoad({
+        new LazyLoad({
           data: this.newGoods,
           page: this,
           imagesStart: 0,
           dataStart: 0,
           dataLength: 6
         })
-        this.oldGoodsLazyLoad = new LazyLoad({
+        new LazyLoad({
           data: this.oldGoods,
           page: this,
           imagesStart: 6,
