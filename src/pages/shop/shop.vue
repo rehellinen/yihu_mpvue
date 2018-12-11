@@ -4,7 +4,7 @@ div.container
   my-loading(:showLoading="showLoading")
   div.header
     img(src="__IMAGE__/theme/shop@header.png")
-  shop-list(:shops="shops")
+  shop-list(:shops="pageArray")
   page-loading(:hasMore="hasMore")
 </template>
 
@@ -18,15 +18,13 @@ div.container
   import {LazyLoad} from '../../utils/lazyload'
   import {share} from '../../utils/utils'
 
-  let Shop = new ShopModel()
+  const shop = new ShopModel()
   const shopSize = 8
   const imageUrl = '__IMAGE__/icon/no-goods.png'
 
   export default {
     data () {
       return {
-        shops: [],
-        hasMore: true,
         showLoading: true
       }
     },
@@ -39,13 +37,12 @@ div.container
     },
     methods: {
       _loadData () {
-        Shop.getShops(this.page, this.shopSize).then(res => {
-          this.shops = Array.concat(this.shops, res)
+        shop.getShops(this.page, this.shopSize).then(res => {
+          this.setMoreData(res)
           this._processData()
           this._setLazyLoad(res)
           this.showLoading = false
         }).catch(ex => {
-          console.log(ex)
           this.hasMore = false
         })
       },
@@ -53,13 +50,13 @@ div.container
         const start = this.getCurrentStart()
         if (this.lazyLoad) {
           this.lazyLoad.reset({
-            data: this.shops,
+            data: this.pageArray,
             imagesStart: start * 4,
             dataStart: start
           })
         } else {
           this.lazyLoad = new LazyLoad({
-            data: this.shops,
+            data: this.pageArray,
             page: this,
             imagesStart: start * 4,
             dataStart: start,
@@ -69,17 +66,16 @@ div.container
         }
       },
       _processData () {
-        let imageObj = {image_id: {image_url: imageUrl}}
-        this.shops.forEach(function (item) {
-          let main = item.main_image_id
+        const imageObj = {image_id: {image_url: imageUrl}}
+        this.pageArray.forEach(function (item) {
+          const main = item.main_image_id
           if (main.length >= 3) {
             item.main_image_id = item.main_image_id.slice(0, 3)
-          } else if (main.length === 2) {
-            item.main_image_id.push(imageObj)
-          } else if (main.length === 1) {
-            item.main_image_id.push(imageObj, imageObj)
           } else {
-            item.main_image_id.push(imageObj, imageObj, imageObj)
+            const addLen = 3 - main.length
+            for (let i = 0; i < addLen; i++) {
+              item.main_image_id.push(imageObj)
+            }
           }
         })
       }

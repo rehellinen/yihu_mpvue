@@ -37,9 +37,9 @@
   import Search from '../../components/search/search'
   import {share} from '../../utils/utils'
 
-  let banner = new BannerModel()
-  let theme = new ThemeModel()
-  let goods = new GoodsModel()
+  const banner = new BannerModel()
+  const theme = new ThemeModel()
+  const goods = new GoodsModel()
 
   export default {
     data () {

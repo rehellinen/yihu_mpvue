@@ -28,7 +28,7 @@ let pageMixin = {
       page: 1,
       pageSize: 10,
       hasMore: true,
-      dataArray: []
+      pageArray: []
     }
   },
   onReachBottom () {
@@ -43,6 +43,10 @@ let pageMixin = {
       this.pageSize = 10
       this.hasMore = true
       this.dataArray = []
+    },
+    setMoreData (data) {
+      if (data.length === 0) this.hasMore = false
+      this.pageArray = this.pageArray.concat(data)
     },
     setPageSize (pageSize) {
       this.pageSize = pageSize
