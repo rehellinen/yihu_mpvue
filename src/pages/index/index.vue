@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    search(@touchmove="touchmove")
+    search
     my-loading(:showLoading="showLoading")
     div.container.index-container(:class="showLoading ? 'hidden' : ''")
       swiper.banner(interval='5000', :indicator-dots='false', :autoplay='true')
@@ -69,7 +69,7 @@
           url: `../goods-more/main?type=${type}`
         })
       },
-      async _getData () {
+      _getData () {
         const promises = [
           banner.getBanners(),
           theme.getThemes(),

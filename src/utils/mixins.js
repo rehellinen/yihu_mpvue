@@ -26,13 +26,35 @@ let pageMixin = {
   data () {
     return {
       page: 1,
-      hasMore: true
+      pageSize: 10,
+      hasMore: true,
+      dataArray: []
     }
   },
   onReachBottom () {
     this.page++
     if (this.hasMore) {
       this._loadData()
+    }
+  },
+  methods: {
+    init () {
+      this.page = 1
+      this.pageSize = 10
+      this.hasMore = true
+      this.dataArray = []
+    },
+    setPageSize (pageSize) {
+      this.pageSize = pageSize
+    },
+    setNoMore () {
+      this.hasMore = false
+    },
+    isEnd () {
+      return !this.hasMore
+    },
+    getCurrentStart () {
+      return (this.page - 1) * this.pageSize
     }
   }
 }
