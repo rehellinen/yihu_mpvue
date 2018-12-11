@@ -23,11 +23,11 @@ export default {
   },
   methods: {
     _setStyle () {
-      const res = wx.getMenuButtonBoundingClientRect()
+      const position = wx.getMenuButtonBoundingClientRect()
       // define the parameters of the search box and the container
-      const inputWidth = res.left
-      const containerHeight = res.bottom - res.top
-      const containerPaddingTop = res.top
+      const inputWidth = position.left
+      const containerHeight = position.bottom - position.top
+      const containerPaddingTop = position.top
       const containerPaddingBottom = 15 / 2 - 1
 
       this.inputStyle = `width:${inputWidth}px`

@@ -2,7 +2,7 @@
 div.container
   search
   my-loading(:showLoading="showLoading")
-  div.header
+  div.header(:class="showLoading ? 'hidden' : ''")
     img(src="__IMAGE__/theme/shop@header.png")
   shop-list(:shops="pageArray")
   page-loading(:hasMore="hasMore")

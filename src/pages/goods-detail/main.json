@@ -1,4 +1,5 @@
 {
   "enablePullDownRefresh": false,
-  "navigationBarTitleText": ""
+  "navigationBarTitleText": "",
+  "navigationStyle": "default"
 }

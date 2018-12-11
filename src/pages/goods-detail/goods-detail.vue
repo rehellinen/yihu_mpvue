@@ -1,8 +1,8 @@
 <template lang="pug">
   div.container.detail-container
     my-loading(:showLoading="showLoading")
-    div(v-show="!showLoading")
-      div.cart-container(@click="toCart", :class="{animate: isShake}")
+    div(:class="showLoading ? 'hidden' : ''")
+      div.cart-container(@click="toCart", :class="{animate: isShake}" :style="cartStyle")
         div.cart
           img(src="__IMAGE__/icon/cart.png")
           div.cart-count {{cartDetail.selectedCount}}
@@ -76,9 +76,13 @@ export default {
       isShake: false,
       translateStyle: '',
       switchStyle: '',
+      cartStyle: '',
       pageEnum: this.$config.pageEnum,
       seller: {}
     }
+  },
+  onLoad () {
+    this._changeCartPosition()
   },
   onShow () {
     let {id, type} = this.$root.$mp.query
@@ -184,6 +188,12 @@ export default {
         }
       })
     },
+    _changeCartPosition () {
+      const position = wx.getMenuButtonBoundingClientRect()
+      const cartTop = position.bottom + 5
+      const cartRight = (750 - position.right * 2)
+      this.cartStyle = `top:${cartTop}px;right:${cartRight}rpx`
+    },
     ...mapActions([
       'addGoods',
       'resetLoadingState'
@@ -208,7 +218,6 @@ export default {
     position: fixed
     width: 80rpx
     height: 80rpx
-    top: 30rpx
     right: 20rpx
     background-color: white
     border-radius: 100px
@@ -254,7 +263,7 @@ export default {
 
   .head-image
     width: 750rpx
-    height: 500rpx
+    height: 600rpx
 
   .info
     width: 90%
