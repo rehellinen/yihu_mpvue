@@ -1,6 +1,6 @@
 <template lang="pug">
   div.cart-box(v-if="goods.length > 0")
-    div.cart-item(v-for="(item, index) in goods" :key="item.id" :class="{deleteThat: deleteIndex === index, deleteAfter: deleteIndex && index > deleteIndex}")
+    div.cart-item(v-for="(item, index) in goods" :key="item.id")
       // 最左侧的复选框
       div.cart-item-checkbox(@click="selectOneTap(index)", v-if="from === pageEnum.CART")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
@@ -10,8 +10,7 @@
 
       // 商品图片
       div.cart-item-img(@click="toDetail(index)")
-        img(:src="item.image_id.image_url" mode="aspectFill"
-          @load="imageLoaded", :data-type="from")
+        img(:src="item.image_id.image_url" mode="aspectFill")
       // 商品图片
 
       // 右侧详细信息
@@ -19,7 +18,7 @@
         // 上部分
         div.title-box(@click="toDetail(index)")
           p.name {{item.name}}
-          p.price ￥{{item.price}}
+          p ￥{{item.price}}
         // 上部分
 
         // 下部分
@@ -27,16 +26,16 @@
           div.cart-item-count
             div
               img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
-              img.disabled(src="__IMAGE__/icon/minus@disabled.png" v-else)
-
-            div {{item.count}}
-
+              img(src="__IMAGE__/icon/minus@disabled.png" v-else)
+            p {{item.count}}
             div
               img(src="__IMAGE__/icon/plus.png", @click="plusOne(index)" v-if="item.count < item.quantity")
-              img.disabled(src="__IMAGE__/icon/plus@disabled.png" v-else)
+              img(src="__IMAGE__/icon/plus@disabled.png" v-else)
 
           div.delete
             img(src="__IMAGE__/icon/delete.png", @click="deleteGoods(item.id)")
+
+        // 未重构
         div.note-container(v-if="from === pageEnum.ORDER_CONFIRM")
           div.note
             input(placeholder="请输入备注", placeholder-style="color:#999", @blur="addRemark" :data-index="index")
@@ -122,121 +121,123 @@
     font-size: $small-font-size
     width: 100%
 
-  .cart-item
-    display: flex
-    flex-direction: row
-    justify-content: space-around
-    background-color: white
-    width: $card-width
-    margin-top: $card-margin-top
-    margin-left: $card-margin-left
-    border-radius: $card-border-radius
-    padding: 20rpx 0
-    height: 186rpx
-    z-index: 10
-    opacity: 1
-    > view
-      height: 100%
-  .deleteThat
-    transform: translate(0,-150rpx)
-    transition: all 0.5s ease-in-out
-    opacity: 0
-  .deleteAfter
-    transition: all 1s ease-in-out
-    transform: translate(0,-234rpx)
-
-  .cart-item-checkbox
-    display: flex
-    align-items: center
-    justify-content: center
-    width: 84rpx
-    img
-      height: 44rpx
-      width: 44rpx
-
-  .left-holder
-    width: 30rpx
-
-  .cart-item-img
-    width: 186rpx
-    height: 100%
-    background-color: $light-font-color
-    border-radius: 10rpx
-    img
-      border-radius: 10rpx
-      width: 100%
-      height: 100%
-
-
-  .cart-item-word
-    display: flex
-    flex-direction: column
-    justify-content: space-between
-    padding: 8rpx 0 8rpx 30rpx
-    color: $base-font-color
-    width: 490rpx
-
-  .title-box
-    display: flex
-    justify-content: space-between
-    width: 100%
-    .name
-      flex-basis: 70%
-    .price
-      margin-right: 20rpx
-
-  .bottom-box
-    display: flex
-    align-items: center
-    justify-content: space-between
-    font-size: $smaller-font-size
-    height: 80rpx
-
-  .cart-item-count
-    width: 220rpx
-    display: flex
-    justify-content: space-between
-    align-items: center
-    color: $base-font-color
-    height: 100%
-    img
-      width: 30rpx
-      height: 30rpx
-    div
+    .cart-item
       display: flex
-      height: 100%
-      align-items: center
-      width: 50rpx
-      justify-content: center
-      font-size: $small-font-size
-  .delete
-    width: 30rpx
-    height: 100%
-    margin-right: 20rpx
-    display: flex
-    align-items: center
-    img
-      width: 30rpx
-      height: 30rpx
+      justify-content: space-around
+      background-color: white
+      box-sizing: border-box
+      width: $card-width
+      margin-top: $card-margin-top
+      margin-left: $card-margin-left
+      border-radius: $card-border-radius
+      padding: 15rpx 20rpx 0 0
+      height: 190rpx
+      z-index: 10
+      > div
+        height: 100%
+      /* 左侧复选框 */
+      .cart-item-checkbox
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 80rpx
+        img
+          height: 44rpx
+          width: 44rpx
+      .left-holder
+        width: 30rpx
+      /* 左侧复选框 */
 
-  .note-container
-    display: flex
-    justify-content: space-between
-    align-items: center
-    margin-bottom: 10rpx
-  .note
-    width: 80%
-    border-bottom: 1rpx solid $lighter-font-color
-    input
-      color: $grey-font-color
-  .count
-    margin-right: 20rpx
-  .count-container
-    width: 100%
-    display: flex
-    justify-content: space-between
-    margin-bottom: 10rpx
-    .remark
-      width: 70%
-      word-wrap: break-word
+      /* 商品主图 */
+      .cart-item-img
+        width: 230rpx
+        height: 100%
+        background-color: $light-font-color
+        border-radius: 10rpx
+        img
+          border-radius: 10rpx
+          width: 100%
+          height: 100%
+      /* 商品主图 */
+
+      /* 右侧信息 */
+      .cart-item-word
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        padding-left: 30rpx
+        color: $base-font-color
+        width: 490rpx
+        /* 上 */
+        .title-box
+          display: flex
+          justify-content: space-between
+          width: 100%
+          .name
+            flex-basis: 70%
+        /* 上 */
+
+        /* 下 */
+        .bottom-box
+          display: flex
+          align-items: center
+          justify-content: space-between
+          font-size: $smaller-font-size
+          height: 80rpx
+          .cart-item-count
+            width: 220rpx
+            display: flex
+            justify-content: space-between
+            align-items: center
+            color: $base-font-color
+            height: 100%
+            p
+              font-size: $small-font-size
+            div
+              display: flex
+              height: 100%
+              align-items: center
+              width: 50rpx
+              justify-content: center
+              img
+                width: 30rpx
+                height: 30rpx
+          .delete
+            width: 30rpx
+            height: 100%
+            margin-right: 10rpx
+            display: flex
+            align-items: center
+            img
+              width: 30rpx
+              height: 30rpx
+        /* 下 */
+      /* 右侧信息 */
+
+
+
+
+
+    /* 未重构 */
+
+    .note-container
+      display: flex
+      justify-content: space-between
+      align-items: center
+      margin-bottom: 10rpx
+    .note
+      width: 80%
+      border-bottom: 1rpx solid $lighter-font-color
+      input
+        color: $grey-font-color
+    .count
+      margin-right: 20rpx
+    .count-container
+      width: 100%
+      display: flex
+      justify-content: space-between
+      margin-bottom: 10rpx
+      .remark
+        width: 70%
+        word-wrap: break-word
 </style>
