@@ -62,7 +62,7 @@ export default {
       top: 0
       left: 0
       width: 100%
-      z-index: 100
+      z-index: 300
       transition: all linear 50ms
       opacity: 0
       background-color: $nav-color

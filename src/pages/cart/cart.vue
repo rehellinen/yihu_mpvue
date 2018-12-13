@@ -6,7 +6,7 @@
       p 购物车中没有商品
 
     div.container.cart-container(:style="offsetStyle" v-else)
-      cart-list(:goods="cartData", :from="pageEnum.CART")
+      cart-list(:goods="cartData", from="CART")
 
       div.footer-account-box(v-if="!showLoading")
         div.all-select(@click="selectAllTap")
@@ -30,25 +30,24 @@ import MyLoading from '../../components/my-loading/my-loading'
 import {moveDownByNav} from '../../utils/utils'
 import {mapGetters, mapActions} from 'vuex'
 
-let Goods = new GoodsModel()
+let goods = new GoodsModel()
 
 export default {
   data () {
     return {
       offsetStyle: '',
-      pageEnum: this.$config.pageEnum
+      showLoading: true
     }
   },
   created () {
     this._setStyle()
   },
-  mounted () {
-    if (this.cartData.length !== 0) {
-      this.setLoadingState({
-        total: this.cartData.length,
-        type: this.pageEnum.CART,
-        flag: true
-      })
+  onShow () {
+    // 更新购物车数据
+    if (this.cartData.length > 0) {
+      this._getData()
+    } else {
+      this.showLoading = false
     }
   },
   computed: {
@@ -58,30 +57,24 @@ export default {
     disabled () {
       return this.cartDetail.totalPrice === 0
     },
-    showLoading () {
-      return this.loadState[this.pageEnum.CART]
-    },
     ...mapGetters([
       'cartData',
-      'cartDetail',
-      'loadState'
+      'cartDetail'
     ])
-  },
-  onShow () {
-    // 更新购物车数据
-    if (this.cartData.length > 0) {
-      Goods.updateGoods(this.cartData).then(res => {
-        this.saveToStorage(res)
-      })
-    }
   },
   onHide () {
     this.saveToStorage(this.cartData)
   },
-  destroyed () {
+  onUnload () {
     this.saveToStorage(this.cartData)
   },
   methods: {
+    _getData () {
+      goods.updateGoods(this.cartData).then(res => {
+        this.saveToStorage(res)
+        this.showLoading = false
+      })
+    },
     _setStyle () {
       this.offsetStyle = moveDownByNav()
     },
@@ -102,8 +95,7 @@ export default {
     ...mapActions([
       'add',
       'selectAll',
-      'saveToStorage',
-      'setLoadingState'
+      'saveToStorage'
     ])
   },
   components: {
