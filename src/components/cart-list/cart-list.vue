@@ -133,6 +133,7 @@
     border-radius: $card-border-radius
     padding: 15rpx 0
     height: 186rpx
+    z-index: 100
     opacity: 1
     > view
       height: 100%

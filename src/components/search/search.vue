@@ -1,5 +1,5 @@
 <template lang="pug">
-  .two
+  div
     .placeholder(:style="placeHolderStyle")
     .search-container(:style="containerStyle")
       .input-container(:style="inputStyle")
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  mounted () {
+  created () {
     this._setStyle()
   },
   data () {

@@ -1,5 +1,6 @@
 <template lang="pug">
   div
+    cart-nav
     my-loading(:showLoading="showLoading")
     div.no-data(v-if="cartData.length === 0")
       p 购 物 车 中 没 有 商 品
@@ -21,6 +22,7 @@
 
 <script>
 import {GoodsModel} from '../../model/GoodsModel'
+import CartNav from '../../components/cart-nav/cart-nav'
 import CartList from '../../components/cart-list/cart-list'
 import MyLoading from '../../components/my-loading/my-loading'
 import {mapGetters, mapActions} from 'vuex'
@@ -90,7 +92,8 @@ export default {
   },
   components: {
     CartList,
-    MyLoading
+    MyLoading,
+    CartNav
   }
 }
 </script>
