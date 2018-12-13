@@ -2,7 +2,7 @@
   div.cart-box(v-if="goods.length > 0")
     div.cart-item(v-for="(item, index) in goods" :key="item.id")
       // 最左侧的复选框
-      div.cart-item-checkbox(@click="selectOneTap(index)", v-if="from === pageEnum.CART")
+      div.cart-item-checkbox(@click="selectOneTap(index)", v-if="showOperation")
         img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
         img(src="__IMAGE__/icon/circle@noselected.png", v-else)
       div.left-holder(v-else)
@@ -22,7 +22,7 @@
         // 上部分
 
         // 下部分
-        div.bottom-box(v-if="from === pageEnum.CART")
+        div.bottom-box(v-if="showOperation")
           div.cart-item-count
             div
               img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
@@ -35,12 +35,12 @@
           div.delete
             img(src="__IMAGE__/icon/delete.png", @click="deleteGoods(item.id)")
 
-        // 未重构
-        div.note-container(v-if="from === pageEnum.ORDER_CONFIRM")
+        div.note-container(v-if="showInput")
           div.note
             input(placeholder="请输入备注", placeholder-style="color:#999", @blur="addRemark" :data-index="index")
           p.count x {{item.count}}
-        div.count-container(v-if="from === pageEnum.ORDER_DETAIL")
+
+        div.count-container(v-if="showInfo")
           p.remark {{item.remark}}
           p.count x {{item.count}}
         // 下部分
@@ -54,23 +54,23 @@
     props: {
       goods: {
         type: Array,
-        default () {
-          return []
-        }
+        default: () => []
       },
-      from: {
-        type: String,
-        default: ''
+      showOperation: {
+        type: Boolean,
+        default: false
+      },
+      showInput: {
+        type: Boolean,
+        default: false
+      },
+      showInfo: {
+        type: Boolean,
+        default: false
       },
       goodsType: {
         type: Number,
         default: null
-      }
-    },
-    data () {
-      return {
-        deleteIndex: null,
-        pageEnum: this.$config.pageEnum
       }
     },
     methods: {

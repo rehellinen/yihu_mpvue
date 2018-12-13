@@ -6,7 +6,7 @@
       p 购物车中没有商品
 
     div.container.cart-container(:style="offsetStyle" v-else)
-      cart-list(:goods="cartData", from="CART")
+      cart-list(:goods="cartData", showOperation="true")
 
       div.footer-account-box(v-if="!showLoading")
         div.all-select(@click="selectAllTap")
