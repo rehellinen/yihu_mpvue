@@ -4,20 +4,22 @@
     my-loading(:showLoading="showLoading")
     div.no-data(v-if="cartData.length === 0")
       p 购物车中没有商品
+
     div.container.cart-container(:style="offsetStyle" v-else)
       cart-list(:goods="cartData", :from="pageEnum.CART")
 
       div.footer-account-box(v-if="!showLoading")
         div.all-select(@click="selectAllTap")
-          img(src="__IMAGE__/icon/all@selected.png", v-if="cartDetail.selectedType === cartData.length")
+          img(src="__IMAGE__/icon/all@selected.png", v-if="isSelectAll")
           img(src="__IMAGE__/icon/all.png" v-else)
           p 全选({{cartDetail.selectedCount}})
-        div.all-price-submit(@click="submitOrder()", :class="{disabled : cartDetail.totalPrice === 0}")
-          p.submit-text 下 单
-          div.price-text(:class="{disabled : cartDetail.totalPrice === 0}") ￥{{cartDetail.totalPrice}}
+
+        div.all-price-submit(@click="submitOrder", :class="{disabled}")
+          p.price-text(:class="{disabled}") ￥{{cartDetail.totalPrice}}
+          p.submit-text 下单
           div.arrow-icon
-            img(src="__IMAGE__/icon/arrow@rightWhite.png" v-if="cartDetail.totalPrice !== 0")
-            img.disabled(src="__IMAGE__/icon/arrow@rightGrey.png" v-else)
+            img(src="__IMAGE__/icon/arrow@rightWhite.png" v-if="!disabled")
+            img(src="__IMAGE__/icon/arrow@rightGrey.png" v-else)
 </template>
 
 <script>
@@ -50,6 +52,12 @@ export default {
     }
   },
   computed: {
+    isSelectAll () {
+      return this.cartDetail.selectedType === this.cartData.length
+    },
+    disabled () {
+      return this.cartDetail.totalPrice === 0
+    },
     showLoading () {
       return this.loadState[this.pageEnum.CART]
     },
@@ -131,50 +139,33 @@ export default {
     width: 100%
     display: flex
     justify-content: space-between
-    border-top: 1rpx solid $light-font-color
-    border-bottom: 1rpx solid $light-font-color
     background-color: $nav-color
     color: #fff
     div
       display: flex
       align-items: center
-
-  .all-select
-    font-size: $small-font-size
-    width: 40%
-    img
-      height: 48rpx
-      width: 48rpx
-      margin: 0 20rpx
-
-  .all-price-submit
-    display: flex
-    justify-content: flex-end
-    width: 43%
-    .price-text.disabled
-      color: $light-font-color
-      border-left: 3rpx dotted $light-font-color
-    .submit-text
+    .all-select
       font-size: $small-font-size
-      margin-right: 40rpx
-    .submit-text.disabled
-      color: $lighter-font-color
-  .price-text, .arrow-icon
-    display: flex
-    align-items: center
-    justify-content: center
-    height: 32rpx
-
-  .price-text
-    width: 35%
-    font-size: $small-font-size
-    padding-left: 15rpx
-    border-left: 3rpx dotted #fff
-
-  .arrow-icon
-    width: 50rpx
-    margin-right: 10rpx
-    image
-      height: 32rpx
-      width: 32rpx
+      width: 40%
+      img
+        height: 48rpx
+        width: 48rpx
+        margin: 0 20rpx
+    .all-price-submit
+      display: flex
+      justify-content: flex-end
+      width: 60%
+      font-size: $small-font-size
+      .price-text
+        padding-right: 40rpx
+        margin-right: 40rpx
+        border-right: 1px dotted white
+      .price-text.disabled
+        border-right: 1px dotted $lighter-font-color
+      .disabled
+        color: $lighter-font-color
+      img
+        height: 28rpx
+        width: 28rpx
+        margin: 0 20rpx
 </style>
