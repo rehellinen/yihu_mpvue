@@ -59,7 +59,7 @@ function share (title, path) {
 
 function moveDownByNav (offset = 0) {
   const position = wx.getMenuButtonBoundingClientRect()
-  return `margin-top:${position.bottom + offset}px`
+  return `padding-top:${position.bottom + offset}px`
 }
 
 export {copyObjArr, toast, modal, getSwitchTabHeight, share, moveDownByNav}

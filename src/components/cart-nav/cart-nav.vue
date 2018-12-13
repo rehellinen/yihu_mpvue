@@ -51,7 +51,7 @@ export default {
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~css/base"
   .cart-nav-container
-    height: 10px
+    height: 1px
     .nav-top
       display: flex
       justify-content: center

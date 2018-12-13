@@ -108,18 +108,21 @@ export default {
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~css/base"
-  .cart-container
-    background-color: $background-color
-    min-height: 110vh
-
   .no-data
     display: flex
-    height: 100vh
-    font-size: $small-font-size
-    color: $light-font-color
     align-items: center
-    letter-spacing: 2px
     justify-content: center
+    box-sizing: border-box
+    height: 99vh
+    p
+      font-size: $small-font-size
+      color: $light-font-color
+      letter-spacing: 2px
+
+  .cart-container
+    background-color: $background-color
+    box-sizing: border-box
+    min-height: 99vh
 
   .footer-account-box
     position: fixed
