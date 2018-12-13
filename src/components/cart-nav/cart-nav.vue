@@ -1,10 +1,11 @@
 <template lang="pug">
-  div.cart-nav-container(:style="containerStyle")
-    .placeholder(:style="placeHolderStyle")
-    <!--.nav-top(:style="[navTopStyle, navTopScroll]")-->
-      <!--p 购物车-->
-    .nav-scroll(:style="navScrollStyle")
+  div
+    .nav-top(:style="navTopStyle + navTopScroll")
       p 购物车
+    div.cart-nav-container(:style="containerStyle")
+      .placeholder(:style="placeHolderStyle")
+      .nav-scroll(:style="navScrollStyle")
+        p 购物车
 </template>
 
 <script>
@@ -27,10 +28,10 @@ export default {
       setInterval(() => {
         wx.createSelectorQuery().select('.cart-nav-container').boundingClientRect(res => {
           let top = res.top
-          this.navTopScroll = `opacity:${-top / 60}`
+          this.navTopScroll = `opacity:${-top / 50}`
           this.containerStyle = `transform:translateY(${top})`
         }).exec()
-      }, 200)
+      }, 100)
     },
     _setStyle () {
       const position = wx.getMenuButtonBoundingClientRect()
@@ -43,7 +44,7 @@ export default {
       this.navScrollStyle = `height:${containerHeight}px;
       padding-top:${containerPaddingTop}px;
       padding-bottom:${containerPaddingBottom}px`
-      this.navTopStyle = `height:${containerHeight}px;
+      this.navTopStyle = `height:${containerHeight + 5}px;
       padding-top:${containerPaddingTop}px;`
       this.placeHolderStyle = `height:${holderHeight}px`
     }
@@ -56,12 +57,13 @@ export default {
   .nav-top
     display: flex
     justify-content: center
-    position: absolute
+    position: fixed
     top: 0
     left: 0
     width: 100%
     z-index: 300
-    opacity: 1
+    transition: all linear 50ms
+    opacity: 0
     background-color: $nav-color
     p
       color: white
