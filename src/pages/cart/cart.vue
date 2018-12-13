@@ -3,8 +3,8 @@
     cart-nav
     my-loading(:showLoading="showLoading")
     div.no-data(v-if="cartData.length === 0")
-      p 购 物 车 中 没 有 商 品
-    div.container.cart-container(v-else)
+      p 购物车中没有商品
+    div.container.cart-container(:style="offsetStyle" v-else)
       cart-list(:goods="cartData", :from="pageEnum.CART")
 
       div.footer-account-box(v-if="!showLoading")
@@ -25,6 +25,7 @@ import {GoodsModel} from '../../model/GoodsModel'
 import CartNav from '../../components/cart-nav/cart-nav'
 import CartList from '../../components/cart-list/cart-list'
 import MyLoading from '../../components/my-loading/my-loading'
+import {moveDownByNav} from '../../utils/utils'
 import {mapGetters, mapActions} from 'vuex'
 
 let Goods = new GoodsModel()
@@ -32,8 +33,12 @@ let Goods = new GoodsModel()
 export default {
   data () {
     return {
+      offsetStyle: '',
       pageEnum: this.$config.pageEnum
     }
+  },
+  created () {
+    this._setStyle()
   },
   mounted () {
     if (this.cartData.length !== 0) {
@@ -69,6 +74,9 @@ export default {
     this.saveToStorage(this.cartData)
   },
   methods: {
+    _setStyle () {
+      this.offsetStyle = moveDownByNav()
+    },
     // 全选按钮
     selectAllTap (event) {
       let flag = true
@@ -102,14 +110,15 @@ export default {
   @import "~css/base"
   .cart-container
     background-color: $background-color
-    min-height: 100vh
+    min-height: 110vh
 
   .no-data
     display: flex
-    height: 140rpx
+    height: 100vh
     font-size: $small-font-size
     color: $light-font-color
     align-items: center
+    letter-spacing: 2px
     justify-content: center
 
   .footer-account-box
