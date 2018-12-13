@@ -13,6 +13,9 @@ export default {
     this._setStyle()
     this._moveNav()
   },
+  onHide () {
+    clearInterval(this.interval)
+  },
   data () {
     return {
       navScrollStyle: '',
@@ -23,7 +26,7 @@ export default {
   },
   methods: {
     _moveNav () {
-      setInterval(() => {
+      this.interval = setInterval(() => {
         wx.createSelectorQuery().select('.cart-nav-container').boundingClientRect(res => {
           let top = res.top
           this.navTopScroll = `opacity:${-top / 50}`
