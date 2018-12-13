@@ -131,9 +131,9 @@
     margin-top: $card-margin-top
     margin-left: $card-margin-left
     border-radius: $card-border-radius
-    padding: 15rpx 0
+    padding: 20rpx 0
     height: 186rpx
-    z-index: 100
+    z-index: 10
     opacity: 1
     > view
       height: 100%
