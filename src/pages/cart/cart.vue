@@ -44,11 +44,7 @@ export default {
   },
   onShow () {
     // 更新购物车数据
-    if (this.cartData.length > 0) {
-      this._getData()
-    } else {
-      this.showLoading = false
-    }
+    this._getData()
   },
   computed: {
     isSelectAll () {
@@ -70,10 +66,14 @@ export default {
   },
   methods: {
     _getData () {
-      goods.updateGoods(this.cartData).then(res => {
-        this.saveToStorage(res)
+      if (this.cartData.length > 0) {
+        goods.updateGoods(this.cartData).then(res => {
+          this.saveToStorage(res)
+          this.showLoading = false
+        })
+      } else {
         this.showLoading = false
-      })
+      }
     },
     _setStyle () {
       this.offsetStyle = moveDownByNav()

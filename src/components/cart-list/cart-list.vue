@@ -130,8 +130,8 @@
       margin-top: $card-margin-top
       margin-left: $card-margin-left
       border-radius: $card-border-radius
-      padding: 15rpx 20rpx 0 0
-      height: 190rpx
+      padding: 20rpx 20rpx 20rpx 0
+      height: 220rpx
       z-index: 10
       > div
         height: 100%
@@ -140,7 +140,7 @@
         display: flex
         align-items: center
         justify-content: center
-        width: 80rpx
+        width: 90rpx
         img
           height: 44rpx
           width: 44rpx
@@ -183,7 +183,7 @@
           align-items: center
           justify-content: space-between
           font-size: $smaller-font-size
-          height: 80rpx
+          height: 75rpx
           .cart-item-count
             width: 220rpx
             display: flex
