@@ -148,6 +148,7 @@ export default {
       justify-content: flex-end
       width: 60%
       font-size: $small-font-size
+      z-index: 300
       .price-text
         padding-right: 40rpx
         margin-right: 40rpx

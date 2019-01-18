@@ -109,7 +109,7 @@
     width: 80rpx
     height: 80rpx
     top: 150rpx
-    right: 20rpx
+    left: 20rpx
     background-color: white
     border-radius: 50px
     opacity: 0.8

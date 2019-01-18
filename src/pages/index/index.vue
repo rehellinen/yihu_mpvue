@@ -10,19 +10,20 @@
       div.theme
         p 精 选 主 题
         div.theme-photo-container
-          img(v-for="item in theme", :src="item.image_id.image_url",
-            :key="item.image_id.id", @click="toTheme({id: item.id, name: item.name})")
+          div(v-for="item in theme", :key="item.image_id.id")
+            a(:href="'../theme/main?id=' + item.id + '&name=' + item.name")
+              img(:src="item.image_id.image_url")
 
       div.find
         img(src="__IMAGE__/theme/find.png")
       goods-list(:goods="newGoods")
-      div(@click="toGoodsMore(GoodsType.NEW_GOODS)")
+      a(:href="'../goods-more/main?type=' + GoodsType.NEW_GOODS")
         see-more
 
       div.find
         img(src="__IMAGE__/theme/old.png")
       goods-list(:goods="oldGoods")
-      div(@click="toGoodsMore(GoodsType.OLD_GOODS)")
+      a(:href="'../goods-more/main?type=' + GoodsType.OLD_GOODS")
         see-more
 </template>
 
@@ -59,16 +60,6 @@
       return share('易乎', 'page/index/main')
     },
     methods: {
-      toTheme ({id, name}) {
-        wx.navigateTo({
-          url: `../theme/main?id=${id}&name=${name}`
-        })
-      },
-      toGoodsMore (type) {
-        wx.navigateTo({
-          url: `../goods-more/main?type=${type}`
-        })
-      },
       _getData () {
         const promises = [
           banner.getBanners(),
