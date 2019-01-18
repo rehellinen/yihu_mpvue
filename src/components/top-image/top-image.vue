@@ -51,13 +51,13 @@ div.info
 
   .header-image
     width: 750rpx
-    height: 325rpx
+    height: 375rpx
 
   .avatar
     width: 150rpx
     height: 150rpx
     position: absolute
-    top: 250rpx
+    top: 300rpx
     border-radius: 50%
     display: block
     overflow: hidden

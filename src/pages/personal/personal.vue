@@ -1,23 +1,19 @@
 <template lang="pug">
   div
     my-loading(:showLoading="showLoading")
-    div.container.personal-container
+    div.container.personal-container(:class="showLoading ? 'hidden' : ''")
       // 个人信息栏
       top-image(type="user")
-      div.icon-container(@click="toEdit")
+      a.icon-container(href="../edit-info/main")
         img(src="__IMAGE__/icon/edit.png")
       // 个人信息栏
-
-      // 电费栏
-      //electricity
-      // 电费栏
 
       // 我的订单
       div.order-container
         div.image-container
           img(src="__IMAGE__/theme/personal@order.png")
-        order-list(:orders="orders", @reload="reload", :from="pageEnum.PERSONAL")
-        div(v-if="orders.length !==0", @click="toOrderMore")
+        order-list(:orders="orders", @reload="reload")
+        a(href="../order/main", v-if="orders.length !==0")
           see-more
         div(v-else)
           page-loading(:hasMore="false" backgroundColor="white")
@@ -31,13 +27,12 @@
 <script>
   import MyLoading from '../../components/my-loading/my-loading'
   import TopImage from '../../components/top-image/top-image'
-  import Electricity from '../../components/electricity/electricity'
   import PageLoading from '../../components/page-loading/page-loading'
   import AboutUs from '../../components/about-us/about-us'
   import SeeMore from '../../components/see-more/see-more'
   import OrderList from '../../components/order-list/order-list'
-  import {orderEnum} from '../../utils/config'
   import {OrderModel} from '../../model/OrderModel'
+  import {loading} from '../../mixins/loading'
   import {mapGetters, mapActions} from 'vuex'
 
   let Order = new OrderModel()
@@ -47,8 +42,7 @@
   export default {
     data () {
       return {
-        orders: [],
-        pageEnum: this.$config.pageEnum
+        orders: []
       }
     },
     onLoad () {
@@ -66,12 +60,8 @@
       }
     },
     computed: {
-      showLoading () {
-        return this.loadState[this.pageEnum.PERSONAL]
-      },
       ...mapGetters([
-        'ordersChange',
-        'loadState'
+        'ordersChange'
       ])
     },
     methods: {
@@ -79,36 +69,13 @@
         this.orders = []
         this._loadData()
       },
-      toOrderMore () {
-        wx.navigateTo({
-          url: '../order/main'
-        })
-      },
-      toEdit () {
-        wx.navigateTo({
-          url: '../edit-info/main'
-        })
-      },
       _loadData () {
         // 获取订单
-        Order.getOrder(orderEnum.ALL, ORDER_PAGE, ORDER_COUNT).then(res => {
-          if (this.showLoading) {
-            this._setLoading(res.length)
-          }
+        Order.getOrder(this.$config.orderEnum.ALL, ORDER_PAGE, ORDER_COUNT).then(res => {
           this._processOrder(res)
+          this.hideLoading()
         }).catch(ex => {
-          this._setLoading(0)
-        })
-      },
-      _setLoading (length) {
-        let flag = true
-        if (length === 0) {
-          flag = false
-        }
-        this.setLoadingState({
-          total: length > 2 ? 2 : length,
-          type: this.pageEnum.PERSONAL,
-          flag: flag
+          this.hideLoading()
         })
       },
       _processOrder (order) {
@@ -120,19 +87,18 @@
         }
       },
       ...mapActions([
-        'setOrderChange',
-        'setLoadingState'
+        'setOrderChange'
       ])
     },
     components: {
       MyLoading,
       TopImage,
-      Electricity,
       SeeMore,
       OrderList,
       PageLoading,
       AboutUs
-    }
+    },
+    mixins: [loading]
   }
 </script>
 
@@ -142,7 +108,7 @@
     position: absolute
     width: 80rpx
     height: 80rpx
-    top: 30rpx
+    top: 150rpx
     right: 20rpx
     background-color: white
     border-radius: 50px
