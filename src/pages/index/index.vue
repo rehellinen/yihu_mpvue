@@ -2,7 +2,7 @@
   div
     // 加载中动画
     my-loading(:showLoading="showLoading")
-    // 上方搜索栏
+    // 搜索栏
     search
     // 主内容
     div.container.index-container(:class="showLoading ? 'hidden' : ''")

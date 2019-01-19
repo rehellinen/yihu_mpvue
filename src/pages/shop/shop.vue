@@ -1,11 +1,11 @@
 <template lang="pug">
-div.container
+div
   search
   my-loading(:showLoading="showLoading")
-  div.header(:class="showLoading ? 'hidden' : ''")
+  div.container(:class="showLoading ? 'hidden' : ''")
     img(src="__IMAGE__/theme/shop@header.png")
-  shop-list(:shops="pageArray")
-  page-loading(:hasMore="hasMore")
+    shop-list(:shops="pageArray")
+    page-loading(:hasMore="hasMore")
 </template>
 
 <script>
@@ -18,8 +18,8 @@ div.container
   import {LazyLoad} from '../../utils/lazyload'
   import {share} from '../../utils/utils'
 
-  const shop = new ShopModel()
   const shopSize = 8
+  const shop = new ShopModel()
   const imageUrl = '__IMAGE__/icon/no-goods.png'
 
   export default {
@@ -94,10 +94,7 @@ div.container
   @import "~css/base"
   .container
     background-color: $background-color
-    .header
+    img
       width: 100%
       height: 435rpx
-      img
-        width: 100%
-        height: 435rpx
 </style>
