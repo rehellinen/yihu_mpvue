@@ -70,6 +70,8 @@ export default {
         goods.updateGoods(this.cartData).then(res => {
           this.saveToStorage(res)
           this.showLoading = false
+        }).catch(() => {
+          this.showLoading = false
         })
       } else {
         this.showLoading = false
@@ -125,6 +127,7 @@ export default {
     min-height: 99vh
 
   .footer-account-box
+    z-index: 100
     position: fixed
     bottom: 0
     height: 90rpx
