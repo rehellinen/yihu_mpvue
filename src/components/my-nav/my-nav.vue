@@ -2,7 +2,10 @@
   div.nav-container(:class="{float, 'fixed-color': fixedColor}",
     :style="containerStyle")
     div.capsule(:style="capsuleStyle")
-      img(src="__IMAGE__/icon/edit.png")
+      div.mask(:style="capsuleStyle")
+      img(src="__IMAGE__/icon/edit@white.png")
+      div.vertical
+      img(src="__IMAGE__/icon/home.png")
 </template>
 
 <script>
@@ -18,6 +21,10 @@ export default {
     fixedColor: {
       type: Boolean,
       default: false
+    },
+    href: {
+      type: Object,
+      default: ''
     }
   },
   data () {
@@ -47,21 +54,33 @@ export default {
     top: 0
   .fixed-color
     background-color: $nav-color
-  @import "~css/base"
   .nav-container
     z-index: 100
     width: 100%
     padding-bottom: $nav-bottom
     .capsule
       display: flex
-      justify-content: space-around
+      justify-content: space-between
       align-items: center
-      background-color: black
-      opacity: 0.15
       border-radius: 25px
       margin-left: 20rpx
+      .mask
+        position: absolute
+        border-radius: 25px
+        background-color: black
+        opacity: 0.15
+        z-index: 0
+      .vertical
+        width: 1px
+        height: 65%
+        background-color: white
       img
-        width: 35rpx
-        height: 35rpx
+        width: 38rpx
+        height: 38rpx
+        z-index: 10
+        margin: 0 20rpx
+      img:last-child
+        width: 43rpx
+        height: 43rpx
   .de
 </style>
