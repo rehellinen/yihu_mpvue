@@ -11,7 +11,7 @@
 <script>
 import GoodsList from '../../components/goods-list/goods-list'
 import PageLoading from '../../components/page-loading/page-loading'
-import {searchMixin, pageMixin} from '../../utils/mixins'
+import {searchMixin} from '../../utils/mixins'
 import {GoodsModel} from '../../model/GoodsModel'
 import {LazyLoad} from '../../utils/lazyload'
 import TitlePanel from '../../components/title-panel/title-panel'
@@ -31,7 +31,7 @@ export default {
       pageEnum: this.$config.pageEnum
     }
   },
-  mixins: [searchMixin, pageMixin],
+  mixins: [searchMixin],
   computed: {
     showLoading () {
       return this.loadState[this.$config.pageEnum.GOODS_MORE]

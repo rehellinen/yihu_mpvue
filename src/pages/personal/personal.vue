@@ -13,10 +13,8 @@
         div.image-container
           img(src="__IMAGE__/theme/personal@order.png")
         order-list(:orders="orders", @reload="reload")
-        a(href="../order/main", v-if="orders.length !==0")
-          see-more
-        div(v-else)
-          page-loading(:hasMore="false" backgroundColor="white")
+        see-more(href="../order/main", v-if="orders.length !==0")
+        page-loading(:hasMore="false" backgroundColor="white" v-else)
       // 我的订单
 
       // 跳转到其他小程序
