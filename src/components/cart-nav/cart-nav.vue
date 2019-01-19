@@ -32,7 +32,7 @@ export default {
           this.navTopScroll = `opacity:${-top / 50}`
           this.containerStyle = `transform:translateY(${top})`
         }).exec()
-      }, 100)
+      }, 15)
     },
     _setStyle () {
       const position = wx.getMenuButtonBoundingClientRect()
