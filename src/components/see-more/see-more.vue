@@ -1,5 +1,5 @@
 <template lang="pug">
-div.more-container
+a.more-container(:href="href")
   p {{text}}
   img(src="__IMAGE__/icon/arrow@downBlack.png")
 </template>
@@ -10,6 +10,10 @@ div.more-container
       text: {
         type: String,
         default: '查看更多'
+      },
+      href: {
+        type: String,
+        default: ''
       }
     }
   }

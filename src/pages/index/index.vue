@@ -17,16 +17,14 @@
               img(:src="item.image_id.image_url")
 
       div.find
-        img(src="__IMAGE__/theme/find.png")
-      goods-list(:goods="newGoods")
-      a(:href="'../goods-more/main?type=' + GoodsType.NEW_GOODS")
-        see-more
+        img.find-img(src="__IMAGE__/theme/find.png")
+        goods-list(:goods="newGoods")
+        see-more(:href="`../goods-more/main?type=${GoodsType.NEW_GOODS}`")
 
       div.find
-        img(src="__IMAGE__/theme/old.png")
-      goods-list(:goods="oldGoods")
-      a(:href="'../goods-more/main?type=' + GoodsType.OLD_GOODS")
-        see-more
+        img.find-img(src="__IMAGE__/theme/old.png")
+        goods-list(:goods="oldGoods")
+        see-more(:href="`../goods-more/main?type=${GoodsType.OLD_GOODS}`")
 </template>
 
 <script>
@@ -34,11 +32,11 @@
   import MyBanner from '../../components/my-banner/my-banner'
   import SeeMore from '../../components/see-more/see-more'
   import GoodsList from '../../components/goods-list/goods-list'
+  import Search from '../../components/search/search'
   import {BannerModel} from '../../model/BannerModel'
   import {ThemeModel} from '../../model/ThemeModel'
   import {GoodsModel} from '../../model/GoodsModel'
   import {LazyLoad} from '../../utils/lazyload'
-  import Search from '../../components/search/search'
   import {share} from '../../utils/utils'
 
   const banner = new BannerModel()
@@ -129,21 +127,19 @@
       img
         width: 48.5vw
         height: 183rpx
-        margin-top: 10rpx
         margin-left: 1vw
   /* theme */
 
   /* find */
   .find
     display: flex
+    flex-direction: column
     align-items: center
-    justify-content: center
-    padding: 40rpx 0 20rpx 0
     background-color: white
     width: 750rpx
-    height: 63rpx
-    img
+    .find-img
       width: 300rpx
       height: 63rpx
+      margin-top: 20rpx
   /* find */
 </style>
