@@ -3,9 +3,10 @@
     :style="containerStyle")
     div.capsule(:style="capsuleStyle")
       div.mask(:style="capsuleStyle")
-      img(src="__IMAGE__/icon/edit@white.png")
-      div.vertical
-      img(src="__IMAGE__/icon/home.png")
+      div.img-container
+        img(src="__IMAGE__/icon/edit@white.png" @click="toCustom")
+      div.img-container
+        img(src="__IMAGE__/icon/home.png" @click="toHome")
 </template>
 
 <script>
@@ -34,6 +35,15 @@ export default {
     }
   },
   methods: {
+    toCustom () {
+      if (!this.href) wx.navigateBack()
+      else wx.navigateTo({ url: this.href })
+    },
+    toHome () {
+      wx.switchTab({
+        url: '../index/main'
+      })
+    },
     _setStyle () {
       const position = wx.getMenuButtonBoundingClientRect()
       const containerHeight = position.bottom - position.top
@@ -60,7 +70,7 @@ export default {
     padding-bottom: $nav-bottom
     .capsule
       display: flex
-      justify-content: space-between
+      justify-content: space-around
       align-items: center
       border-radius: 25px
       margin-left: 20rpx
@@ -74,13 +84,16 @@ export default {
         width: 1px
         height: 65%
         background-color: white
-      img
-        width: 38rpx
-        height: 38rpx
-        z-index: 10
-        margin: 0 20rpx
-      img:last-child
-        width: 43rpx
-        height: 43rpx
+      .img-container
+        width: 50%
+        display: flex
+        justify-content: center
+        align-items: center
+        img
+          width: 40rpx
+          height: 40rpx
+          z-index: 10
+      .img-container:last-child
+        border-left: 1rpx solid white
   .de
 </style>
