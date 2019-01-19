@@ -5,6 +5,7 @@
       :style="containerStyle")
       div.back-color(:style="colorStyle + opacityStyle",
         v-if="!fixedColor")
+      p {{title}}
       div.capsule(:style="capsuleStyle")
         div.mask(:style="capsuleStyle")
         div.img-container
@@ -30,6 +31,10 @@ export default {
     },
     href: {
       type: Object,
+      default: ''
+    },
+    title: {
+      type: String,
       default: ''
     }
   },
@@ -83,7 +88,15 @@ export default {
   .nav-container
     z-index: 100
     width: 100%
+    display: flex
+    align-items: center
+    justify-content: center
     padding-bottom: $nav-bottom
+    p
+      color: white
+      font-size: $normal-font-size
+      letter-spacing: 2px
+      z-index: 10
     .back-color
       position: fixed
       padding-bottom: $nav-bottom
@@ -93,11 +106,12 @@ export default {
       opacity: 0
       background-color: $nav-color
     .capsule
+      position: absolute
       display: flex
       justify-content: space-around
       align-items: center
       border-radius: 25px
-      margin-left: 20rpx
+      left: 20rpx
       .mask
         position: absolute
         border-radius: 25px

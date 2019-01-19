@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    my-nav(href="../edit-info/main", :fixedColor="true")
+    my-nav(href="../edit-info/main", title="个人中心")
     my-loading(:showLoading="showLoading")
     div.container.personal-container(:class="showLoading ? 'hidden' : ''")
       // 个人信息栏
