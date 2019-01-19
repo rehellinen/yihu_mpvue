@@ -3,8 +3,7 @@ div.goods-list-container(:style="style")
   div.goods-container(v-for="(item, index) in goods", :key="item.id"
     @click="toGoodsDetail(index)")
     img.lazy(:src="item.lazy_url[0]" mode='aspectFill'
-      :data-index="index", :class="item.transition"
-      @load="imageLoaded" :data-type="from")
+      :class="item.transition")
     div.text-container
       div
         text.two-handed(v-if="item.type === 2") 二手
@@ -30,19 +29,13 @@ div.goods-list-container(:style="style")
       backgroundColor: {
         type: String,
         default: ''
-      },
-      from: {
-        type: String,
-        default: ''
       }
     },
     computed: {
       style () {
-        if (this.backgroundColor === this.$config.color.BACKGROUND_COLOR) {
-          return `background-color:${this.$config.color.BACKGROUND_COLOR}`
-        } else {
-          return `background-color:${this.$config.color.WHITE}`
-        }
+        const color = this.$config.color
+        return `background-color:${this.backgroundColor === color.BACKGROUND_COLOR
+          ? color.BACKGROUND_COLOR : color.WHITE}`
       }
     },
     methods: {

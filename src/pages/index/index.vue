@@ -1,11 +1,13 @@
 <template lang="pug">
   div
-    search
+    // 加载中动画
     my-loading(:showLoading="showLoading")
+    // 上方搜索栏
+    search
+    // 主内容
     div.container.index-container(:class="showLoading ? 'hidden' : ''")
-      swiper.banner(interval='5000', :indicator-dots='false', :autoplay='true')
-          swiper-item(v-for="item in banner", :key="item.image_id.id")
-            img(:src="item.image_id.image_url")
+      // 轮播图
+      my-banner(:banner="banner")
 
       div.theme
         p 精 选 主 题
@@ -29,6 +31,7 @@
 
 <script>
   import MyLoading from '../../components/my-loading/my-loading'
+  import MyBanner from '../../components/my-banner/my-banner'
   import SeeMore from '../../components/see-more/see-more'
   import GoodsList from '../../components/goods-list/goods-list'
   import {BannerModel} from '../../model/BannerModel'
@@ -98,7 +101,8 @@
       MyLoading,
       SeeMore,
       GoodsList,
-      Search
+      Search,
+      MyBanner
     }
   }
 </script>
@@ -107,15 +111,6 @@
   @import '~css/base'
   .index-container
     background-color: $background-color
-
-  /* banner */
-  .banner
-    width: 750rpx
-    height: 415rpx
-    img
-      width: 750rpx
-      height: 415rpx
-  /* banner */
 
   /* theme */
   .theme
