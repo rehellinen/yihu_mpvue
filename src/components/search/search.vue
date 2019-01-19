@@ -45,7 +45,7 @@ export default {
     display: flex
     align-items: center
     width: 100%
-    padding-bottom: 15rpx
+    padding-bottom: $nav-bottom
     background-color: $nav-color
     position: fixed
     z-index: 100

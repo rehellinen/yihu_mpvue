@@ -1,11 +1,10 @@
 <template lang="pug">
   div
+    my-nav()
     my-loading(:showLoading="showLoading")
     div.container.personal-container(:class="showLoading ? 'hidden' : ''")
       // 个人信息栏
       top-image(type="user")
-      a.icon-container(href="../edit-info/main")
-        img(src="__IMAGE__/icon/edit.png")
       // 个人信息栏
 
       // 我的订单
@@ -24,6 +23,7 @@
 
 <script>
   import MyLoading from '../../components/my-loading/my-loading'
+  import MyNav from '../../components/my-nav/my-nav'
   import TopImage from '../../components/top-image/top-image'
   import PageLoading from '../../components/page-loading/page-loading'
   import AboutUs from '../../components/about-us/about-us'
@@ -94,7 +94,8 @@
       SeeMore,
       OrderList,
       PageLoading,
-      AboutUs
+      AboutUs,
+      MyNav
     },
     mixins: [loading]
   }
@@ -102,22 +103,6 @@
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~css/base"
-  .icon-container
-    position: absolute
-    width: 80rpx
-    height: 80rpx
-    top: 150rpx
-    left: 20rpx
-    background-color: white
-    border-radius: 50px
-    opacity: 0.8
-    display: flex
-    justify-content: center
-    align-items: center
-    z-index: 100
-    img
-      width: 40rpx
-      height: 40rpx
   .personal-container
     background-color: $background-color
     padding-bottom: $card-margin-top

@@ -44,7 +44,7 @@ export default {
       this.navScrollStyle = `height:${containerHeight}px;
       padding-top:${containerPaddingTop}px;
       padding-bottom:${containerPaddingBottom}px`
-      this.navTopStyle = `height:${containerHeight + 5}px;
+      this.navTopStyle = `height:${containerHeight}px;
       padding-top:${containerPaddingTop}px;`
     }
   }
@@ -64,6 +64,7 @@ export default {
       width: 100%
       z-index: 300
       transition: all linear 50ms
+      padding-bottom: $nav-bottom
       opacity: 0
       background-color: $nav-color
       p
