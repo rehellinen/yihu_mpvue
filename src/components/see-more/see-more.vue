@@ -1,7 +1,7 @@
 <template lang="pug">
 a.more-container(:href="href")
   p {{text}}
-  img(src="__IMAGE__/icon/arrow@downBlack.png")
+  img(src="/static/images/icon/arrow@downBlack.png")
 </template>
 
 <script>

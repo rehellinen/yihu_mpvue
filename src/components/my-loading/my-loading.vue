@@ -1,6 +1,6 @@
 <template lang="pug">
   .loading-container(v-if="showLoading")
-    img(src="__IMAGE__/theme/loading.gif")
+    img(src="/static/images/theme/loading.gif")
 </template>
 
 <script>

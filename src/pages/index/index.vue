@@ -10,9 +10,8 @@
       div.theme
         p 精 选 主 题
         div.theme-photo-container
-          div(v-for="item in theme", :key="item.image_id.id")
-            div(@click="toTheme" :href="'../theme/main?id=' + item.id + '&name=' + item.name")
-              img(:src="item.image_id.image_url" mode="aspectFill")
+          div(v-for="item in theme", :key="item.image_id.id" @click="toTheme(item)")
+            img(:src="item.image_id.image_url" mode="aspectFill")
 
       div.find
         img.find-img(src="/static/images/theme/find.png")
@@ -20,7 +19,7 @@
         see-more(:href="`../goods-more/main?type=${GOODS.NEW_GOODS}`")
 
       div.find
-        img.find-img(src="__IMAGE__/theme/old.png")
+        img.find-img(src="/static/images/theme/old.png")
         goods-list(:goods="oldGoods")
         see-more(:href="`../goods-more/main?type=${GOODS.OLD_GOODS}`")
 </template>
@@ -58,6 +57,11 @@
       return share('易乎', 'page/index/main')
     },
     methods: {
+      toTheme (item) {
+        wx.navigateTo({
+          url: `../theme/main?id=${item.id}&name=${item.name}`
+        })
+      },
       _getData () {
         const promises = [
           banner.getBanners(),

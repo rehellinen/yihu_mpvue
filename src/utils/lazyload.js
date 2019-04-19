@@ -34,7 +34,7 @@ export class LazyLoad {
     // 用于防止页面刷新过多次数
     this.stop = false
     // 加载中图片路径
-    this.lazyImage = '__IMAGE__/icon/no-goods.png'
+    this.lazyImage = '/static/images/icon/no-goods.png'
     // 处理数据
     this._processData()
     // 每100ms刷新一次页面
