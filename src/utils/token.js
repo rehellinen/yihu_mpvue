@@ -1,9 +1,9 @@
-import {restUrl} from './config.js'
+import config from './config.js'
 
 class Token {
   constructor () {
-    this.verifyUrl = restUrl + 'token/verify'
-    this.tokenUrl = restUrl + 'token/buyer'
+    this.verifyUrl = config.REST_URL + 'token/verify'
+    this.tokenUrl = config.REST_URL + 'token/buyer'
   }
 
   verify () {

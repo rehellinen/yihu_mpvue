@@ -33,9 +33,12 @@ div.goods-list-container(:style="style")
     },
     computed: {
       style () {
-        const color = this.$config.color
-        return `background-color:${this.backgroundColor === color.BACKGROUND_COLOR
-          ? color.BACKGROUND_COLOR : color.WHITE}`
+        const color = this.$config.COLOR
+        return `background-color:${
+          this.backgroundColor === color.BACKGROUND_COLOR
+            ? color.BACKGROUND_COLOR
+            : color.WHITE
+        }`
       }
     },
     methods: {

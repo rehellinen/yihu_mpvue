@@ -1,5 +1,5 @@
 import {BaseModel} from './BaseModel.js'
-import {payEnum} from '../utils/config'
+import config from '../utils/config'
 
 class OrderModel extends BaseModel {
   constructor () {
@@ -46,20 +46,20 @@ class OrderModel extends BaseModel {
             paySign: res.paySign,
             success () {
               resolve({
-                status: payEnum.PAY_SUCCESS,
+                status: config.PAY.PAY_SUCCESS,
                 res
               })
             },
             fail () {
               resolve({
-                status: payEnum.PAY_FAIL,
+                status: config.PAY.PAY_FAIL,
                 res
               })
             }
           })
         } else {
           resolve({
-            status: payEnum.OUT_OF_STOCK,
+            status: config.PAY.OUT_OF_STOCK,
             res
           })
         }

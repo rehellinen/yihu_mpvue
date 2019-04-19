@@ -1,9 +1,9 @@
-import { restUrl } from '../utils/config'
+import config from '../utils/config'
 import { Token } from '../utils/token'
 
 export class BaseModel {
   constructor () {
-    this.baseUrl = restUrl
+    this.baseUrl = config.REST_URL
   }
 
   /**

@@ -44,7 +44,7 @@
         page: [],
         hasMore: [],
         switchStyle: '',
-        backgroundColor: this.$config.color.WHITE,
+        backgroundColor: this.$config.COLOR.WHITE,
         pageEnum: this.$config.pageEnum
       }
     },

@@ -1,6 +1,6 @@
 <template lang="pug">
   div.container.pay-result-container
-    div.success(v-if="payStatus === payEnum.PAY_SUCCESS")
+    div.success(v-if="payStatus === PAY.PAY_SUCCESS")
       img(src="__IMAGE__/icon/pay@success.png")
       p.pay-title 支付成功
       p.pay-text 感谢~
@@ -14,12 +14,11 @@
 </template>
 
 <script>
-import {payEnum} from '../../utils/config'
 export default {
   data () {
     return {
-      payStatus: payEnum.PAY_FAIL,
-      payEnum
+      payStatus: this.$config.PAY.PAY_FAIL,
+      PAY: this.$config.PAY
     }
   },
   mounted () {

@@ -4,7 +4,6 @@
       div.up(@click="toShopDetail(item.id)")
         div
           img.shop-avatar.lazy(:src="item.lazy_url[0]",
-            @load="imageLoaded" :data-type="pageEnum.SHOP"
             :class="{afterShow: item.transition}")
           p.avatar-text {{item.name}}
         img.come-image(src="__IMAGE__/theme/shop@come.png")
@@ -23,13 +22,8 @@
 </template>
 
 <script>
-import {pageEnum} from 'utils/config'
-
 export default {
   data () {
-    return {
-      pageEnum
-    }
   },
   props: {
     shops: []

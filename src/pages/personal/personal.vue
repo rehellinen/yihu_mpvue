@@ -4,6 +4,8 @@
     div.container.personal-container(:class="showLoading ? 'hidden' : ''")
       // 个人信息栏
       top-image(type="user")
+      div.icon-container(@click="toEdit")
+        img(src="__IMAGE__/icon/edit.png")
       // 个人信息栏
 
       // 我的订单
@@ -65,6 +67,11 @@
         this.orders = []
         this._loadData()
       },
+      toEdit () {
+        wx.navigateTo({
+          url: '../edit-info/main'
+        })
+      },
       _loadData () {
         // 获取订单
         Order.getOrder(this.$config.orderEnum.ALL, ORDER_PAGE, ORDER_COUNT).then(res => {
@@ -100,6 +107,24 @@
 
 <style scoped lang="sass" rel="stylesheet/sass">
   @import "~css/base"
+  .icon-container
+    position: absolute
+    width: 80rpx
+    height: 80rpx
+    top: 30rpx
+    right: 20rpx
+    background-color: white
+    border-radius: 50px
+    opacity: 0.8
+    display: flex
+    justify-content: center
+    align-items: center
+    z-index: 100
+    img
+      width: 40rpx
+      height: 40rpx
+
+
   .personal-container
     background-color: $background-color
     padding-bottom: $card-margin-top

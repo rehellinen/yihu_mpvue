@@ -11,18 +11,18 @@
         p 精 选 主 题
         div.theme-photo-container
           div(v-for="item in theme", :key="item.image_id.id")
-            a(:href="'../theme/main?id=' + item.id + '&name=' + item.name")
+            div(@click="toTheme" :href="'../theme/main?id=' + item.id + '&name=' + item.name")
               img(:src="item.image_id.image_url" mode="aspectFill")
 
       div.find
-        img.find-img(src="__IMAGE__/theme/find.png")
+        img.find-img(src="/static/images/theme/find.png")
         goods-list(:goods="newGoods")
-        see-more(:href="`../goods-more/main?type=${GoodsType.NEW_GOODS}`")
+        see-more(:href="`../goods-more/main?type=${GOODS.NEW_GOODS}`")
 
       div.find
         img.find-img(src="__IMAGE__/theme/old.png")
         goods-list(:goods="oldGoods")
-        see-more(:href="`../goods-more/main?type=${GoodsType.OLD_GOODS}`")
+        see-more(:href="`../goods-more/main?type=${GOODS.OLD_GOODS}`")
 </template>
 
 <script>
@@ -35,6 +35,7 @@
   import {GoodsModel} from '../../model/GoodsModel'
   import {LazyLoad} from '../../utils/lazyload'
   import {share} from '../../utils/utils'
+  import {loading} from '../../mixins/loading'
 
   const banner = new BannerModel()
   const theme = new ThemeModel()
@@ -47,8 +48,7 @@
         theme: [],
         newGoods: [],
         oldGoods: [],
-        GoodsType: this.$config.GoodsType,
-        showLoading: true
+        GOODS: this.$config.GOODS
       }
     },
     onLoad () {
@@ -72,7 +72,7 @@
           this.newGoods = res[2]
           this.oldGoods = res[3]
           this._setLazyLoad()
-          this.showLoading = false
+          this.hideLoading()
         })
       },
       _setLazyLoad () {
@@ -97,7 +97,8 @@
       SeeMore,
       GoodsList,
       MyBanner
-    }
+    },
+    mixins: [loading]
   }
 </script>
 

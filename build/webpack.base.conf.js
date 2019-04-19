@@ -5,10 +5,7 @@ var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var MpvuePlugin = require('webpack-mpvue-asset-plugin')
 var glob = require('glob')
-var StringReplace = require('string-replace-webpack-plugin')
-var pathConfig = require('../src/utils/config')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
-var replace = pathConfig.replace
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -108,31 +105,10 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[ext]')
         }
-      },
-
-      {
-        test: /\.(js|vue)$/,
-        loader: StringReplace.replace({
-          replacements: [
-            {
-              pattern: new RegExp(replace.static.origin, 'g'),
-              replacement: function (nextLoaders, options, prevLoaders) {
-                return replace.static.replacement
-              }
-            },
-            {
-              pattern: new RegExp(replace.image.origin, 'g'),
-              replacement: function (nextLoaders, options, prevLoaders) {
-                return replace.image.replacement
-              }
-            }
-          ]
-        })
       }
     ]
   },
   plugins: [
-    new StringReplace(),
     new MpvuePlugin(),
     new CopyWebpackPlugin([{
       from: '**/*.json',

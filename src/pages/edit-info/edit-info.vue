@@ -28,6 +28,7 @@
 <script>
 import TitlePanel from '../../components/title-panel/title-panel'
 import {UserModel} from '../../model/UserModel'
+import { toast } from '../../utils/utils'
 
 let User = new UserModel()
 
@@ -51,6 +52,8 @@ export default {
           title: '修改信息成功',
           image: this.$config.iconType.SUCCESS
         })
+      }).catch(ex => {
+        toast(ex.message)
       })
     }
   },

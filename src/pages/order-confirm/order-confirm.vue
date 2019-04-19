@@ -2,7 +2,7 @@
   div.container.order-container
     my-loading(:showLoading="showLoading")
     buyer-info(@isCompleted="complete")
-    cart-list(:goods="selectedCartData" :from="pageEnum.ORDER_CONFIRM" @remark="addRemark")
+    cart-list(:goods="selectedCartData" :from="PAGE.ORDER_CONFIRM" @remark="addRemark")
     div.accounts
       div.total-account
         p 付款合计：￥{{cartDetail.totalPrice}}
@@ -16,7 +16,6 @@ import MyLoading from '../../components/my-loading/my-loading'
 import CartList from '../../components/cart-list/cart-list'
 import {OrderModel} from '../../model/OrderModel'
 import {mapGetters, mapActions} from 'vuex'
-import {pageEnum} from '../../utils/config'
 
 let Order = new OrderModel()
 
@@ -24,18 +23,14 @@ export default {
   data () {
     return {
       isCompleted: false,
-      pageEnum,
-      remarks: []
+      remarks: [],
+      PAGE: this.$config.PAGE
     }
   },
   computed: {
-    showLoading () {
-      return this.loadState[pageEnum.ORDER_CONFIRM]
-    },
     ...mapGetters([
       'cartDetail',
-      'selectedCartData',
-      'loadState'
+      'selectedCartData'
     ])
   },
   components: {

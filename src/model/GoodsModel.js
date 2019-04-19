@@ -1,6 +1,6 @@
 import {BaseModel} from './BaseModel.js'
 import {CartModel} from './CartModel'
-import {GoodsType} from 'utils/config'
+import config from 'utils/config'
 
 export class GoodsModel extends BaseModel {
   /**
@@ -56,7 +56,7 @@ export class GoodsModel extends BaseModel {
   // 获取所有二手 / 自营商品
   getGoods (type, page, size = 14) {
     let url = `oldGoods`
-    if (parseInt(type) === GoodsType.NEW_GOODS) {
+    if (parseInt(type) === config.GOODS.NEW_GOODS) {
       url = `newGoods`
     }
     let params = {
@@ -76,7 +76,7 @@ export class GoodsModel extends BaseModel {
    */
   getGoodsDetail (id, type) {
     let url = `oldGoods/${id}`
-    if (parseInt(type) === GoodsType.NEW_GOODS) {
+    if (parseInt(type) === config.GOODS.NEW_GOODS) {
       url = `newGoods/${id}`
     }
 

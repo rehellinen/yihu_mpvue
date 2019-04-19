@@ -1,11 +1,11 @@
-import {iconType} from './config'
+import config from './config'
 
 // 对“对象数组”进行深拷贝
 function copyObjArr (arr) {
   return [].concat(JSON.parse(JSON.stringify(arr)))
 }
 
-function toast (title, icon = iconType.SUCCESS, isBack = true) {
+function toast (title, icon = config.ICON.SUCCESS, isBack = true) {
   wx.showToast({
     title,
     image: icon,
@@ -45,13 +45,13 @@ function share (title, path) {
     success: (res) => {
       wx.showToast({
         title: '分享成功',
-        image: iconType.SUCCESS
+        image: config.ICON.SUCCESS
       })
     },
     fail: (res) => {
       wx.showToast({
         title: '分享失败',
-        image: iconType.FAIL
+        image: config.ICON.FAIL
       })
     }
   }

@@ -6,7 +6,7 @@
 
 export const loading = {
   created () {
-    setTimeout(() => this.hideLoading(), 3000)
+    setTimeout(() => this.hideLoading(), this.$config.LOADING_HIDDEN_TIME)
   },
   data () {
     return {

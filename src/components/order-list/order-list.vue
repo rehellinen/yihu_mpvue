@@ -7,20 +7,19 @@ div.order-list-contailer(:class="{'card-container': card}")
       @load="imageLoaded", :data-type="from")
     div.two-text(@click="toDetail({id: item.id, type: item.type})")
       p.name-text {{item.snap_name}}
-      p.status-text(v-if="item.status === orderEnum.UNPAID") 待付款
-      p.status-text(v-if="item.status === orderEnum.PAID") 待发货
-      p.status-text(v-if="item.status === orderEnum.DELIVERED") 已发货
-      p.status-text(v-if="item.status === orderEnum.COMPLETED") 已完成
-      p.status-text(v-if="item.status === orderEnum.PAID_BUT_NO_GOODS") 付款成功但库存量不足
+      p.status-text(v-if="item.status === ORDER.UNPAID") 待付款
+      p.status-text(v-if="item.status === ORDER.PAID") 待发货
+      p.status-text(v-if="item.status === ORDER.DELIVERED") 已发货
+      p.status-text(v-if="item.status === ORDER.COMPLETED") 已完成
+      p.status-text(v-if="item.status === ORDER.PAID_BUT_NO_GOODS") 付款成功但库存量不足
     div.price-container
       p.price ￥{{item.total_price}}
       img.delete(src="__IMAGE__/icon/delete.png"
-        v-if="item.status === orderEnum.UNPAID"
+        v-if="item.status === ORDER.UNPAID"
         @click="deleteOne(item.id)")
 </template>
 
 <script>
-  import {orderEnum, iconType} from 'utils/config'
   import {modal, toast} from 'utils/utils'
   import {OrderModel} from 'model/OrderModel'
   import {mapActions} from 'vuex'
@@ -30,7 +29,7 @@ div.order-list-contailer(:class="{'card-container': card}")
   export default {
     data () {
       return {
-        orderEnum
+        ORDER: this.$config.ORDER
       }
     },
     props: {
@@ -59,10 +58,10 @@ div.order-list-contailer(:class="{'card-container': card}")
           if (res.confirm) {
             Order.delete(id).then(() => {
               this.setOrderChange(true)
-              toast('删除成功', iconType.SUCCESS, false)
+              toast('删除成功', this.$config.ICON.SUCCESS, false)
               this.$emit('reload')
             }).catch((ex) => {
-              toast('删除失败', iconType.FAIL, false)
+              toast('删除失败', this.$config.ICON.FAIL, false)
             })
           }
         })
