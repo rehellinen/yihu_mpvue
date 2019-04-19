@@ -1,7 +1,7 @@
 <template lang="pug">
   div.card.desc-container
     div.goods-icon-container
-      img(src="__IMAGE__/icon/goods-detail.png")
+      img(src="/static/images/icon/goods-detail.png")
       p 商品详情：
     p.desc(v-if="desc") {{desc}}
     p.no-goods-desc(v-else) 暂无商品介绍

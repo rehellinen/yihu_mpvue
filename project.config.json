@@ -55,7 +55,7 @@
 					"id": 3,
 					"name": "商品详情",
 					"pathName": "pages/goods-detail/main",
-					"query": "id=279&type=1"
+					"query": "id=590&type=1"
 				},
 				{
 					"id": -1,

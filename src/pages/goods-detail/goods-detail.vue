@@ -2,16 +2,18 @@
   div.container.detail-container
     my-loading(:showLoading="showLoading")
     div(:class="showLoading ? 'hidden' : ''")
-      div.cart-container(@click="toCart", :class="{animate: isShake}" :style="cartStyle")
+      div.cart-container(@click="toCart", :class="{animate: isShake}")
         div.cart
-          img(src="__IMAGE__/icon/cart.png")
+          img(src="/static/images/icon/cart.png")
           div.cart-count {{cartDetail.selectedCount}}
 
       div.goods-container
         // 商品头图
-        img.head-image(:src="goods.image_id.image_url",
+        img.head-image(
+          :src="goods.image_id.image_url",
           v-if="goods.image_id"
-          @load="imageLoaded", :data-type="pageEnum.GOODS_DETAIL")
+          @load="hideLoading"
+        )
         // 详细信息
         div.info
           div.info-up
@@ -26,8 +28,8 @@
               )
               div.picker.normal(:class="{disabled : cartCount >= goods.quantity}")
                 p 数量 {{cartCount < goods.quantity ? selectedCount : 0}}
-                img(src="__IMAGE__/icon/arrow@downOrange.png" v-if="cartCount < goods.quantity")
-                img(src="__IMAGE__/icon/arrow@downGrey.png" v-else)
+                img(src="/static/images/icon/arrow@downOrange.png" v-if="cartCount < goods.quantity")
+                img(src="/static/images/icon/arrow@downGrey.png" v-else)
 
           div.hr
 
@@ -37,8 +39,8 @@
               p.quantity 库存：{{goods.quantity}}
             div.cart-text-container(@click="addGoodsToCart" :class="{disabled : cartCount >= goods.quantity}")
               p {{cartCount < goods.quantity ? '加入购物车' : '库存不足'}}
-              img(src="__IMAGE__/icon/cart.png" v-if="cartCount < goods.quantity")
-              img(src="__IMAGE__/icon/cart@grey.png" v-else)
+              img(src="/static/images/icon/cart.png" v-if="cartCount < goods.quantity")
+              img(src="/static/images/icon/cart@grey.png" v-else)
               img.small-top-img(:class="{animate: fastTap}"
                 :src="goods.image_id.image_url"
                 :style="translateStyle"
@@ -48,7 +50,7 @@
       div.photo-text-detail
         switch-tab(:tabs="['商品信息', '商家详情']", @switch="switchTabs", ref="switch")
           div(slot=0)
-            GoodsDesc(:desc="goods.description")
+            goods-desc(:desc="goods.description")
           div(slot=1)
             seller-info(:seller="seller")
 </template>
@@ -63,6 +65,7 @@ import MyLoading from '../../components/my-loading/my-loading'
 import SellerInfo from '../../components/seller-info/seller-info'
 import GoodsDesc from '../../components/goods-desc/goods-desc'
 import {share} from '../../utils/utils'
+import {loading} from '../../mixins/loading'
 
 let Goods = new GoodsModel()
 let Shop = new ShopModel()
@@ -71,18 +74,12 @@ export default {
   data () {
     return {
       goods: {},
+      seller: {},
       selectedCount: 1,
       fastTap: false,
       isShake: false,
-      translateStyle: '',
-      switchStyle: '',
-      cartStyle: '',
-      pageEnum: this.$config.pageEnum,
-      seller: {}
+      translateStyle: ''
     }
-  },
-  onLoad () {
-    this._changeCartPosition()
   },
   onShow () {
     let {id, type} = this.$root.$mp.query
@@ -93,20 +90,13 @@ export default {
   },
   onUnload () {
     this.goods = {}
+    this.seller = {}
     this.selectedCount = 1
-    this.switchStyle = ''
-    this.resetLoadingState(this.$config.pageEnum.GOODS_DETAIL)
     this.$refs.switch.switchTabs(0)
   },
   computed: {
-    showLoading () {
-      return this.loadState[this.$config.pageEnum.GOODS_DETAIL]
-    },
-    ...mapGetters([
-      'loadState'
-    ]),
     cartCount () {
-      let res = CartModel._isExistedThatOne(this.goods.id, this.cartData)
+      let res = CartModel.isExistedThatOne(this.goods.id, this.cartData)
       if (res.index !== -1) {
         return res.data.count
       }
@@ -177,7 +167,7 @@ export default {
       Goods.getGoodsDetail(id, type).then((res) => {
         wx.setNavigationBarTitle({title: res.name})
         this.goods = res
-        if (parseInt(type) === this.$config.GoodsType.NEW_GOODS) {
+        if (parseInt(type) === this.$config.GOODS.NEW_GOODS) {
           Shop.getShopByID(res.foreign_id).then(res => {
             this.seller = res
           })
@@ -188,15 +178,8 @@ export default {
         }
       })
     },
-    _changeCartPosition () {
-      const position = wx.getMenuButtonBoundingClientRect()
-      const cartTop = position.bottom + 5
-      const cartRight = (750 - position.right * 2)
-      this.cartStyle = `top:${cartTop}px;right:${cartRight}rpx`
-    },
     ...mapActions([
-      'addGoods',
-      'resetLoadingState'
+      'addGoods'
     ])
   },
   components: {
@@ -204,7 +187,8 @@ export default {
     MyLoading,
     SellerInfo,
     GoodsDesc
-  }
+  },
+  mixins: [loading]
 }
 </script>
 
@@ -219,6 +203,7 @@ export default {
     width: 80rpx
     height: 80rpx
     right: 20rpx
+    top: 15rpx
     background-color: white
     border-radius: 100px
     opacity: 0.95
