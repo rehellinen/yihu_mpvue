@@ -17,7 +17,7 @@ export const loading = {
     hideLoading () {
       this.showLoading = false
     },
-    showLoading () {
+    openLoading () {
       this.showLoading = true
     }
   }

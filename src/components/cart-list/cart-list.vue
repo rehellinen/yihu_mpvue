@@ -3,8 +3,8 @@
     div.cart-item(v-for="(item, index) in goods" :key="item.id")
       // 最左侧的复选框
       div.cart-item-checkbox(@click="selectOneTap(index)", v-if="showOperation")
-        img(src="__IMAGE__/icon/circle@selected.png", v-if="item.selected")
-        img(src="__IMAGE__/icon/circle@noselected.png", v-else)
+        img(src="/static/images/icon/circle@selected.png", v-if="item.selected")
+        img(src="/static/images/icon/circle@noselected.png", v-else)
       div.left-holder(v-else)
       // 最左侧的复选框
 
@@ -25,15 +25,15 @@
         div.bottom-box(v-if="showOperation")
           div.cart-item-count
             div
-              img(src="__IMAGE__/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
-              img(src="__IMAGE__/icon/minus@disabled.png" v-else)
+              img(src="/static/images/icon/minus.png", @click="minusOne(index)" v-if="item.count > 1")
+              img(src="/static/images/icon/minus@disabled.png" v-else)
             p {{item.count}}
             div
-              img(src="__IMAGE__/icon/plus.png", @click="plusOne(index)" v-if="item.count < item.quantity")
-              img(src="__IMAGE__/icon/plus@disabled.png" v-else)
+              img(src="/static/images/icon/plus.png", @click="plusOne(index)" v-if="item.count < item.quantity")
+              img(src="/static/images/icon/plus@disabled.png" v-else)
 
           div.delete
-            img(src="__IMAGE__/icon/delete.png", @click="deleteGoods(item.id)")
+            img(src="/static/images/icon/delete.png", @click="deleteGoods(item.id)")
 
         div.note-container(v-if="showInput")
           div.note

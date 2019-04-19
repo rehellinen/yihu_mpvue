@@ -43,7 +43,7 @@ export class CartModel extends BaseModel {
     let data = []
     for (let item of res) {
       let id = item.id
-      let goodsIndexObj = CartModel._isExistedThatOne(id, goods)
+      let goodsIndexObj = CartModel.isExistedThatOne(id, goods)
       let index = goodsIndexObj.index
       let storageGoods = goodsIndexObj.data
 
@@ -88,7 +88,7 @@ export class CartModel extends BaseModel {
    * @return Array
    */
   static add (goods, count, cartData) {
-    let isExisted = CartModel._isExistedThatOne(goods.id, cartData)
+    let isExisted = CartModel.isExistedThatOne(goods.id, cartData)
     if (isExisted.index === -1) {
       // index为-1代表商品不存在购物车中
       goods.count = count
@@ -110,9 +110,8 @@ export class CartModel extends BaseModel {
    * @param id 商品id
    * @param cartData 购物车商品
    * @return {{index: number}}
-   * @private
    */
-  static _isExistedThatOne (id, cartData) {
+  static isExistedThatOne (id, cartData) {
     let result = {index: -1}
     cartData.forEach((item, index) => {
       if (item.id === id) {

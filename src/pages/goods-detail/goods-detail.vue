@@ -92,6 +92,7 @@ export default {
     this.goods = {}
     this.seller = {}
     this.selectedCount = 1
+    this.openLoading()
     this.$refs.switch.switchTabs(0)
   },
   computed: {

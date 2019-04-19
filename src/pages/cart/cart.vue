@@ -9,31 +9,29 @@
 
       div.footer-account-box(v-if="!showLoading")
         div.all-select(@click="selectAllTap")
-          img(src="__IMAGE__/icon/all@selected.png", v-if="isSelectAll")
-          img(src="__IMAGE__/icon/all.png" v-else)
+          img(src="/static/images/icon/all@selected.png", v-if="isSelectAll")
+          img(src="/static/images/icon/all.png" v-else)
           p 全选({{cartDetail.selectedCount}})
 
         div.all-price-submit(@click="submitOrder", :class="{disabled}")
           p.price-text(:class="{disabled}") ￥{{cartDetail.totalPrice}}
           p.submit-text 下单
           div.arrow-icon
-            img(src="__IMAGE__/icon/arrow@rightWhite.png" v-if="!disabled")
-            img(src="__IMAGE__/icon/arrow@rightGrey.png" v-else)
+            img(src="/static/images/icon/arrow@rightWhite.png" v-if="!disabled")
+            img(src="/static/images/icon/arrow@rightGrey.png" v-else)
 </template>
 
 <script>
 import {GoodsModel} from '../../model/GoodsModel'
 import CartList from '../../components/cart-list/cart-list'
 import MyLoading from '../../components/my-loading/my-loading'
+import {loading} from '../../mixins/loading'
 import {mapGetters, mapActions} from 'vuex'
 
 let goods = new GoodsModel()
 
 export default {
   data () {
-    return {
-      showLoading: true
-    }
   },
   onShow () {
     // 更新购物车数据
@@ -62,12 +60,12 @@ export default {
       if (this.cartData.length > 0) {
         goods.updateGoods(this.cartData).then(res => {
           this.saveToStorage(res)
-          this.showLoading = false
+          this.hideLoading()
         }).catch(() => {
-          this.showLoading = false
+          this.hideLoading()
         })
       } else {
-        this.showLoading = false
+        this.hideLoading()
       }
     },
     // 全选按钮
@@ -93,7 +91,8 @@ export default {
   components: {
     CartList,
     MyLoading
-  }
+  },
+  mixins: [loading]
 }
 </script>
 
