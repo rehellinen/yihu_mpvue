@@ -6,7 +6,7 @@
           img.shop-avatar.lazy(:src="item.lazy_url[0]",
             :class="{afterShow: item.transition}")
           p.avatar-text {{item.name}}
-        img.come-image(src="__IMAGE__/theme/shop@come.png")
+        img.come-image(src="/static/images/theme/shop@come.png")
       div.down
         div.left
           img.lazy(:src="item.lazy_url[1]", mode="aspectFill"

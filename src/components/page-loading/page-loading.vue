@@ -2,7 +2,7 @@
   div.container.load-container(:style="colorStyle")
     p(v-if="hasMore") 加载中
     p(v-else) 暂无更多内容
-    img(src="__IMAGE__/theme/page-loading.gif", v-if="hasMore")
+    img(src="/static/images/theme/page-loading.gif", v-if="hasMore")
 </template>
 
 <script>
@@ -25,10 +25,10 @@
     },
     computed: {
       colorStyle () {
-        if (this.backgroundColor === this.$config.color.WHITE) {
-          return `background-color:${this.$config.color.WHITE}`
+        if (this.backgroundColor === this.$config.COLOR.WHITE) {
+          return `background-color:${this.$config.COLOR.WHITE}`
         } else {
-          return `background-color:${this.$config.color.BACKGROUND_COLOR}`
+          return `background-color:${this.$config.COLOR.BACKGROUND_COLOR}`
         }
       }
     }

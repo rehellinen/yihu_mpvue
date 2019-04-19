@@ -2,7 +2,7 @@
 div
   my-loading(:showLoading="showLoading")
   div.container(:class="showLoading ? 'hidden' : ''")
-    img(src="__IMAGE__/theme/shop@header.png")
+    img(src="/static/images/theme/shop@header.png")
     shop-list(:shops="pageArray")
     page-loading(:hasMore="hasMore")
 </template>
@@ -18,7 +18,7 @@ div
 
   const shopSize = 8
   const shop = new ShopModel()
-  const imageUrl = '__IMAGE__/icon/no-goods.png'
+  const imageUrl = '/static/images/icon/no-goods.png'
 
   export default {
     data () {
