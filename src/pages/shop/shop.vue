@@ -1,6 +1,5 @@
 <template lang="pug">
 div
-  search
   my-loading(:showLoading="showLoading")
   div.container(:class="showLoading ? 'hidden' : ''")
     img(src="__IMAGE__/theme/shop@header.png")
@@ -12,7 +11,6 @@ div
   import MyLoading from '../../components/my-loading/my-loading'
   import PageLoading from '../../components/page-loading/page-loading'
   import ShopList from '../../components/shop-list/shop-list'
-  import Search from '../../components/search/search'
   import {ShopModel} from '../../model/ShopModel'
   import {pageMixin} from '../../mixins/page'
   import {LazyLoad} from '../../utils/lazyload'
@@ -83,7 +81,6 @@ div
     components: {
       MyLoading,
       ShopList,
-      Search,
       PageLoading
     },
     mixins: [pageMixin]

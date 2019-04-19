@@ -1,6 +1,5 @@
 <template lang="pug">
   div
-    my-nav(href="../edit-info/main", title="个人中心")
     my-loading(:showLoading="showLoading")
     div.container.personal-container(:class="showLoading ? 'hidden' : ''")
       // 个人信息栏
@@ -23,7 +22,6 @@
 
 <script>
   import MyLoading from '../../components/my-loading/my-loading'
-  import MyNav from '../../components/my-nav/my-nav'
   import TopImage from '../../components/top-image/top-image'
   import PageLoading from '../../components/page-loading/page-loading'
   import AboutUs from '../../components/about-us/about-us'
@@ -94,8 +92,7 @@
       SeeMore,
       OrderList,
       PageLoading,
-      AboutUs,
-      MyNav
+      AboutUs
     },
     mixins: [loading]
   }

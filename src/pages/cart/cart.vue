@@ -1,6 +1,5 @@
 <template lang="pug">
   div
-    cart-nav
     my-loading(:showLoading="showLoading")
     div.no-data(v-if="cartData.length === 0")
       p 购物车中没有商品
@@ -24,10 +23,8 @@
 
 <script>
 import {GoodsModel} from '../../model/GoodsModel'
-import CartNav from '../../components/cart-nav/cart-nav'
 import CartList from '../../components/cart-list/cart-list'
 import MyLoading from '../../components/my-loading/my-loading'
-import {moveDownByNav} from '../../utils/utils'
 import {mapGetters, mapActions} from 'vuex'
 
 let goods = new GoodsModel()
@@ -35,12 +32,8 @@ let goods = new GoodsModel()
 export default {
   data () {
     return {
-      offsetStyle: '',
       showLoading: true
     }
-  },
-  created () {
-    this._setStyle()
   },
   onShow () {
     // 更新购物车数据
@@ -77,9 +70,6 @@ export default {
         this.showLoading = false
       }
     },
-    _setStyle () {
-      this.offsetStyle = moveDownByNav()
-    },
     // 全选按钮
     selectAllTap (event) {
       let flag = true
@@ -102,8 +92,7 @@ export default {
   },
   components: {
     CartList,
-    MyLoading,
-    CartNav
+    MyLoading
   }
 }
 </script>

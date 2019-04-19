@@ -2,8 +2,6 @@
   div
     // 加载中动画
     my-loading(:showLoading="showLoading")
-    // 搜索栏
-    search
     // 主内容
     div.container.index-container(:class="showLoading ? 'hidden' : ''")
       // 轮播图
@@ -14,7 +12,7 @@
         div.theme-photo-container
           div(v-for="item in theme", :key="item.image_id.id")
             a(:href="'../theme/main?id=' + item.id + '&name=' + item.name")
-              img(:src="item.image_id.image_url")
+              img(:src="item.image_id.image_url" mode="aspectFill")
 
       div.find
         img.find-img(src="__IMAGE__/theme/find.png")
@@ -32,7 +30,6 @@
   import MyBanner from '../../components/my-banner/my-banner'
   import SeeMore from '../../components/see-more/see-more'
   import GoodsList from '../../components/goods-list/goods-list'
-  import Search from '../../components/search/search'
   import {BannerModel} from '../../model/BannerModel'
   import {ThemeModel} from '../../model/ThemeModel'
   import {GoodsModel} from '../../model/GoodsModel'
@@ -99,7 +96,6 @@
       MyLoading,
       SeeMore,
       GoodsList,
-      Search,
       MyBanner
     }
   }
