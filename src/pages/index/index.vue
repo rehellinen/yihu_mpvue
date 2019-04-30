@@ -71,10 +71,7 @@
         ]
 
         Promise.all(promises).then(res => {
-          this.banner = res[0]
-          this.theme = res[1]
-          this.newGoods = res[2]
-          this.oldGoods = res[3]
+          [this.banner, this.theme, this.newGoods, this.oldGoods] = res
           this._setLazyLoad()
           this.hideLoading()
         })
