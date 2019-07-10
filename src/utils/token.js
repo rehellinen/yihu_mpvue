@@ -16,7 +16,7 @@ class Token {
   }
 
   // 从服务器获取Token
-  getTokenFromServer (cb) {
+  getTokenFromServer () {
     return new Promise((resolve, reject) => {
       wx.login({
         success: (res) => {
